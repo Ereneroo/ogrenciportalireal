@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>İtalya Öğrenci Portalı</title>
+    <title>İtalya Üniversite Rehberi</title>
     <style>
         * {
             margin: 0;
@@ -13,13 +13,13 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             min-height: 100vh;
-            overflow-x: hidden;
+            color: #333;
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
         }
@@ -30,6 +30,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
 
         .login-box {
@@ -39,12 +40,11 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.2);
             width: 100%;
             max-width: 400px;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: transform 0.3s;
         }
 
         .login-box:hover {
             transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         }
 
         .login-box h2 {
@@ -118,24 +118,21 @@
         }
 
         .header {
-            background: rgba(255,255,255,0.9);
+            background: rgba(255,255,255,0.95);
             padding: 25px;
             border-radius: 15px;
             margin-bottom: 30px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,255,255,0.2);
+            text-align: center;
         }
 
         .header h1 {
             color: #333;
-            text-align: center;
             margin-bottom: 10px;
             font-size: 2.2rem;
         }
 
         .header p {
-            text-align: center;
             color: #666;
             font-size: 1.1rem;
         }
@@ -161,261 +158,203 @@
             box-shadow: 0 6px 15px rgba(0,0,0,0.3);
         }
 
-        .map-container {
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            margin-bottom: 30px;
-            border: 1px solid rgba(255,255,255,0.3);
+        /* Harita Konteyneri */
+        .map-wrapper {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
         }
 
-        .map-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 50% 50%, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
-            border-radius: 20px;
-            pointer-events: none;
-            z-index: 1;
+        .map-container {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            border-radius: 15px;
+            overflow: hidden;
+            background: white;
         }
 
         .italy-map {
-            position: relative;
-            display: inline-block;
-            width: 100%;
-            max-width: 1200px;
-            margin: 20px auto;
-            transform-origin: center;
-            transition: transform 0.3s;
-        }
-
-        .italy-map svg {
             width: 100%;
             height: auto;
-            max-height: 900px;
-            filter: drop-shadow(0 15px 30px rgba(0,0,0,0.3));
+            display: block;
         }
 
+        /* Bölge Etkileşimleri */
         .region {
+            position: absolute;
             cursor: pointer;
-            transition: all 0.4s ease;
-            stroke: #ffffff;
-            stroke-width: 1.5;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
-            transform-origin: center;
-        }
-
-        .region:hover {
-            filter: drop-shadow(0 8px 25px rgba(0,0,0,0.4)) brightness(1.1);
-            transform: scale(1.03);
-            stroke-width: 2.5;
-            stroke: #ffff00;
+            transition: all 0.3s ease;
+            opacity: 0.5;
             z-index: 10;
         }
 
-        .region:active {
-            transform: scale(0.98);
+        .region:hover {
+            opacity: 0.8;
+            transform: scale(1.02);
         }
 
-        .region-label { 
-            font-family: 'Arial', sans-serif; 
-            font-size: 16px; 
-            font-weight: bold; 
-            fill: white; 
-            text-anchor: middle;
-            text-shadow: 2px 2px 5px rgba(0,0,0,0.8);
-            pointer-events: none;
-            transition: all 0.3s;
+        .region.active {
+            opacity: 0.8;
+            box-shadow: 0 0 0 3px rgba(255, 255, 0, 0.7);
         }
 
-        .region:hover + .region-label {
-            font-size: 18px;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.9);
-        }
+        /* Bölge Tanımları */
+        #puglia { top: 65%; left: 75%; width: 15%; height: 10%; }
+        #basilicata { top: 62%; left: 68%; width: 8%; height: 8%; }
+        #calabria { top: 70%; left: 65%; width: 8%; height: 15%; }
+        #sicilia { top: 80%; left: 50%; width: 15%; height: 15%; }
+        #sardegna { top: 50%; left: 15%; width: 15%; height: 25%; }
+        #lazio { top: 45%; left: 55%; width: 10%; height: 10%; }
+        #abruzzo { top: 45%; left: 65%; width: 10%; height: 10%; }
+        #molise { top: 50%; left: 68%; width: 5%; height: 5%; }
+        #campania { top: 55%; left: 60%; width: 10%; height: 10%; }
+        #umbria { top: 45%; left: 50%; width: 8%; height: 8%; }
+        #marche { top: 40%; left: 60%; width: 10%; height: 10%; }
+        #toscana { top: 35%; left: 45%; width: 15%; height: 15%; }
+        #emilia-romagna { top: 30%; left: 50%; width: 15%; height: 10%; }
+        #liguria { top: 30%; left: 35%; width: 8%; height: 10%; }
+        #piemonte { top: 20%; left: 40%; width: 15%; height: 15%; }
+        #valle-aosta { top: 10%; left: 40%; width: 8%; height: 8%; }
+        #lombardia { top: 25%; left: 45%; width: 12%; height: 12%; }
+        #trentino { top: 15%; left: 50%; width: 10%; height: 10%; }
+        #veneto { top: 25%; left: 55%; width: 12%; height: 12%; }
+        #friuli { top: 20%; left: 60%; width: 10%; height: 10%; }
 
-        .small-region-label { 
-            font-size: 12px; 
-        }
-
-        .region-tooltip {
+        /* Bölge İsimleri */
+        .region-label {
             position: absolute;
-            background: linear-gradient(135deg, #333 0%, #555 100%);
+            background: rgba(0,0,0,0.7);
             color: white;
-            padding: 12px 16px;
-            border-radius: 8px;
-            font-size: 16px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 14px;
             font-weight: bold;
             pointer-events: none;
-            z-index: 1000;
-            display: none;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            border: 2px solid #ffff00;
+            z-index: 20;
+            transform: translate(-50%, -50%);
             opacity: 0;
-            transition: opacity 0.2s;
+            transition: opacity 0.3s;
         }
 
-        .region-tooltip::after {
-            content: '';
+        .region:hover + .region-label,
+        .region.active + .region-label {
+            opacity: 1;
+        }
+
+        /* Tooltip */
+        .region-tooltip {
             position: absolute;
-            top: 100%;
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: #ffff00 transparent transparent transparent;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            pointer-events: none;
+            z-index: 100;
+            display: none;
         }
 
-        /* Üniversite Listesi Modal */
+        /* Üniversite Modal */
         .modal {
             display: none;
             position: fixed;
-            z-index: 2000;
-            left: 0;
             top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.7);
-            backdrop-filter: blur(5px);
-            animation: fadeIn 0.3s;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
         }
 
         .modal-content {
-            background-color: white;
-            margin: 5% auto;
-            padding: 30px;
-            border-radius: 15px;
+            background: white;
+            border-radius: 10px;
             width: 90%;
             max-width: 800px;
             max-height: 80vh;
             overflow-y: auto;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-            transform: translateY(-20px);
-            opacity: 0;
-            animation: slideIn 0.3s forwards;
+            padding: 30px;
+            position: relative;
+            animation: modalFadeIn 0.3s;
         }
 
-        @keyframes slideIn {
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             padding-bottom: 15px;
-            border-bottom: 2px solid #eee;
+            border-bottom: 1px solid #eee;
         }
 
         .modal-header h2 {
             color: #333;
-            font-size: 24px;
         }
 
         .close {
-            font-size: 30px;
-            font-weight: bold;
-            color: #aaa;
+            font-size: 24px;
             cursor: pointer;
-            transition: all 0.2s;
+            color: #999;
+            transition: color 0.2s;
         }
 
         .close:hover {
-            color: #000;
-            transform: rotate(90deg);
+            color: #333;
         }
 
         .university-list {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
+            gap: 15px;
         }
 
         .university-item {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            border-left: 4px solid #667eea;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
             transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
 
         .university-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            background: white;
-            border-left: 4px solid #764ba2;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
         .university-name {
-            font-size: 18px;
             font-weight: bold;
+            margin-bottom: 5px;
             color: #333;
-            margin-bottom: 8px;
         }
 
         .university-location {
             color: #666;
             font-size: 14px;
             margin-bottom: 5px;
-            display: flex;
-            align-items: center;
-        }
-
-        .university-location::before {
-            content: '📍';
-            margin-right: 5px;
         }
 
         .university-website {
             color: #667eea;
             text-decoration: none;
             font-size: 14px;
-            display: flex;
-            align-items: center;
-            transition: color 0.2s;
-        }
-
-        .university-website::before {
-            content: '🌐';
-            margin-right: 5px;
+            display: inline-block;
+            margin-top: 5px;
         }
 
         .university-website:hover {
-            color: #764ba2;
             text-decoration: underline;
         }
 
-        /* Responsive Tasarım */
+        /* Responsive */
         @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-            
-            .login-box {
-                padding: 30px 20px;
-                margin: 20px;
-            }
-            
-            .modal-content {
-                margin: 10% auto;
-                padding: 20px;
-            }
-            
-            .university-list {
-                grid-template-columns: 1fr;
-            }
-            
             .header h1 {
                 font-size: 1.8rem;
             }
@@ -423,18 +362,13 @@
             .header p {
                 font-size: 1rem;
             }
-        }
-
-        @media (max-width: 480px) {
-            .logout-btn {
-                padding: 8px 15px;
-                font-size: 14px;
-                top: 10px;
-                right: 10px;
+            
+            .university-list {
+                grid-template-columns: 1fr;
             }
             
-            .map-container {
-                padding: 15px;
+            .modal-content {
+                padding: 20px;
             }
         }
     </style>
@@ -443,7 +377,7 @@
     <!-- Login Sayfası -->
     <div id="loginPage" class="login-container">
         <div class="login-box">
-            <h2>🎓 İtalya Üniversite Portalı</h2>
+            <h2>🇮🇹 İtalya Üniversite Rehberi</h2>
             <form id="loginForm">
                 <div class="form-group">
                     <label for="username">Kullanıcı Adı:</label>
@@ -467,130 +401,76 @@
         
         <div class="container">
             <div class="header">
-                <h1>🇮🇹 İtalya Üniversiteleri Rehberi</h1>
-                <p>Bölgeye tıklayarak o bölgedeki üniversiteleri görüntüleyebilirsiniz</p>
+                <h1>İtalya Üniversiteleri Haritası</h1>
+                <p>Bölgelere tıklayarak üniversiteleri görüntüleyin</p>
             </div>
 
-            <div class="map-container">
-                <div class="italy-map">
-                    <!-- Gerçek İtalya Haritası SVG -->
-                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                         viewBox="0 0 1000 1200" style="enable-background:new 0 0 1000 1200;" xml:space="preserve">
-                        <defs>
-                            <style type="text/css">
-                                .st0{fill:#4CAF50;stroke:#FFFFFF;stroke-width:2;stroke-miterlimit:10;}
-                                .st1{fill:#2196F3;stroke:#FFFFFF;stroke-width:2;stroke-miterlimit:10;}
-                                .st2{fill:#FFC107;stroke:#FFFFFF;stroke-width:2;stroke-miterlimit:10;}
-                                .st3{fill:#F44336;stroke:#FFFFFF;stroke-width:2;stroke-miterlimit:10;}
-                                .st4{fill:#9C27B0;stroke:#FFFFFF;stroke-width:2;stroke-miterlimit:10;}
-                                .st5{fill:#3F51B5;stroke:#FFFFFF;stroke-width:2;stroke-miterlimit:10;}
-                                .st6{fill:#009688;stroke:#FFFFFF;stroke-width:2;stroke-miterlimit:10;}
-                                .st7{fill:#FF5722;stroke:#FFFFFF;stroke-width:2;stroke-miterlimit:10;}
-                                .st8{fill:#795548;stroke:#FFFFFF;stroke-width:2;stroke-miterlimit:10;}
-                                .st9{fill:#607D8B;stroke:#FFFFFF;stroke-width:2;stroke-miterlimit:10;}
-                                .st10{fill:#E91E63;stroke:#FFFFFF;stroke-width:2;stroke-miterlimit:10;}
-                                .st11{fill:#00BCD4;stroke:#FFFFFF;stroke-width:2;stroke-miterlimit:10;}
-                                .st12{fill:#8BC34A;stroke:#FFFFFF;stroke-width:2;stroke-miterlimit:10;}
-                                .st13{fill:#673AB7;stroke:#FFFFFF;stroke-width:2;stroke-miterlimit:10;}
-                                .st14{fill:#CDDC39;stroke:#FFFFFF;stroke-width:2;stroke-miterlimit:10;}
-                                .st15{fill:#FF9800;stroke:#FFFFFF;stroke-width:2;stroke-miterlimit:10;}
-                                .st16{fill:#9E9E9E;stroke:#FFFFFF;stroke-width:2;stroke-miterlimit:10;}
-                                .st17{fill:#03A9F4;stroke:#FFFFFF;stroke-width:2;stroke-miterlimit:10;}
-                                .st18{fill:#FFEB3B;stroke:#FFFFFF;stroke-width:2;stroke-miterlimit:10;}
-                                .st19{fill:#4CAF50;stroke:#FFFFFF;stroke-width:2;stroke-miterlimit:10;}
-                                .st20{fill:#2196F3;stroke:#FFFFFF;stroke-width:2;stroke-miterlimit:10;}
-                            </style>
-                            <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="500" y1="0" x2="500" y2="1200">
-                                <stop  offset="0" style="stop-color:#FFFFFF;stop-opacity:0.1"/>
-                                <stop  offset="1" style="stop-color:#FFFFFF;stop-opacity:0"/>
-                            </linearGradient>
-                        </defs>
-                        
-                        <!-- Valle d'Aosta -->
-                        <path class="st0 region" d="M150,120l50-20l20,40l-40,20L150,150z" data-region="valle-aosta" data-name="Valle d'Aosta"/>
-                        <text x="185" y="135" class="region-label small-region-label">Valle d'Aosta</text>
-                        
-                        <!-- Piemonte -->
-                        <path class="st1 region" d="M80,180l70-30l50,10l40,20l-10,100l-50,20l-60-10l-30-40L80,250z" data-region="piemonte" data-name="Piemonte"/>
-                        <text x="165" y="230" class="region-label">Piemonte</text>
-                        
-                        <!-- Trentino-Alto Adige -->
-                        <path class="st2 region" d="M300,100l80-20l20,60l-20,40l-40,10l-40-20z" data-region="trentino" data-name="Trentino-Alto Adige"/>
-                        <text x="350" y="140" class="region-label">Trentino</text>
-                        <text x="350" y="160" class="region-label small-region-label">Alto Adige</text>
-                        
-                        <!-- Lombardia -->
-                        <path class="st3 region" d="M240,160l60-20l40,30l10,50l-30,40l-40,20l-40-10l-10-70L240,160z" data-region="lombardia" data-name="Lombardia"/>
-                        <text x="290" y="220" class="region-label">Lombardia</text>
-                        
-                        <!-- Veneto -->
-                        <path class="st4 region" d="M350,180l70-20l30,40l-10,50l-40,30l-50-10l-10-50L350,180z" data-region="veneto" data-name="Veneto"/>
-                        <text x="395" y="225" class="region-label">Veneto</text>
-                        
-                        <!-- Friuli-Venezia Giulia -->
-                        <path class="st5 region" d="M450,140l70-20l20,50l-20,30l-40,10l-30-20L450,140z" data-region="friuli" data-name="Friuli-Venezia Giulia"/>
-                        <text x="495" y="170" class="region-label">Friuli</text>
-                        <text x="495" y="190" class="region-label small-region-label">Venezia Giulia</text>
-                        
-                        <!-- Liguria -->
-                        <path class="st6 region" d="M80,300l100-10l40,30l-20,40l-80,10l-30-30L80,300z" data-region="liguria" data-name="Liguria"/>
-                        <text x="150" y="335" class="region-label">Liguria</text>
-                        
-                        <!-- Emilia-Romagna -->
-                        <path class="st7 region" d="M220,300l180-20l50,40l-10,40l-60,20l-130,10l-30-40L220,300z" data-region="emilia-romagna" data-name="Emilia-Romagna"/>
-                        <text x="335" y="335" class="region-label">Emilia-Romagna</text>
-                        
-                        <!-- Toscana -->
-                        <path class="st8 region" d="M200,380l180-20l20,60l-20,60l-60,20l-60-10l-40-40L200,380z" data-region="toscana" data-name="Toscana"/>
-                        <text x="310" y="440" class="region-label">Toscana</text>
-                        
-                        <!-- Umbria -->
-                        <path class="st9 region" d="M380,400l50-20l20,40l-20,40l-50,10L380,400z" data-region="umbria" data-name="Umbria"/>
-                        <text x="415" y="430" class="region-label">Umbria</text>
-                        
-                        <!-- Marche -->
-                        <path class="st10 region" d="M430,360l50-20l40,40l-20,60l-50,10l-20-40L430,360z" data-region="marche" data-name="Marche"/>
-                        <text x="475" y="400" class="region-label">Marche</text>
-                        
-                        <!-- Lazio -->
-                        <path class="st11 region" d="M320,480l110-20l20,60l-10,60l-60,20l-60-10l-20-50L320,480z" data-region="lazio" data-name="Lazio"/>
-                        <text x="375" y="540" class="region-label">Lazio</text>
-                        
-                        <!-- Abruzzo -->
-                        <path class="st12 region" d="M450,440l50-20l20,60l-20,40l-50,20l-20-50L450,440z" data-region="abruzzo" data-name="Abruzzo"/>
-                        <text x="475" y="485" class="region-label">Abruzzo</text>
-                        
-                        <!-- Molise -->
-                        <path class="st13 region" d="M500,500l40-20l20,40l-20,40l-40,10l-20-30L500,500z" data-region="molise" data-name="Molise"/>
-                        <text x="520" y="530" class="region-label small-region-label">Molise</text>
-                        
-                        <!-- Campania -->
-                        <path class="st14 region" d="M380,580l100-20l20,60l-20,60l-60,20l-40-20l-20-50L380,580z" data-region="campania" data-name="Campania"/>
-                        <text x="440" y="635" class="region-label">Campania</text>
-                        
-                        <!-- Puglia -->
-                        <path class="st15 region" d="M500,560l80-20l40,60l20,80l-40,40l-40-20l-40-40l-20-60L500,560z" data-region="puglia" data-name="Puglia"/>
-                        <text x="570" y="630" class="region-label">Puglia</text>
-                        
-                        <!-- Basilicata -->
-                        <path class="st16 region" d="M480,680l60-20l20,60l-40,40l-40-10l-20-40L480,680z" data-region="basilicata" data-name="Basilicata"/>
-                        <text x="520" y="715" class="region-label">Basilicata</text>
-                        
-                        <!-- Calabria -->
-                        <path class="st17 region" d="M460,750l60-20l20,70l-20,70l-40,20l-20-40l-20-50L460,750z" data-region="calabria" data-name="Calabria"/>
-                        <text x="490" y="820" class="region-label">Calabria</text>
-                        
-                        <!-- Sicilia -->
-                        <path class="st18 region" d="M380,950l220-20l40,50l-20,50l-40,20l-160,20l-40-50L380,950z" data-region="sicilia" data-name="Sicilia"/>
-                        <text x="510" y="1000" class="region-label">Sicilia</text>
-                        
-                        <!-- Sardegna -->
-                        <path class="st19 region" d="M150,600l100-20l30,70l-10,100l-20,70l-30,60l-40-50l-30-70l10-70L150,600z" data-region="sardegna" data-name="Sardegna"/>
-                        <text x="215" y="740" class="region-label">Sardegna</text>
-                        
-                        <!-- Deniz etkisi -->
-                        <rect x="0" y="0" width="1000" height="1200" fill="url(#SVGID_1_)" style="pointer-events:none"/>
-                    </svg>
+            <div class="map-wrapper">
+                <div class="map-container">
+                    <!-- İtalya Fiziki Haritası -->
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Italy_topographic_map-blank.svg/1200px-Italy_topographic_map-blank.svg.png" alt="İtalya Haritası" class="italy-map">
+                    
+                    <!-- Bölgeler (transparent overlay) -->
+                    <div class="region" id="valle-aosta" data-region="valle-aosta" data-name="Valle d'Aosta"></div>
+                    <div class="region-label" style="top: 15%; left: 45%;">Valle d'Aosta</div>
+                    
+                    <div class="region" id="piemonte" data-region="piemonte" data-name="Piemonte"></div>
+                    <div class="region-label" style="top: 25%; left: 45%;">Piemonte</div>
+                    
+                    <div class="region" id="lombardia" data-region="lombardia" data-name="Lombardia"></div>
+                    <div class="region-label" style="top: 30%; left: 50%;">Lombardia</div>
+                    
+                    <div class="region" id="trentino" data-region="trentino" data-name="Trentino-Alto Adige"></div>
+                    <div class="region-label" style="top: 20%; left: 55%;">Trentino</div>
+                    
+                    <div class="region" id="veneto" data-region="veneto" data-name="Veneto"></div>
+                    <div class="region-label" style="top: 30%; left: 60%;">Veneto</div>
+                    
+                    <div class="region" id="friuli" data-region="friuli" data-name="Friuli-Venezia Giulia"></div>
+                    <div class="region-label" style="top: 25%; left: 65%;">Friuli-Venezia Giulia</div>
+                    
+                    <div class="region" id="liguria" data-region="liguria" data-name="Liguria"></div>
+                    <div class="region-label" style="top: 35%; left: 40%;">Liguria</div>
+                    
+                    <div class="region" id="emilia-romagna" data-region="emilia-romagna" data-name="Emilia-Romagna"></div>
+                    <div class="region-label" style="top: 35%; left: 55%;">Emilia-Romagna</div>
+                    
+                    <div class="region" id="toscana" data-region="toscana" data-name="Toscana"></div>
+                    <div class="region-label" style="top: 40%; left: 50%;">Toscana</div>
+                    
+                    <div class="region" id="umbria" data-region="umbria" data-name="Umbria"></div>
+                    <div class="region-label" style="top: 50%; left: 55%;">Umbria</div>
+                    
+                    <div class="region" id="marche" data-region="marche" data-name="Marche"></div>
+                    <div class="region-label" style="top: 45%; left: 65%;">Marche</div>
+                    
+                    <div class="region" id="lazio" data-region="lazio" data-name="Lazio"></div>
+                    <div class="region-label" style="top: 50%; left: 60%;">Lazio</div>
+                    
+                    <div class="region" id="abruzzo" data-region="abruzzo" data-name="Abruzzo"></div>
+                    <div class="region-label" style="top: 50%; left: 70%;">Abruzzo</div>
+                    
+                    <div class="region" id="molise" data-region="molise" data-name="Molise"></div>
+                    <div class="region-label" style="top: 55%; left: 73%;">Molise</div>
+                    
+                    <div class="region" id="campania" data-region="campania" data-name="Campania"></div>
+                    <div class="region-label" style="top: 60%; left: 65%;">Campania</div>
+                    
+                    <div class="region" id="puglia" data-region="puglia" data-name="Puglia"></div>
+                    <div class="region-label" style="top: 70%; left: 80%;">Puglia</div>
+                    
+                    <div class="region" id="basilicata" data-region="basilicata" data-name="Basilicata"></div>
+                    <div class="region-label" style="top: 65%; left: 72%;">Basilicata</div>
+                    
+                    <div class="region" id="calabria" data-region="calabria" data-name="Calabria"></div>
+                    <div class="region-label" style="top: 75%; left: 70%;">Calabria</div>
+                    
+                    <div class="region" id="sicilia" data-region="sicilia" data-name="Sicilia"></div>
+                    <div class="region-label" style="top: 85%; left: 60%;">Sicilia</div>
+                    
+                    <div class="region" id="sardegna" data-region="sardegna" data-name="Sardegna"></div>
+                    <div class="region-label" style="top: 60%; left: 20%;">Sardegna</div>
+                    
                     <div class="region-tooltip" id="tooltip"></div>
                 </div>
             </div>
@@ -609,7 +489,7 @@
     </div>
 
     <script>
-        // Kullanıcı bilgileri (gerçek uygulamada bu bilgiler veritabanında saklanmalı)
+        // Kullanıcı bilgileri
         const users = {
             'ogrenci1': 'sifre123',
             'ogrenci2': 'pass456',
@@ -617,7 +497,7 @@
             'admin': 'admin2024'
         };
 
-        // Bölge bazında üniversite verileri
+        // Üniversite verileri
         const universityData = {
             'lombardia': [
                 { name: 'Università Bocconi', location: 'Milano', website: 'https://www.unibocconi.it' },
@@ -743,38 +623,25 @@
         document.addEventListener('DOMContentLoaded', function() {
             const regions = document.querySelectorAll('.region');
             const tooltip = document.getElementById('tooltip');
-            const italyMap = document.querySelector('.italy-map');
 
-            // Haritaya hover efekti
-            italyMap.addEventListener('mouseenter', function() {
-                this.style.transform = 'scale(1.01)';
-            });
-
-            italyMap.addEventListener('mouseleave', function() {
-                this.style.transform = 'scale(1)';
-            });
-
-            // Bölge etkileşimleri
             regions.forEach(region => {
                 region.addEventListener('mouseenter', function(e) {
                     const regionName = e.target.dataset.name;
                     tooltip.textContent = regionName;
                     tooltip.style.display = 'block';
-                    setTimeout(() => {
-                        tooltip.style.opacity = '1';
-                    }, 10);
+                    
+                    // Bölgeyi vurgula
+                    e.target.classList.add('active');
                 });
 
                 region.addEventListener('mousemove', function(e) {
                     tooltip.style.left = e.pageX + 15 + 'px';
-                    tooltip.style.top = e.pageY - 40 + 'px';
+                    tooltip.style.top = e.pageY + 15 + 'px';
                 });
 
-                region.addEventListener('mouseleave', function() {
-                    tooltip.style.opacity = '0';
-                    setTimeout(() => {
-                        tooltip.style.display = 'none';
-                    }, 200);
+                region.addEventListener('mouseleave', function(e) {
+                    tooltip.style.display = 'none';
+                    e.target.classList.remove('active');
                 });
 
                 region.addEventListener('click', function(e) {
@@ -789,13 +656,13 @@
         function showUniversities(regionKey, regionName) {
             const universities = universityData[regionKey] || [];
             
-            document.getElementById('regionTitle').textContent = regionName + ' Üniversiteleri';
+            document.getElementById('regionTitle').textContent = `${regionName} Üniversiteleri`;
             
             const universityList = document.getElementById('universityList');
             universityList.innerHTML = '';
 
             if (universities.length === 0) {
-                universityList.innerHTML = '<p style="text-align: center; color: #666; grid-column: 1/-1;">Bu bölge için henüz üniversite bilgisi eklenmemiş.</p>';
+                universityList.innerHTML = '<p style="text-align: center; color: #666; grid-column: 1/-1;">Bu bölge için üniversite bilgisi bulunamadı.</p>';
             } else {
                 universities.forEach(university => {
                     const universityItem = document.createElement('div');
@@ -809,7 +676,7 @@
                 });
             }
 
-            document.getElementById('universityModal').style.display = 'block';
+            document.getElementById('universityModal').style.display = 'flex';
         }
 
         // Modal kapatma
