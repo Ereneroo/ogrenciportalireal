@@ -120,7 +120,7 @@
         }
 
         .logout-btn {
-            position: fixed;
+            position: absolute;
             top: 20px;
             right: 20px;
             padding: 10px 20px;
@@ -129,49 +129,88 @@
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            z-index: 1000;
         }
 
         .map-container {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
             text-align: center;
+            position: relative;
+            overflow-x: auto;
+        }
+
+        .map-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+            border-radius: 20px;
+            pointer-events: none;
         }
 
         .italy-map {
             position: relative;
             display: inline-block;
             max-width: 100%;
+            margin: 20px 0;
         }
 
         .italy-map svg {
             width: 100%;
             height: auto;
-            max-width: 600px;
+            max-width: 1400px;
+            min-height: 800px;
+            filter: drop-shadow(0 10px 30px rgba(0,0,0,0.3));
         }
 
         .region {
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
+            stroke: #ffffff;
+            stroke-width: 2;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
         }
 
         .region:hover {
-            opacity: 0.8;
+            filter: drop-shadow(0 8px 25px rgba(0,0,0,0.4)) brightness(1.1);
             transform: scale(1.02);
+            stroke-width: 3;
+            stroke: #ffff00;
+        }
+
+        .region:active {
+            transform: scale(0.98);
         }
 
         .region-tooltip {
             position: absolute;
-            background: #333;
+            background: linear-gradient(135deg, #333 0%, #555 100%);
             color: white;
-            padding: 8px 12px;
-            border-radius: 5px;
-            font-size: 14px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
             pointer-events: none;
             z-index: 1000;
             display: none;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            border: 2px solid #ffff00;
+        }
+
+        .region-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #ffff00 transparent transparent transparent;
         }
 
         /* Üniversite Listesi Modal */
@@ -312,66 +351,164 @@
 
             <div class="map-container">
                 <div class="italy-map">
-                    <svg viewBox="0 0 600 800" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Piemonte -->
-                        <path d="M50 200 L120 180 L140 220 L110 250 L80 240 Z" fill="#4169E1" class="region" data-region="piemonte" data-name="Piemonte"/>
-                        
+                    <svg viewBox="0 0 1000 1200" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Gradients and Effects -->
+                        <defs>
+                            <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#4169E1;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#1e3a8a;stop-opacity:1" />
+                            </linearGradient>
+                            <linearGradient id="redGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#DC143C;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#991b1b;stop-opacity:1" />
+                            </linearGradient>
+                            <linearGradient id="orangeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#FFA500;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#ea580c;stop-opacity:1" />
+                            </linearGradient>
+                            <linearGradient id="lightBlueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#87CEEB;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#0ea5e9;stop-opacity:1" />
+                            </linearGradient>
+                            
+                            <!-- Region Name Labels -->
+                            <style>
+                                .region-label { 
+                                    font-family: 'Arial', sans-serif; 
+                                    font-size: 20px; 
+                                    font-weight: bold; 
+                                    fill: white; 
+                                    text-anchor: middle;
+                                    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+                                    pointer-events: none;
+                                }
+                                .small-region-label { 
+                                    font-size: 14px; 
+                                }
+                            </style>
+                        </defs>
+
                         <!-- Valle d'Aosta -->
-                        <path d="M80 170 L110 160 L120 180 L100 190 Z" fill="#87CEEB" class="region" data-region="valle-aosta" data-name="Valle d'Aosta"/>
-                        
-                        <!-- Lombardia -->
-                        <path d="M120 180 L180 170 L200 200 L190 230 L140 220 Z" fill="#4169E1" class="region" data-region="lombardia" data-name="Lombardia"/>
-                        
+                        <path d="M150 120 L200 100 L220 140 L180 160 L150 150 Z" 
+                              fill="url(#lightBlueGrad)" class="region" 
+                              data-region="valle-aosta" data-name="Valle d'Aosta"/>
+                        <text x="185" y="135" class="region-label small-region-label">Valle d'Aosta</text>
+
+                        <!-- Piemonte -->
+                        <path d="M80 180 L150 150 L200 160 L240 180 L230 280 L180 300 L120 290 L90 250 Z" 
+                              fill="url(#blueGrad)" class="region" 
+                              data-region="piemonte" data-name="Piemonte"/>
+                        <text x="165" y="230" class="region-label">Piemonte</text>
+
                         <!-- Trentino-Alto Adige -->
-                        <path d="M180 150 L220 140 L230 170 L200 180 L180 170 Z" fill="#4169E1" class="region" data-region="trentino" data-name="Trentino-Alto Adige"/>
-                        
+                        <path d="M300 100 L380 80 L400 140 L380 180 L340 190 L300 170 Z" 
+                              fill="url(#blueGrad)" class="region" 
+                              data-region="trentino" data-name="Trentino-Alto Adige"/>
+                        <text x="350" y="140" class="region-label">Trentino</text>
+                        <text x="350" y="160" class="region-label">Alto Adige</text>
+
+                        <!-- Lombardia -->
+                        <path d="M240 160 L300 140 L340 170 L350 220 L320 260 L280 280 L240 270 L230 200 Z" 
+                              fill="url(#blueGrad)" class="region" 
+                              data-region="lombardia" data-name="Lombardia"/>
+                        <text x="290" y="220" class="region-label">Lombardia</text>
+
                         <!-- Veneto -->
-                        <path d="M200 180 L270 170 L280 200 L260 220 L200 200 Z" fill="#DC143C" class="region" data-region="veneto" data-name="Veneto"/>
-                        
+                        <path d="M350 180 L420 160 L450 200 L440 250 L400 280 L350 270 L340 220 Z" 
+                              fill="url(#redGrad)" class="region" 
+                              data-region="veneto" data-name="Veneto"/>
+                        <text x="395" y="225" class="region-label">Veneto</text>
+
                         <!-- Friuli-Venezia Giulia -->
-                        <path d="M270 160 L310 150 L320 180 L280 190 L270 170 Z" fill="#DC143C" class="region" data-region="friuli" data-name="Friuli-Venezia Giulia"/>
-                        
+                        <path d="M450 140 L520 120 L540 170 L520 200 L480 210 L450 190 Z" 
+                              fill="url(#redGrad)" class="region" 
+                              data-region="friuli" data-name="Friuli-Venezia Giulia"/>
+                        <text x="495" y="170" class="region-label">Friuli</text>
+                        <text x="495" y="190" class="region-label small-region-label">Venezia Giulia</text>
+
                         <!-- Liguria -->
-                        <path d="M60 250 L130 240 L140 270 L70 280 Z" fill="#DC143C" class="region" data-region="liguria" data-name="Liguria"/>
-                        
+                        <path d="M80 300 L180 290 L220 320 L200 360 L120 370 L90 340 Z" 
+                              fill="url(#redGrad)" class="region" 
+                              data-region="liguria" data-name="Liguria"/>
+                        <text x="150" y="335" class="region-label">Liguria</text>
+
                         <!-- Emilia-Romagna -->
-                        <path d="M140 240 L280 230 L290 260 L150 270 Z" fill="#FFA500" class="region" data-region="emilia-romagna" data-name="Emilia-Romagna"/>
-                        
+                        <path d="M220 300 L400 280 L450 320 L440 360 L380 380 L250 390 L220 350 Z" 
+                              fill="url(#orangeGrad)" class="region" 
+                              data-region="emilia-romagna" data-name="Emilia-Romagna"/>
+                        <text x="335" y="335" class="region-label">Emilia-Romagna</text>
+
                         <!-- Toscana -->
-                        <path d="M120 280 L220 270 L230 320 L140 330 Z" fill="#87CEEB" class="region" data-region="toscana" data-name="Toscana"/>
-                        
+                        <path d="M200 380 L380 360 L400 420 L380 480 L320 500 L260 490 L220 450 Z" 
+                              fill="url(#lightBlueGrad)" class="region" 
+                              data-region="toscana" data-name="Toscana"/>
+                        <text x="310" y="440" class="region-label">Toscana</text>
+
                         <!-- Umbria -->
-                        <path d="M220 290 L260 280 L270 320 L230 330 Z" fill="#4169E1" class="region" data-region="umbria" data-name="Umbria"/>
-                        
+                        <path d="M380 400 L430 380 L450 420 L430 460 L380 470 Z" 
+                              fill="url(#blueGrad)" class="region" 
+                              data-region="umbria" data-name="Umbria"/>
+                        <text x="415" y="430" class="region-label">Umbria</text>
+
                         <!-- Marche -->
-                        <path d="M260 270 L300 260 L310 310 L270 320 Z" fill="#4169E1" class="region" data-region="marche" data-name="Marche"/>
-                        
+                        <path d="M430 360 L480 340 L520 380 L500 440 L450 450 L430 410 Z" 
+                              fill="url(#blueGrad)" class="region" 
+                              data-region="marche" data-name="Marche"/>
+                        <text x="475" y="400" class="region-label">Marche</text>
+
                         <!-- Lazio -->
-                        <path d="M200 330 L280 320 L290 380 L210 390 Z" fill="#4169E1" class="region" data-region="lazio" data-name="Lazio"/>
-                        
+                        <path d="M320 480 L430 460 L450 520 L440 580 L380 600 L320 590 L300 540 Z" 
+                              fill="url(#blueGrad)" class="region" 
+                              data-region="lazio" data-name="Lazio"/>
+                        <text x="375" y="540" class="region-label">Lazio</text>
+
                         <!-- Abruzzo -->
-                        <path d="M280 320 L320 310 L330 360 L290 370 Z" fill="#DC143C" class="region" data-region="abruzzo" data-name="Abruzzo"/>
-                        
+                        <path d="M450 440 L500 420 L520 480 L500 520 L450 540 L430 490 Z" 
+                              fill="url(#redGrad)" class="region" 
+                              data-region="abruzzo" data-name="Abruzzo"/>
+                        <text x="475" y="485" class="region-label">Abruzzo</text>
+
                         <!-- Molise -->
-                        <path d="M320 350 L340 340 L350 370 L330 380 Z" fill="#DC143C" class="region" data-region="molise" data-name="Molise"/>
-                        
+                        <path d="M500 500 L540 480 L560 520 L540 560 L500 570 L480 540 Z" 
+                              fill="url(#redGrad)" class="region" 
+                              data-region="molise" data-name="Molise"/>
+                        <text x="520" y="530" class="region-label small-region-label">Molise</text>
+
                         <!-- Campania -->
-                        <path d="M250 390 L320 380 L330 430 L260 440 Z" fill="#DC143C" class="region" data-region="campania" data-name="Campania"/>
-                        
+                        <path d="M380 580 L480 560 L500 620 L480 680 L420 700 L380 680 L360 630 Z" 
+                              fill="url(#redGrad)" class="region" 
+                              data-region="campania" data-name="Campania"/>
+                        <text x="440" y="635" class="region-label">Campania</text>
+
                         <!-- Puglia -->
-                        <path d="M330 380 L380 370 L390 450 L340 460 Z" fill="#FFA500" class="region" data-region="puglia" data-name="Puglia"/>
-                        
+                        <path d="M500 560 L580 540 L620 600 L640 680 L600 720 L560 700 L520 660 L500 600 Z" 
+                              fill="url(#orangeGrad)" class="region" 
+                              data-region="puglia" data-name="Puglia"/>
+                        <text x="570" y="630" class="region-label">Puglia</text>
+
                         <!-- Basilicata -->
-                        <path d="M290 430 L340 420 L350 460 L300 470 Z" fill="#87CEEB" class="region" data-region="basilicata" data-name="Basilicata"/>
-                        
+                        <path d="M480 680 L540 660 L560 720 L520 760 L480 750 L460 710 Z" 
+                              fill="url(#lightBlueGrad)" class="region" 
+                              data-region="basilicata" data-name="Basilicata"/>
+                        <text x="520" y="715" class="region-label">Basilicata</text>
+
                         <!-- Calabria -->
-                        <path d="M280 470 L320 460 L330 520 L290 530 Z" fill="#4169E1" class="region" data-region="calabria" data-name="Calabria"/>
-                        
+                        <path d="M460 750 L520 730 L540 800 L520 870 L480 890 L460 850 L440 800 Z" 
+                              fill="url(#blueGrad)" class="region" 
+                              data-region="calabria" data-name="Calabria"/>
+                        <text x="490" y="820" class="region-label">Calabria</text>
+
                         <!-- Sicilia -->
-                        <path d="M220 550 L350 540 L360 600 L230 610 Z" fill="#4169E1" class="region" data-region="sicilia" data-name="Sicilia"/>
-                        
+                        <path d="M380 950 L600 930 L640 980 L620 1030 L580 1050 L420 1070 L380 1020 Z" 
+                              fill="url(#blueGrad)" class="region" 
+                              data-region="sicilia" data-name="Sicilia"/>
+                        <text x="510" y="1000" class="region-label">Sicilia</text>
+
                         <!-- Sardegna -->
-                        <path d="M80 400 L150 390 L160 500 L90 510 Z" fill="#4169E1" class="region" data-region="sardegna" data-name="Sardegna"/>
+                        <path d="M150 600 L250 580 L280 650 L270 750 L250 820 L220 880 L180 900 L150 850 L130 780 L140 700 Z" 
+                              fill="url(#blueGrad)" class="region" 
+                              data-region="sardegna" data-name="Sardegna"/>
+                        <text x="215" y="740" class="region-label">Sardegna</text>
                     </svg>
                     <div class="region-tooltip" id="tooltip"></div>
                 </div>
@@ -391,7 +528,7 @@
     </div>
 
     <script>
-        // Kullanıcı bilgileri
+        // Kullanıcı bilgileri (gerçek uygulamada bu bilgiler veritabanında saklanmalı)
         const users = {
             'ogrenci1': 'sifre123',
             'ogrenci2': 'pass456',
@@ -497,39 +634,32 @@
             ]
         };
 
-        // Sayfa yüklendiğinde çalışacak fonksiyon
-        function init() {
-            // Login formu dinleyicisi
-            document.getElementById('loginForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const username = document.getElementById('username').value.trim();
-                const password = document.getElementById('password').value.trim();
-                
-                if (users[username] && users[username] === password) {
-                    document.getElementById('loginPage').style.display = 'none';
-                    document.getElementById('portalPage').style.display = 'block';
-                    document.getElementById('errorMessage').style.display = 'none';
-                    
-                    // Tarayıcı geçmişine giriş durumunu kaydet
-                    history.pushState({ loggedIn: true }, '', '#portal');
-                } else {
-                    document.getElementById('errorMessage').style.display = 'block';
-                }
-            });
+        // Login fonksiyonu
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (users[username] && users[username] === password) {
+                document.getElementById('loginPage').style.display = 'none';
+                document.getElementById('portalPage').style.display = 'block';
+                document.getElementById('errorMessage').style.display = 'none';
+            } else {
+                document.getElementById('errorMessage').style.display = 'block';
+            }
+        });
 
-            // Geri butonu için dinleyici
-            window.addEventListener('popstate', function(event) {
-                if (event.state && event.state.loggedIn) {
-                    document.getElementById('loginPage').style.display = 'none';
-                    document.getElementById('portalPage').style.display = 'block';
-                } else {
-                    document.getElementById('loginPage').style.display = 'flex';
-                    document.getElementById('portalPage').style.display = 'none';
-                }
-            });
+        // Logout fonksiyonu
+        function logout() {
+            document.getElementById('loginPage').style.display = 'flex';
+            document.getElementById('portalPage').style.display = 'none';
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        }
 
-            // Harita etkileşimleri
+        // Harita etkileşimleri
+        document.addEventListener('DOMContentLoaded', function() {
             const regions = document.querySelectorAll('.region');
             const tooltip = document.getElementById('tooltip');
 
@@ -555,13 +685,7 @@
                     showUniversities(regionKey, regionName);
                 });
             });
-
-            // Sayfa yüklendiğinde hash kontrolü
-            if (window.location.hash === '#portal') {
-                document.getElementById('loginPage').style.display = 'none';
-                document.getElementById('portalPage').style.display = 'block';
-            }
-        }
+        });
 
         // Üniversite listesi gösterme
         function showUniversities(regionKey, regionName) {
@@ -595,24 +719,12 @@
             document.getElementById('universityModal').style.display = 'none';
         }
 
-        // Çıkış yapma
-        function logout() {
-            document.getElementById('loginPage').style.display = 'flex';
-            document.getElementById('portalPage').style.display = 'none';
-            document.getElementById('username').value = '';
-            document.getElementById('password').value = '';
-            history.replaceState(null, '', window.location.pathname);
-        }
-
         // Modal dışına tıklanınca kapatma
         window.addEventListener('click', function(e) {
             if (e.target === document.getElementById('universityModal')) {
                 closeModal();
             }
         });
-
-        // Sayfa yüklendiğinde init fonksiyonunu çağır
-        document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
 </html>
