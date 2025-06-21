@@ -3,31 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Education Portal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Education Portal - Modern Design</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #1e293b;
-            --primary-light: #334155;
-            --accent-color: #3b82f6;
+            --primary: #0f172a;
+            --primary-light: #1e293b;
+            --accent: #3b82f6;
             --accent-hover: #2563eb;
-            --success-color: #10b981;
-            --warning-color: #f59e0b;
-            --error-color: #ef4444;
-            --background: #f8fafc;
-            --surface: #ffffff;
-            --surface-hover: #f1f5f9;
-            --text-primary: #1e293b;
-            --text-secondary: #64748b;
-            --text-muted: #94a3b8;
-            --border: #e2e8f0;
-            --border-light: #f1f5f9;
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --background: #0f1419;
+            --surface: #1a1f2e;
+            --surface-light: #252b3b;
+            --surface-hover: #2d3548;
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border: #334155;
+            --border-light: #475569;
+            --glass-bg: rgba(26, 31, 46, 0.8);
+            --glass-border: rgba(148, 163, 184, 0.1);
             --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --gradient-accent: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            --gradient-surface: linear-gradient(145deg, #1a1f2e 0%, #252b3b 100%);
+            --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.3);
+            --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
         
         * {
@@ -37,64 +38,89 @@
         }
         
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--background);
+            font-family: 'Inter', sans-serif;
+            background: var(--background);
             color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
         }
-        
-        .container {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #0f1419, #1a1f2e, #252b3b);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
         }
-        
-        /* Header Styles */
-        header {
-            background: var(--gradient-primary);
-            color: white;
-            padding: 1rem 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: var(--shadow-lg);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        header::before {
+
+        .animated-bg::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" fill-opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" fill-opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" fill-opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-            opacity: 0.3;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(148,163,184,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
         }
-        
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Header */
+        header {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1.5rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
         .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 1rem;
-            position: relative;
-            z-index: 1;
         }
-        
+
         .logo {
-            height: 48px;
+            height: 50px;
             width: auto;
-            border-radius: 8px;
-            box-shadow: var(--shadow-md);
+            border-radius: 12px;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+            transition: transform 0.3s ease;
         }
-        
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
         .header-title {
-            font-size: 1.875rem;
-            font-weight: 700;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        
+
         /* Login Section */
         .login-container {
             display: flex;
@@ -102,165 +128,259 @@
             align-items: center;
             flex-grow: 1;
             padding: 2rem;
-            background: var(--gradient-primary);
             position: relative;
         }
-        
-        .login-container::before {
-            content: '';
+
+        .floating-elements {
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 0%, transparent 50%);
-        }
-        
-        .login-box {
-            background: var(--surface);
-            border-radius: 16px;
-            box-shadow: var(--shadow-xl);
             width: 100%;
-            max-width: 420px;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .floating-element {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-element:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .floating-element:nth-child(2) { left: 20%; animation-delay: 1s; }
+        .floating-element:nth-child(3) { left: 80%; animation-delay: 2s; }
+        .floating-element:nth-child(4) { left: 90%; animation-delay: 3s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 0.6; transform: scale(1); }
+            90% { opacity: 0.6; transform: scale(1); }
+            100% { transform: translateY(-100px) scale(0); opacity: 0; }
+        }
+
+        .login-box {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
             padding: 3rem;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1);
+            width: 100%;
+            max-width: 450px;
+            box-shadow: var(--shadow-lg);
             position: relative;
-            z-index: 1;
-            transform: translateY(0);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
+
+        .login-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .login-box:hover::before {
+            left: 100%;
+        }
+
         .login-box:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-xl), 0 25px 50px -12px rgba(0,0,0,0.25);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
         }
-        
-        .login-title {
+
+        .login-header {
             text-align: center;
-            margin-bottom: 2rem;
-            color: var(--text-primary);
-            font-size: 1.5rem;
-            font-weight: 600;
+            margin-bottom: 2.5rem;
         }
-        
+
+        .login-logo {
+            height: 80px;
+            width: auto;
+            margin-bottom: 1rem;
+            border-radius: 16px;
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+        }
+
+        .login-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .login-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
         .form-group {
             margin-bottom: 1.5rem;
+            position: relative;
         }
-        
+
         .form-label {
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
             color: var(--text-secondary);
             font-size: 0.875rem;
-            font-weight: 500;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-        
+
         .form-input {
             width: 100%;
-            padding: 0.75rem 1rem;
+            padding: 1rem 1.25rem;
+            background: var(--surface-light);
             border: 2px solid var(--border);
-            border-radius: 8px;
+            border-radius: 12px;
+            color: var(--text-primary);
             font-size: 1rem;
-            transition: all 0.2s;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
             background: var(--surface);
         }
-        
-        .form-input:focus {
-            outline: none;
-            border-color: var(--accent-color);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+
+        .form-input::placeholder {
+            color: var(--text-muted);
         }
-        
+
         .btn-primary {
             width: 100%;
-            padding: 0.875rem 1.5rem;
-            background: var(--gradient-accent);
+            padding: 1rem 1.5rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
-        
+
         .btn-primary:hover {
-            transform: translateY(-1px);
-            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
         }
-        
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
         .error-message {
-            color: var(--error-color);
+            color: var(--error);
             margin-top: 1rem;
             display: none;
             text-align: center;
             font-size: 0.875rem;
-            padding: 0.5rem;
+            padding: 0.75rem;
             background: rgba(239, 68, 68, 0.1);
-            border-radius: 6px;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
         }
-        
-        /* Portal Navigation */
+
+        /* Portal */
         .portal {
             display: none;
             width: 100%;
+            animation: fadeIn 0.5s ease-out;
         }
-        
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Navigation */
         nav {
-            background: var(--surface);
-            border-bottom: 1px solid var(--border);
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
             position: sticky;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(10px);
-            box-shadow: var(--shadow-sm);
+            top: 85px;
+            z-index: 90;
         }
-        
+
         .nav-container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 0 2rem;
         }
-        
+
         .nav-list {
             list-style: none;
             display: flex;
             align-items: center;
+            gap: 0.5rem;
         }
-        
+
         .nav-item {
-            padding: 1rem 1.5rem;
+            padding: 1.25rem 1.75rem;
             cursor: pointer;
-            transition: all 0.2s;
-            font-weight: 500;
+            transition: all 0.3s ease;
+            font-weight: 600;
             color: var(--text-secondary);
             position: relative;
-            border-radius: 8px;
-            margin: 0.5rem 0.25rem;
+            border-radius: 12px;
+            font-size: 0.95rem;
         }
-        
+
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+            transform: translateX(-50%);
+            transition: width 0.3s ease;
+            border-radius: 2px;
+        }
+
         .nav-item:hover {
-            background: var(--surface-hover);
             color: var(--text-primary);
+            background: var(--surface-hover);
         }
-        
+
         .nav-item.active-tab {
-            color: var(--accent-color);
+            color: var(--accent);
             background: rgba(59, 130, 246, 0.1);
         }
-        
+
+        .nav-item.active-tab::before {
+            width: 80%;
+        }
+
         .nav-item.logout {
             margin-left: auto;
-            color: var(--error-color);
+            color: var(--error);
         }
-        
+
         .nav-item.logout:hover {
             background: rgba(239, 68, 68, 0.1);
         }
-        
+
         /* Main Content */
         .main-content {
             max-width: 1400px;
@@ -269,301 +389,431 @@
             padding: 2rem;
             flex: 1;
         }
-        
+
         .section {
             display: none;
-            animation: fadeIn 0.3s ease-in-out;
+            animation: slideIn 0.4s ease-out;
         }
-        
+
         .section.active {
             display: block;
         }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
         }
-        
+
         .section-title {
-            font-size: 2rem;
-            font-weight: 700;
+            font-size: 2.5rem;
+            font-weight: 800;
             margin-bottom: 2rem;
-            color: var(--text-primary);
+            background: linear-gradient(135deg, var(--text-primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        
+
         .section-subtitle {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin: 2rem 0 1rem 0;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 2.5rem 0 1.5rem 0;
             color: var(--text-primary);
         }
-        
+
         /* Dashboard Cards */
         .dashboard-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
             margin-bottom: 3rem;
         }
-        
+
         .dashboard-card {
-            background: var(--surface);
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: var(--shadow-md);
-            border: 1px solid var(--border-light);
-            transition: all 0.2s;
+            background: var(--gradient-surface);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(20px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
-        
+
+        .dashboard-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+
         .dashboard-card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
+            border-color: var(--accent);
         }
-        
+
         .card-header {
             display: flex;
             align-items: center;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
-        
+
         .card-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
+            width: 50px;
+            height: 50px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-right: 1rem;
-            font-size: 1.25rem;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
         }
-        
+
         .card-title {
-            font-size: 1.125rem;
-            font-weight: 600;
+            font-size: 1.25rem;
+            font-weight: 700;
             color: var(--text-primary);
         }
-        
+
         /* Table Styles */
         .table-container {
-            background: var(--surface);
-            border-radius: 12px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: var(--shadow-md);
-            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-lg);
         }
-        
+
         .table {
             width: 100%;
             border-collapse: collapse;
         }
-        
+
         .table th {
-            background: var(--surface-hover);
-            padding: 1rem;
+            background: var(--surface-light);
+            padding: 1.5rem;
             text-align: left;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--text-primary);
             border-bottom: 1px solid var(--border);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-        
+
         .table td {
-            padding: 1rem;
-            border-bottom: 1px solid var(--border-light);
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
             color: var(--text-secondary);
+            transition: all 0.3s ease;
         }
-        
+
         .table tr:hover {
             background: var(--surface-hover);
         }
-        
+
+        .table tr:hover td {
+            color: var(--text-primary);
+        }
+
         /* Map Section */
         .map-section {
             display: none;
             height: calc(100vh - 200px);
-            background: var(--surface);
-            border-radius: 16px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
             overflow: hidden;
             box-shadow: var(--shadow-lg);
-            border: 1px solid var(--border-light);
+            animation: slideIn 0.4s ease-out;
         }
-        
+
         .map-header {
             background: var(--gradient-primary);
             color: white;
-            padding: 1.5rem 2rem;
+            padding: 2rem;
             text-align: center;
-            font-size: 1.25rem;
-            font-weight: 600;
+            font-size: 1.5rem;
+            font-weight: 700;
+            position: relative;
+            overflow: hidden;
         }
-        
+
+        .map-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
         .map-container {
             display: flex;
-            height: calc(100% - 70px);
+            height: calc(100% - 100px);
         }
-        
+
         .map-content {
             flex: 2;
             position: relative;
-            background: #f8fafc;
+            background: var(--surface);
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 2rem;
         }
-        
+
         .italy-map {
             width: 100%;
             height: 100%;
-            max-width: 600px;
-            max-height: 700px;
+            max-width: 700px;
+            max-height: 800px;
+            filter: drop-shadow(0 10px 25px rgba(0,0,0,0.3));
         }
-        
+
         .map-sidebar {
             flex: 1;
             padding: 2rem;
             overflow-y: auto;
-            background: var(--surface);
+            background: var(--surface-light);
             border-left: 1px solid var(--border);
         }
-        
-        /* Region Info Styles */
+
+        /* Region Styles */
         .region-header {
             display: flex;
             align-items: center;
             margin-bottom: 2rem;
-            padding: 1rem;
-            background: var(--surface-hover);
-            border-radius: 12px;
+            padding: 1.5rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
         }
-        
+
         .region-flag {
-            width: 60px;
-            height: 40px;
+            width: 70px;
+            height: 50px;
             object-fit: cover;
-            border-radius: 6px;
+            border-radius: 8px;
             margin-right: 1rem;
-            box-shadow: var(--shadow-sm);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
-        
+
         .region-name {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
+            font-size: 1.75rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        
+
         .region-stats {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(2, 1fr);
             gap: 1rem;
             margin-bottom: 2rem;
         }
-        
+
         .stat-card {
-            background: var(--surface-hover);
-            padding: 1rem;
-            border-radius: 8px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            padding: 1.5rem;
+            border-radius: 12px;
             text-align: center;
+            transition: all 0.3s ease;
         }
-        
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.2);
+        }
+
         .stat-label {
             font-size: 0.75rem;
             color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
             margin-bottom: 0.5rem;
-            font-weight: 500;
+            font-weight: 600;
         }
-        
+
         .stat-value {
-            font-size: 1.125rem;
-            font-weight: 700;
+            font-size: 1.25rem;
+            font-weight: 800;
             color: var(--text-primary);
         }
-        
+
         .universities-section {
             margin-top: 2rem;
         }
-        
+
         .universities-title {
             font-size: 1.25rem;
-            font-weight: 600;
+            font-weight: 700;
             margin-bottom: 1rem;
             color: var(--text-primary);
         }
-        
+
         .university-list {
             list-style: none;
         }
-        
+
         .university-item {
-            background: var(--surface);
-            border: 1px solid var(--border-light);
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 0.75rem;
-            transition: all 0.2s;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
-        
+
+        .university-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
         .university-item:hover {
-            transform: translateX(4px);
-            box-shadow: var(--shadow-md);
+            transform: translateX(8px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.2);
         }
-        
+
+        .university-item:hover::before {
+            transform: scaleY(1);
+        }
+
         .university-name {
-            font-weight: 600;
+            font-weight: 700;
             color: var(--text-primary);
             margin-bottom: 0.5rem;
+            font-size: 1.1rem;
         }
-        
+
         .university-location {
-            font-size: 0.875rem;
+            font-size: 0.9rem;
             color: var(--text-secondary);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
         }
-        
+
         .university-type {
             display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: var(--accent-color);
+            padding: 0.4rem 1rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
             color: white;
-            border-radius: 12px;
+            border-radius: 20px;
             font-size: 0.75rem;
-            font-weight: 500;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-        
+
         .university-type.private {
-            background: var(--warning-color);
+            background: linear-gradient(135deg, var(--warning), #f97316);
         }
-        
+
         /* SVG Region Styles */
         .region-path {
-            fill: #e2e8f0;
-            stroke: #cbd5e1;
-            stroke-width: 1;
+            fill: var(--surface-light);
+            stroke: var(--border);
+            stroke-width: 1.5;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: center;
         }
-        
+
         .region-path:hover {
-            fill: #cbd5e1;
-            stroke: var(--accent-color);
-            stroke-width: 2;
-        }
-        
-        .region-path.selected {
-            fill: var(--accent-color);
+            fill: var(--accent);
             stroke: var(--accent-hover);
             stroke-width: 2;
+            transform: scale(1.05);
+            filter: drop-shadow(0 5px 15px rgba(59, 130, 246, 0.4));
         }
-        
+
+        .region-path.selected {
+            fill: var(--accent);
+            stroke: var(--accent-hover);
+            stroke-width: 2;
+            transform: scale(1.03);
+            filter: drop-shadow(0 5px 15px rgba(59, 130, 246, 0.4));
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1.03); }
+            50% { transform: scale(1.06); }
+        }
+
         /* Footer */
         footer {
-            background: var(--primary-color);
-            color: white;
+            background: var(--gradient-surface);
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-secondary);
             text-align: center;
             padding: 2rem;
             margin-top: auto;
+            backdrop-filter: blur(20px);
         }
-        
+
+        /* Course Materials */
+        .course-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 1rem;
+        }
+
+        .course-item {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .course-item:last-child {
+            border-bottom: none;
+        }
+
+        .course-item:hover {
+            padding-left: 1rem;
+        }
+
+        .course-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .course-link:hover {
+            color: var(--accent-hover);
+            text-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
+        }
+
         /* Responsive Design */
         @media (max-width: 1024px) {
             .map-container {
@@ -578,6 +828,10 @@
                 border-left: none;
                 border-top: 1px solid var(--border);
             }
+            
+            .region-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
         
         @media (max-width: 768px) {
@@ -585,12 +839,17 @@
                 padding: 1rem;
             }
             
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
             .nav-list {
                 flex-wrap: wrap;
+                justify-content: center;
             }
             
             .nav-item {
-                padding: 0.75rem 1rem;
+                padding: 1rem;
                 font-size: 0.875rem;
             }
             
@@ -612,10 +871,16 @@
             .region-stats {
                 grid-template-columns: 1fr;
             }
+            
+            .section-title {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="animated-bg"></div>
+    
     <div class="container">
         <header>
             <div class="header-content">
@@ -626,16 +891,30 @@
 
         <!-- Login Section -->
         <div class="login-container" id="loginSection">
+            <div class="floating-elements">
+                <div class="floating-element"></div>
+                <div class="floating-element"></div>
+                <div class="floating-element"></div>
+                <div class="floating-element"></div>
+            </div>
+            
             <div class="login-box">
-                <h2 class="login-title">Welcome Back</h2>
+                <div class="login-header">
+                    <img src="https://r.resimlink.com/ZtgP_MypD4Q.png" alt="Logo" class="login-logo">
+                    <h2 class="login-title">Welcome Back</h2>
+                    <p class="login-subtitle">Sign in to access your education portal</p>
+                </div>
+                
                 <div class="form-group">
                     <label for="username" class="form-label">Username</label>
                     <input type="text" id="username" class="form-input" placeholder="Enter your username">
                 </div>
+                
                 <div class="form-group">
                     <label for="password" class="form-label">Password</label>
                     <input type="password" id="password" class="form-input" placeholder="Enter your password">
                 </div>
+                
                 <button class="btn-primary" onclick="login()">Sign In</button>
                 <div id="loginError" class="error-message">Invalid username or password!</div>
             </div>
@@ -663,7 +942,7 @@
                     <div class="dashboard-grid">
                         <div class="dashboard-card">
                             <div class="card-header">
-                                <div class="card-icon" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6;">📚</div>
+                                <div class="card-icon">📚</div>
                                 <h3 class="card-title">Active Courses</h3>
                             </div>
                             <p style="color: var(--text-secondary);">You have 6 active courses this semester</p>
@@ -671,7 +950,7 @@
                         
                         <div class="dashboard-card">
                             <div class="card-header">
-                                <div class="card-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">📊</div>
+                                <div class="card-icon">📊</div>
                                 <h3 class="card-title">Progress</h3>
                             </div>
                             <p style="color: var(--text-secondary);">75% completion rate across all courses</p>
@@ -679,7 +958,7 @@
                         
                         <div class="dashboard-card">
                             <div class="card-header">
-                                <div class="card-icon" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">🎯</div>
+                                <div class="card-icon">🎯</div>
                                 <h3 class="card-title">Upcoming Exams</h3>
                             </div>
                             <p style="color: var(--text-secondary);">3 exams scheduled this month</p>
@@ -728,37 +1007,37 @@
                     <div class="dashboard-grid">
                         <div class="dashboard-card">
                             <div class="card-header">
-                                <div class="card-icon" style="background: rgba(139, 69, 19, 0.1); color: #8b4513;">📐</div>
+                                <div class="card-icon">📐</div>
                                 <h3 class="card-title">Mathematics</h3>
                             </div>
-                            <ul style="list-style: none; padding-left: 0; margin-top: 1rem;">
-                                <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-light);"><a href="#" style="color: var(--accent-color); text-decoration: none;">Algebra Basics</a></li>
-                                <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-light);"><a href="#" style="color: var(--accent-color); text-decoration: none;">Geometry Concepts</a></li>
-                                <li style="padding: 0.5rem 0;"><a href="#" style="color: var(--accent-color); text-decoration: none;">Calculus Introduction</a></li>
+                            <ul class="course-list">
+                                <li class="course-item"><a href="#" class="course-link">Algebra Basics</a></li>
+                                <li class="course-item"><a href="#" class="course-link">Geometry Concepts</a></li>
+                                <li class="course-item"><a href="#" class="course-link">Calculus Introduction</a></li>
                             </ul>
                         </div>
                         
                         <div class="dashboard-card">
                             <div class="card-header">
-                                <div class="card-icon" style="background: rgba(34, 197, 94, 0.1); color: #22c55e;">🔬</div>
+                                <div class="card-icon">🔬</div>
                                 <h3 class="card-title">Science</h3>
                             </div>
-                            <ul style="list-style: none; padding-left: 0; margin-top: 1rem;">
-                                <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-light);"><a href="#" style="color: var(--accent-color); text-decoration: none;">Physics Fundamentals</a></li>
-                                <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-light);"><a href="#" style="color: var(--accent-color); text-decoration: none;">Chemistry Basics</a></li>
-                                <li style="padding: 0.5rem 0;"><a href="#" style="color: var(--accent-color); text-decoration: none;">Biology Essentials</a></li>
+                            <ul class="course-list">
+                                <li class="course-item"><a href="#" class="course-link">Physics Fundamentals</a></li>
+                                <li class="course-item"><a href="#" class="course-link">Chemistry Basics</a></li>
+                                <li class="course-item"><a href="#" class="course-link">Biology Essentials</a></li>
                             </ul>
                         </div>
                         
                         <div class="dashboard-card">
                             <div class="card-header">
-                                <div class="card-icon" style="background: rgba(168, 85, 247, 0.1); color: #a855f7;">📜</div>
+                                <div class="card-icon">📜</div>
                                 <h3 class="card-title">History</h3>
                             </div>
-                            <ul style="list-style: none; padding-left: 0; margin-top: 1rem;">
-                                <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-light);"><a href="#" style="color: var(--accent-color); text-decoration: none;">Ancient Civilizations</a></li>
-                                <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-light);"><a href="#" style="color: var(--accent-color); text-decoration: none;">Medieval Period</a></li>
-                                <li style="padding: 0.5rem 0;"><a href="#" style="color: var(--accent-color); text-decoration: none;">Modern Era</a></li>
+                            <ul class="course-list">
+                                <li class="course-item"><a href="#" class="course-link">Ancient Civilizations</a></li>
+                                <li class="course-item"><a href="#" class="course-link">Medieval Period</a></li>
+                                <li class="course-item"><a href="#" class="course-link">Modern Era</a></li>
                             </ul>
                         </div>
                     </div>
@@ -771,7 +1050,7 @@
                     <div class="dashboard-grid">
                         <div class="dashboard-card">
                             <div class="card-header">
-                                <div class="card-icon" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6;">🎯</div>
+                                <div class="card-icon">🎯</div>
                                 <h3 class="card-title">Our Mission</h3>
                             </div>
                             <p style="color: var(--text-secondary); line-height: 1.6;">To empower students through innovative education, critical thinking, and comprehensive learning experiences that prepare them for future challenges.</p>
@@ -779,7 +1058,7 @@
                         
                         <div class="dashboard-card">
                             <div class="card-header">
-                                <div class="card-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">👥</div>
+                                <div class="card-icon">👥</div>
                                 <h3 class="card-title">Our Community</h3>
                             </div>
                             <p style="color: var(--text-secondary); line-height: 1.6;">A diverse community of learners, educators, and researchers committed to academic excellence and personal growth.</p>
@@ -787,7 +1066,7 @@
                         
                         <div class="dashboard-card">
                             <div class="card-header">
-                                <div class="card-icon" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">🌟</div>
+                                <div class="card-icon">🌟</div>
                                 <h3 class="card-title">Our Values</h3>
                             </div>
                             <p style="color: var(--text-secondary); line-height: 1.6;">Integrity, innovation, inclusivity, and excellence guide everything we do in our educational journey.</p>
@@ -802,17 +1081,17 @@
                     </div>
                     <div class="map-container">
                         <div class="map-content">
-                            <svg class="italy-map" viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+                            <svg class="italy-map" viewBox="0 0 500 600" xmlns="http://www.w3.org/2000/svg">
                                 <!-- Valle d'Aosta -->
                                 <path class="region-path" data-region="aosta" d="M85,85 L95,75 L110,80 L115,90 L105,100 L90,95 Z" />
                                 
-                                <!-- Piedmont -->
+                                <!-- Piemonte -->
                                 <path class="region-path" data-region="piedmont" d="M70,95 L105,100 L115,90 L125,95 L130,110 L120,130 L110,140 L95,135 L80,125 L75,110 Z" />
                                 
                                 <!-- Liguria -->
                                 <path class="region-path" data-region="liguria" d="M80,125 L95,135 L110,140 L125,145 L130,155 L115,160 L100,155 L85,150 L75,145 Z" />
                                 
-                                <!-- Lombardy -->
+                                <!-- Lombardia -->
                                 <path class="region-path" data-region="lombardy" d="M125,95 L155,90 L170,100 L175,115 L165,130 L150,135 L130,130 L120,115 Z" />
                                 
                                 <!-- Trentino-Alto Adige -->
@@ -827,7 +1106,7 @@
                                 <!-- Emilia-Romagna -->
                                 <path class="region-path" data-region="emilia" d="M130,155 L165,150 L195,155 L210,165 L205,180 L190,185 L170,180 L150,175 L135,170 Z" />
                                 
-                                <!-- Tuscany -->
+                                <!-- Toscana -->
                                 <path class="region-path" data-region="tuscany" d="M125,175 L155,170 L170,180 L175,195 L165,210 L150,215 L135,210 L125,195 Z" />
                                 
                                 <!-- Umbria -->
@@ -848,7 +1127,7 @@
                                 <!-- Campania -->
                                 <path class="region-path" data-region="campania" d="M180,250 L210,245 L225,255 L230,270 L220,285 L205,290 L190,285 L175,275 L170,260 Z" />
                                 
-                                <!-- Apulia -->
+                                <!-- Puglia -->
                                 <path class="region-path" data-region="apulia" d="M225,260 L255,255 L270,265 L275,280 L270,295 L260,310 L245,315 L230,310 L220,295 L215,280 Z" />
                                 
                                 <!-- Basilicata -->
@@ -857,10 +1136,10 @@
                                 <!-- Calabria -->
                                 <path class="region-path" data-region="calabria" d="M220,315 L240,310 L250,320 L255,335 L250,350 L245,365 L235,380 L225,375 L215,360 L210,345 L205,330 Z" />
                                 
-                                <!-- Sicily -->
+                                <!-- Sicilia -->
                                 <path class="region-path" data-region="sicily" d="M180,380 L220,375 L260,380 L280,390 L285,405 L275,420 L250,425 L220,420 L190,415 L170,410 L160,395 Z" />
                                 
-                                <!-- Sardinia -->
+                                <!-- Sardegna -->
                                 <path class="region-path" data-region="sardinia" d="M50,250 L80,245 L95,255 L100,270 L95,285 L90,300 L85,315 L80,330 L75,345 L70,360 L65,375 L55,390 L45,385 L40,370 L35,355 L30,340 L35,325 L40,310 L45,295 L50,280 L55,265 Z" />
                             </svg>
                         </div>
@@ -920,7 +1199,7 @@
         // Region data with all original information
         const regionData = {
             piedmont: {
-                name: "Piedmont",
+                name: "Piemonte",
                 population: "4.4 million",
                 area: "25,402 km²",
                 capital: "Turin",
@@ -932,7 +1211,7 @@
                 ]
             },
             aosta: {
-                name: "Aosta Valley",
+                name: "Valle d'Aosta",
                 population: "128,000",
                 area: "3,263 km²",
                 capital: "Aosta",
@@ -942,7 +1221,7 @@
                 ]
             },
             lombardy: {
-                name: "Lombardy",
+                name: "Lombardia",
                 population: "10 million",
                 area: "23,844 km²",
                 capital: "Milan",
@@ -1019,7 +1298,7 @@
                 ]
             },
             tuscany: {
-                name: "Tuscany",
+                name: "Toscana",
                 population: "3.7 million",
                 area: "22,987 km²",
                 capital: "Florence",
@@ -1109,7 +1388,7 @@
                 ]
             },
             apulia: {
-                name: "Apulia",
+                name: "Puglia",
                 population: "4.1 million",
                 area: "19,358 km²",
                 capital: "Bari",
@@ -1144,7 +1423,7 @@
                 ]
             },
             sicily: {
-                name: "Sicily",
+                name: "Sicilia",
                 population: "5 million",
                 area: "25,711 km²",
                 capital: "Palermo",
@@ -1158,7 +1437,7 @@
                 ]
             },
             sardinia: {
-                name: "Sardinia",
+                name: "Sardegna",
                 population: "1.6 million",
                 area: "24,090 km²",
                 capital: "Cagliari",
@@ -1255,13 +1534,13 @@
                 
                 path.addEventListener('mouseenter', function() {
                     if (!this.classList.contains('selected')) {
-                        this.style.fill = '#cbd5e1';
+                        this.style.transform = 'scale(1.02)';
                     }
                 });
                 
                 path.addEventListener('mouseleave', function() {
                     if (!this.classList.contains('selected')) {
-                        this.style.fill = '#e2e8f0';
+                        this.style.transform = 'scale(1)';
                     }
                 });
             });
@@ -1319,6 +1598,20 @@
                     login();
                 }
             });
+            
+            // Add floating animation elements
+            const loginContainer = document.getElementById('loginSection');
+            const floatingElements = loginContainer.querySelector('.floating-elements');
+            
+            // Create additional floating elements for enhanced visual effect
+            for (let i = 0; i < 8; i++) {
+                const element = document.createElement('div');
+                element.className = 'floating-element';
+                element.style.left = Math.random() * 100 + '%';
+                element.style.animationDelay = Math.random() * 6 + 's';
+                element.style.animationDuration = (4 + Math.random() * 4) + 's';
+                floatingElements.appendChild(element);
+            }
         });
     </script>
 </body>
