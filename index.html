@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eğitim Portalı - Modern Tasarım</title>
+    <title>İtalyan Üniversiteleri Portalı</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #0f172a;
+            --primary: #0f172a; /* Lacivert */
             --primary-light: #1e293b;
             --accent: #3b82f6;
             --accent-hover: #2563eb;
             --success: #22c55e;
             --warning: #f59e0b;
             --error: #ef4444;
-            --background: #f8fafc;
+            --background: #0f172a; /* Lacivert arka plan */
             --surface: #ffffff;
             --surface-light: #f1f5f9;
             --surface-hover: #e2e8f0;
@@ -23,20 +24,20 @@
             --text-muted: #64748b;
             --border: #cbd5e1;
             --border-light: #e2e8f0;
-            --glass-bg: rgba(255, 255, 255, 0.9);
+            --glass-bg: rgba(255, 255, 255, 0.95); /* Beyaz kutu */
             --glass-border: rgba(148, 163, 184, 0.1);
             --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             --gradient-surface: linear-gradient(145deg, #ffffff 0%, #f1f5f9 100%);
             --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.1);
             --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
         }
-        
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
-        
+
         body {
             font-family: 'Inter', sans-serif;
             background: var(--background);
@@ -44,7 +45,7 @@
             line-height: 1.6;
             overflow-x: hidden;
         }
-        
+
         .animated-bg {
             position: fixed;
             top: 0;
@@ -52,11 +53,11 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            background: linear-gradient(45deg, #f0f4f8, #e2e8f0, #f1f5f9);
+            background: linear-gradient(45deg, #0f172a, #1e293b, #0f172a);
             background-size: 400% 400%;
             animation: gradientShift 15s ease infinite;
         }
-        
+
         .animated-bg::before {
             content: '';
             position: absolute;
@@ -64,22 +65,22 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(148,163,184,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(148,163,184,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
         }
-        
+
         @keyframes gradientShift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
-        
+
         .container {
             display: flex;
             flex-direction: column;
             min-height: 100vh;
             position: relative;
         }
-        
+
         /* Header */
         header {
             background: var(--glass-bg);
@@ -89,9 +90,9 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
-        
+
         .header-content {
             max-width: 1400px;
             margin: 0 auto;
@@ -100,7 +101,7 @@
             justify-content: center;
             gap: 1rem;
         }
-        
+
         .logo {
             height: 50px;
             width: auto;
@@ -108,11 +109,11 @@
             filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
             transition: transform 0.3s ease;
         }
-        
+
         .logo:hover {
             transform: scale(1.05);
         }
-        
+
         .header-title {
             font-size: 2rem;
             font-weight: 800;
@@ -121,7 +122,7 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        
+
         /* Login Section */
         .login-container {
             display: flex;
@@ -130,8 +131,9 @@
             flex-grow: 1;
             padding: 2rem;
             position: relative;
+            background: var(--background);
         }
-        
+
         .floating-elements {
             position: absolute;
             top: 0;
@@ -141,7 +143,7 @@
             overflow: hidden;
             pointer-events: none;
         }
-        
+
         .floating-element {
             position: absolute;
             width: 4px;
@@ -151,36 +153,36 @@
             opacity: 0.6;
             animation: float 6s ease-in-out infinite;
         }
-        
+
         .floating-element:nth-child(1) {
             left: 10%;
             animation-delay: 0s;
         }
-        
+
         .floating-element:nth-child(2) {
             left: 20%;
             animation-delay: 1s;
         }
-        
+
         .floating-element:nth-child(3) {
             left: 80%;
             animation-delay: 2s;
         }
-        
+
         .floating-element:nth-child(4) {
             left: 90%;
             animation-delay: 3s;
         }
-        
+
         @keyframes float {
             0%, 100% { transform: translateY(100vh) scale(0); opacity: 0; }
             10% { opacity: 0.6; transform: scale(1); }
             90% { opacity: 0.6; transform: scale(1); }
             100% { transform: translateY(-100px) scale(0); opacity: 0; }
         }
-        
+
         .login-box {
-            background: var(--primary); /* Lacivert arkaplan */
+            background: var(--glass-bg);
             backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             border-radius: 24px;
@@ -192,7 +194,7 @@
             overflow: hidden;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
+
         .login-box::before {
             content: '';
             position: absolute;
@@ -200,24 +202,24 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            background: linear-gradient(90deg, transparent, rgba(15, 23, 42, 0.03), transparent);
             transition: left 0.5s;
         }
-        
+
         .login-box:hover::before {
             left: 100%;
         }
-        
+
         .login-box:hover {
             transform: translateY(-8px);
             box-shadow: var(--shadow-lg), var(--shadow-glow);
         }
-        
+
         .login-header {
             text-align: center;
             margin-bottom: 2.5rem;
         }
-        
+
         .login-logo {
             height: 80px;
             width: auto;
@@ -225,56 +227,56 @@
             border-radius: 16px;
             filter: drop-shadow(0 4px 12px rgba(0,0,0,0.1));
         }
-        
+
         .login-title {
             font-size: 1.75rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
-            color: white; /* Beyaz metin */
+            color: var(--text-primary);
         }
-        
+
         .login-subtitle {
-            color: rgba(255, 255, 255, 0.8); /* Beyaz metin */
+            color: var(--text-secondary);
             font-size: 0.95rem;
         }
-        
+
         .form-group {
             margin-bottom: 1.5rem;
             position: relative;
         }
-        
+
         .form-label {
             display: block;
             margin-bottom: 0.75rem;
-            color: rgba(255, 255, 255, 0.9); /* Beyaz metin */
+            color: var(--text-secondary);
             font-size: 0.875rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        
+
         .form-input {
             width: 100%;
             padding: 1rem 1.25rem;
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: var(--surface-light);
+            border: 2px solid var(--border);
             border-radius: 12px;
-            color: white; /* Beyaz metin */
+            color: var(--text-primary);
             font-size: 1rem;
             transition: all 0.3s ease;
             outline: none;
         }
-        
+
         .form-input:focus {
             border-color: var(--accent);
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-            background: rgba(255, 255, 255, 0.15);
+            background: var(--surface);
         }
-        
+
         .form-input::placeholder {
-            color: rgba(255, 255, 255, 0.6);
+            color: var(--text-muted);
         }
-        
+
         .btn-primary {
             width: 100%;
             padding: 1rem 1.5rem;
@@ -289,16 +291,16 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
         }
-        
+
         .btn-primary:active {
             transform: translateY(0);
         }
-        
+
         .error-message {
             color: var(--error);
             margin-top: 1rem;
@@ -311,19 +313,19 @@
             border-radius: 8px;
             backdrop-filter: blur(10px);
         }
-        
+
         /* Portal */
         .portal {
             display: none;
             width: 100%;
             animation: fadeIn 0.5s ease-out;
         }
-        
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        
+
         /* Navigation */
         nav {
             background: var(--glass-bg);
@@ -334,20 +336,20 @@
             z-index: 90;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
-        
+
         .nav-container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 0 2rem;
         }
-        
+
         .nav-list {
             list-style: none;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
-        
+
         .nav-item {
             padding: 1.25rem 1.75rem;
             cursor: pointer;
@@ -358,7 +360,7 @@
             border-radius: 12px;
             font-size: 0.95rem;
         }
-        
+
         .nav-item::before {
             content: '';
             position: absolute;
@@ -371,30 +373,30 @@
             transition: width 0.3s ease;
             border-radius: 2px;
         }
-        
+
         .nav-item:hover {
             color: var(--text-primary);
             background: var(--surface-hover);
         }
-        
+
         .nav-item.active-tab {
             color: var(--accent);
             background: rgba(59, 130, 246, 0.1);
         }
-        
+
         .nav-item.active-tab::before {
             width: 80%;
         }
-        
+
         .nav-item.logout {
             margin-left: auto;
             color: var(--error);
         }
-        
+
         .nav-item.logout:hover {
             background: rgba(239, 68, 68, 0.1);
         }
-        
+
         /* Main Content */
         .main-content {
             max-width: 1400px;
@@ -403,21 +405,21 @@
             padding: 2rem;
             flex: 1;
         }
-        
+
         .section {
             display: none;
             animation: slideIn 0.4s ease-out;
         }
-        
+
         .section.active {
             display: block;
         }
-        
+
         @keyframes slideIn {
             from { opacity: 0; transform: translateX(-20px); }
             to { opacity: 1; transform: translateX(0); }
         }
-        
+
         .section-title {
             font-size: 2.5rem;
             font-weight: 800;
@@ -427,14 +429,14 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        
+
         .section-subtitle {
             font-size: 1.5rem;
             font-weight: 700;
             margin: 2.5rem 0 1.5rem 0;
             color: var(--text-primary);
         }
-        
+
         /* Dashboard Cards */
         .dashboard-grid {
             display: grid;
@@ -442,7 +444,7 @@
             gap: 2rem;
             margin-bottom: 3rem;
         }
-        
+
         .dashboard-card {
             background: var(--gradient-surface);
             border: 1px solid var(--glass-border);
@@ -454,7 +456,7 @@
             overflow: hidden;
             box-shadow: 0 10px 25px rgba(0,0,0,0.03);
         }
-        
+
         .dashboard-card::before {
             content: '';
             position: absolute;
@@ -464,19 +466,19 @@
             height: 1px;
             background: linear-gradient(90deg, transparent, var(--accent), transparent);
         }
-        
+
         .dashboard-card:hover {
             transform: translateY(-8px) scale(1.02);
             box-shadow: var(--shadow-lg), var(--shadow-glow);
             border-color: var(--accent);
         }
-        
+
         .card-header {
             display: flex;
             align-items: center;
             margin-bottom: 1.5rem;
         }
-        
+
         .card-icon {
             width: 50px;
             height: 50px;
@@ -490,13 +492,13 @@
             box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
             color: white;
         }
-        
+
         .card-title {
             font-size: 1.25rem;
             font-weight: 700;
             color: var(--text-primary);
         }
-        
+
         /* Table Styles */
         .table-container {
             background: var(--glass-bg);
@@ -506,12 +508,12 @@
             overflow: hidden;
             box-shadow: var(--shadow-lg);
         }
-        
+
         .table {
             width: 100%;
             border-collapse: collapse;
         }
-        
+
         .table th {
             background: var(--surface-light);
             padding: 1.5rem;
@@ -523,22 +525,22 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        
+
         .table td {
             padding: 1.5rem;
             border-bottom: 1px solid var(--border);
             color: var(--text-secondary);
             transition: all 0.3s ease;
         }
-        
+
         .table tr:hover {
             background: var(--surface-hover);
         }
-        
+
         .table tr:hover td {
             color: var(--text-primary);
         }
-        
+
         /* Map Section */
         .map-section {
             display: none;
@@ -551,7 +553,7 @@
             box-shadow: var(--shadow-lg);
             animation: slideIn 0.4s ease-out;
         }
-        
+
         .map-header {
             background: var(--gradient-primary);
             color: white;
@@ -562,7 +564,7 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .map-header::before {
             content: '';
             position: absolute;
@@ -573,17 +575,17 @@
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
             animation: shimmer 3s infinite;
         }
-        
+
         @keyframes shimmer {
             0% { left: -100%; }
             100% { left: 100%; }
         }
-        
+
         .map-container {
             display: flex;
             height: calc(100% - 100px);
         }
-        
+
         .map-content {
             flex: 2;
             position: relative;
@@ -592,16 +594,44 @@
             align-items: center;
             justify-content: center;
             padding: 2rem;
+            overflow: hidden;
         }
-        
-        .italy-map {
+
+        .italy-map-container {
+            position: relative;
             width: 100%;
             height: 100%;
             max-width: 800px;
-            max-height: 900px;
+            max-height: 800px;
+        }
+
+        .italy-map {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
             filter: drop-shadow(0 10px 25px rgba(0,0,0,0.1));
         }
-        
+
+        .region-label {
+            position: absolute;
+            font-size: 12px;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: var(--primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .region-label:hover {
+            background: var(--accent);
+            color: white;
+            transform: scale(1.05);
+        }
+
         .map-sidebar {
             flex: 1;
             padding: 2rem;
@@ -609,7 +639,7 @@
             background: var(--surface-light);
             border-left: 1px solid var(--border);
         }
-        
+
         /* Region Styles */
         .region-header {
             display: flex;
@@ -621,7 +651,7 @@
             border: 1px solid var(--glass-border);
             border-radius: 16px;
         }
-        
+
         .region-flag {
             width: 70px;
             height: 50px;
@@ -630,7 +660,7 @@
             margin-right: 1rem;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
-        
+
         .region-name {
             font-size: 1.75rem;
             font-weight: 800;
@@ -639,14 +669,14 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        
+
         .region-stats {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 1rem;
             margin-bottom: 2rem;
         }
-        
+
         .stat-card {
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
@@ -656,12 +686,12 @@
             text-align: center;
             transition: all 0.3s ease;
         }
-        
+
         .stat-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 8px 25px rgba(59, 130, 246, 0.1);
         }
-        
+
         .stat-label {
             font-size: 0.75rem;
             color: var(--text-muted);
@@ -670,28 +700,28 @@
             margin-bottom: 0.5rem;
             font-weight: 600;
         }
-        
+
         .stat-value {
             font-size: 1.25rem;
             font-weight: 800;
             color: var(--text-primary);
         }
-        
+
         .universities-section {
             margin-top: 2rem;
         }
-        
+
         .universities-title {
             font-size: 1.25rem;
             font-weight: 700;
             margin-bottom: 1rem;
             color: var(--text-primary);
         }
-        
+
         .university-list {
             list-style: none;
         }
-        
+
         .university-item {
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
@@ -703,7 +733,7 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .university-item::before {
             content: '';
             position: absolute;
@@ -715,29 +745,36 @@
             transform: scaleY(0);
             transition: transform 0.3s ease;
         }
-        
+
         .university-item:hover {
             transform: translateX(8px);
             box-shadow: 0 8px 25px rgba(59, 130, 246, 0.1);
         }
-        
+
         .university-item:hover::before {
             transform: scaleY(1);
         }
-        
+
         .university-name {
             font-weight: 700;
             color: var(--text-primary);
             margin-bottom: 0.5rem;
             font-size: 1.1rem;
         }
-        
+
         .university-location {
             font-size: 0.9rem;
             color: var(--text-secondary);
             margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
         }
-        
+
+        .university-location i {
+            margin-right: 8px;
+            color: var(--accent);
+        }
+
         .university-type {
             display: inline-block;
             padding: 0.4rem 1rem;
@@ -749,43 +786,11 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        
+
         .university-type.private {
             background: linear-gradient(135deg, var(--warning), #f97316);
         }
-        
-        /* SVG Region Styles */
-        .region-path {
-            fill: #e2e8f0;
-            stroke: #94a3b8;
-            stroke-width: 1;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            transform-origin: center;
-        }
-        
-        .region-path:hover {
-            fill: #bfdbfe;
-            stroke: var(--accent);
-            stroke-width: 1.5;
-            transform: scale(1.02);
-            filter: drop-shadow(0 5px 15px rgba(59, 130, 246, 0.2));
-        }
-        
-        .region-path.selected {
-            fill: #93c5fd;
-            stroke: var(--accent);
-            stroke-width: 1.5;
-            transform: scale(1.03);
-            filter: drop-shadow(0 5px 15px rgba(59, 130, 246, 0.3));
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { transform: scale(1.03); }
-            50% { transform: scale(1.06); }
-        }
-        
+
         /* Footer */
         footer {
             background: var(--gradient-surface);
@@ -796,40 +801,40 @@
             margin-top: auto;
             backdrop-filter: blur(20px);
         }
-        
+
         /* Course Materials */
         .course-list {
             list-style: none;
             padding: 0;
             margin-top: 1rem;
         }
-        
+
         .course-item {
             padding: 0.75rem 0;
             border-bottom: 1px solid var(--border);
             transition: all 0.3s ease;
         }
-        
+
         .course-item:last-child {
             border-bottom: none;
         }
-        
+
         .course-item:hover {
             padding-left: 1rem;
         }
-        
+
         .course-link {
             color: var(--accent);
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s ease;
         }
-        
+
         .course-link:hover {
             color: var(--accent-hover);
             text-shadow: 0 0 8px rgba(59, 130, 246, 0.3);
         }
-        
+
         /* Responsive Design */
         @media (max-width: 1024px) {
             .map-container {
@@ -849,7 +854,7 @@
                 grid-template-columns: repeat(2, 1fr);
             }
         }
-        
+
         @media (max-width: 768px) {
             .main-content {
                 padding: 1rem;
@@ -900,10 +905,10 @@
         <header>
             <div class="header-content">
                 <img src="https://r.resimlink.com/ZtgP_MypD4Q.png" alt="Logo" class="logo">
-                <h1 class="header-title">Eğitim Portalı</h1>
+                <h1 class="header-title">İtalyan Üniversiteleri Portalı</h1>
             </div>
         </header>
-        
+
         <!-- Login Section -->
         <div class="login-container" id="loginSection">
             <div class="floating-elements">
@@ -912,29 +917,25 @@
                 <div class="floating-element"></div>
                 <div class="floating-element"></div>
             </div>
-            
             <div class="login-box">
                 <div class="login-header">
                     <img src="https://r.resimlink.com/ZtgP_MypD4Q.png" alt="Logo" class="login-logo">
                     <h2 class="login-title">Tekrar Hoşgeldiniz</h2>
                     <p class="login-subtitle">Eğitim portalınıza erişmek için giriş yapın</p>
                 </div>
-                
                 <div class="form-group">
                     <label for="username" class="form-label">Kullanıcı Adı</label>
                     <input type="text" id="username" class="form-input" placeholder="Kullanıcı adınızı girin">
                 </div>
-                
                 <div class="form-group">
                     <label for="password" class="form-label">Şifre</label>
                     <input type="password" id="password" class="form-input" placeholder="Şifrenizi girin">
                 </div>
-                
                 <button class="btn-primary" onclick="login()">Giriş Yap</button>
                 <div id="loginError" class="error-message">Geçersiz kullanıcı adı veya şifre!</div>
             </div>
         </div>
-        
+
         <!-- Portal Content -->
         <div class="portal" id="portal">
             <nav>
@@ -948,12 +949,11 @@
                     </ul>
                 </div>
             </nav>
-            
+
             <div class="main-content">
                 <!-- Dashboard Section -->
                 <div class="section active" id="dashboard">
                     <h2 class="section-title">Gösterge Paneli</h2>
-                    
                     <div class="dashboard-grid">
                         <div class="dashboard-card">
                             <div class="card-header">
@@ -962,7 +962,6 @@
                             </div>
                             <p style="color: var(--text-secondary);">Bu dönem 6 aktif dersiniz bulunuyor</p>
                         </div>
-                        
                         <div class="dashboard-card">
                             <div class="card-header">
                                 <div class="card-icon">📊</div>
@@ -970,7 +969,6 @@
                             </div>
                             <p style="color: var(--text-secondary);">Tüm derslerde %75 tamamlama oranı</p>
                         </div>
-                        
                         <div class="dashboard-card">
                             <div class="card-header">
                                 <div class="card-icon">🎯</div>
@@ -979,7 +977,6 @@
                             <p style="color: var(--text-secondary);">Bu ay 3 sınav planlanmış</p>
                         </div>
                     </div>
-                    
                     <h3 class="section-subtitle">Yaklaşan Dersler</h3>
                     <div class="table-container">
                         <table class="table">
@@ -1014,11 +1011,10 @@
                         </table>
                     </div>
                 </div>
-                
+
                 <!-- Lessons Section -->
                 <div class="section" id="lessons">
                     <h2 class="section-title">Ders Materyalleri</h2>
-                    
                     <div class="dashboard-grid">
                         <div class="dashboard-card">
                             <div class="card-header">
@@ -1031,7 +1027,6 @@
                                 <li class="course-item"><a href="#" class="course-link">Kalkülüs Giriş</a></li>
                             </ul>
                         </div>
-                        
                         <div class="dashboard-card">
                             <div class="card-header">
                                 <div class="card-icon">🔬</div>
@@ -1043,7 +1038,6 @@
                                 <li class="course-item"><a href="#" class="course-link">Biyoloji Temelleri</a></li>
                             </ul>
                         </div>
-                        
                         <div class="dashboard-card">
                             <div class="card-header">
                                 <div class="card-icon">📜</div>
@@ -1057,11 +1051,10 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- About Section -->
                 <div class="section" id="about">
                     <h2 class="section-title">Kurumumuz Hakkında</h2>
-                    
                     <div class="dashboard-grid">
                         <div class="dashboard-card">
                             <div class="card-header">
@@ -1070,7 +1063,6 @@
                             </div>
                             <p style="color: var(--text-secondary); line-height: 1.6;">Öğrencileri yenilikçi eğitim, eleştirel düşünce ve gelecekteki zorluklara hazırlayan kapsamlı öğrenme deneyimleri ile güçlendirmek.</p>
                         </div>
-                        
                         <div class="dashboard-card">
                             <div class="card-header">
                                 <div class="card-icon">👥</div>
@@ -1078,7 +1070,6 @@
                             </div>
                             <p style="color: var(--text-secondary); line-height: 1.6;">Akademik mükemmelliğe ve kişisel gelişime adanmış, öğrenenler, eğitimciler ve araştırmacılardan oluşan çeşitli bir topluluk.</p>
                         </div>
-                        
                         <div class="dashboard-card">
                             <div class="card-header">
                                 <div class="card-icon">🌟</div>
@@ -1088,68 +1079,47 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Map Section -->
                 <div class="map-section" id="mapSection">
                     <div class="map-header">
                         🎓 İtalyan Üniversiteleri Etkileşimli Harita - 2024
                     </div>
-                    
                     <div class="map-container">
                         <div class="map-content">
-                            <svg class="italy-map" viewBox="0 0 800 1000" xmlns="http://www.w3.org/2000/svg">
-                                <!-- Detaylı İtalya haritası -->
-                                <path class="region-path" data-region="piedmont" d="M170,180 L200,170 L230,180 L240,200 L235,220 L225,230 L210,240 L195,250 L185,260 L175,270 L165,280 L155,290 L145,300 L135,290 L125,280 L115,270 L105,260 L100,250 L110,240 L120,230 L130,220 L140,210 L150,200 L160,190 Z" />
-                                <path class="region-path" data-region="aosta" d="M140,100 L160,90 L180,100 L190,120 L180,140 L160,150 L140,140 L130,120 Z" />
-                                <path class="region-path" data-region="lombardy" d="M200,190 L230,200 L250,210 L260,220 L270,230 L280,240 L290,250 L300,260 L310,270 L320,280 L330,290 L340,300 L330,310 L320,320 L310,330 L300,340 L290,350 L280,360 L270,370 L260,380 L250,370 L240,360 L230,350 L220,340 L210,330 L200,320 L190,310 L180,300 L170,290 L160,280 L150,270 L160,260 L170,250 L180,240 L190,230 L200,220 Z" />
-                                <path class="region-path" data-region="trentino" d="M250,120 L280,110 L310,120 L320,140 L310,160 L290,170 L270,160 L260,140 Z" />
-                                <path class="region-path" data-region="veneto" d="M250,200 L280,210 L300,220 L310,230 L320,240 L330,250 L340,260 L350,270 L360,280 L370,290 L380,300 L370,310 L360,320 L350,330 L340,340 L330,350 L320,360 L310,370 L300,380 L290,390 L280,400 L270,390 L260,380 L250,370 L240,360 L230,350 L220,340 L230,330 L240,320 L250,310 L260,300 L270,290 L280,280 L290,270 L300,260 L310,250 L320,240 L330,230 L340,220 L350,210 L360,200 L350,190 L340,180 L330,170 L320,160 L310,150 L300,140 L290,130 L280,120 L270,130 L260,140 L250,150 L240,160 L230,170 L220,180 L210,190 L220,200 Z" />
-                                <path class="region-path" data-region="friuli" d="M350,180 L380,170 L410,180 L420,200 L410,220 L390,230 L370,220 L360,200 Z" />
-                                <path class="region-path" data-region="liguria" d="M100,250 L120,240 L140,250 L150,270 L140,290 L120,300 L100,290 L90,270 Z" />
-                                <path class="region-path" data-region="emilia" d="M150,350 L180,340 L210,350 L220,360 L230,370 L240,380 L250,390 L260,400 L270,410 L280,420 L290,430 L300,440 L290,450 L280,460 L270,470 L260,480 L250,490 L240,500 L230,490 L220,480 L210,470 L200,460 L190,450 L180,440 L170,430 L160,420 L150,410 L140,400 L130,390 L120,380 L110,370 L120,360 L130,350 Z" />
-                                <path class="region-path" data-region="tuscany" d="M120,400 L150,390 L180,400 L190,410 L200,420 L210,430 L220,440 L230,450 L240,460 L250,470 L260,480 L250,490 L240,500 L230,510 L220,520 L210,530 L200,540 L190,530 L180,520 L170,510 L160,500 L150,490 L140,480 L130,470 L120,460 L110,450 L100,440 L90,430 L100,420 L110,410 Z" />
-                                <path class="region-path" data-region="umbria" d="M220,450 L250,440 L280,450 L290,460 L300,470 L310,480 L300,490 L290,500 L280,510 L270,520 L260,530 L250,540 L240,530 L230,520 L220,510 L210,500 L200,490 L190,480 L200,470 L210,460 Z" />
-                                <path class="region-path" data-region="marche" d="M270,420 L300,410 L330,420 L340,430 L350,440 L360,450 L370,460 L380,470 L370,480 L360,490 L350,500 L340,510 L330,520 L320,530 L310,540 L300,530 L290,520 L280,510 L270,500 L260,490 L250,480 L260,470 L270,460 Z" />
-                                <path class="region-path" data-region="lazio" d="M180,500 L210,490 L240,500 L250,510 L260,520 L270,530 L280,540 L290,550 L300,560 L290,570 L280,580 L270,590 L260,600 L250,610 L240,600 L230,590 L220,580 L210,570 L200,560 L190,550 L180,540 L170,530 L160,520 L170,510 L180,500 Z" />
-                                <path class="region-path" data-region="abruzzo" d="M290,500 L320,490 L350,500 L360,510 L370,520 L380,530 L370,540 L360,550 L350,560 L340,570 L330,580 L320,590 L310,600 L300,590 L290,580 L280,570 L270,560 L260,550 L270,540 L280,530 Z" />
-                                <path class="region-path" data-region="molise" d="M320,550 L350,540 L380,550 L390,560 L400,570 L390,580 L380,590 L370,600 L360,610 L350,600 L340,590 L330,580 L320,570 Z" />
-                                <path class="region-path" data-region="campania" d="M240,600 L270,590 L300,600 L310,610 L320,620 L330,630 L340,640 L350,650 L340,660 L330,670 L320,680 L310,690 L300,700 L290,690 L280,680 L270,670 L260,660 L250,650 L240,640 L230,630 L220,620 L230,610 Z" />
-                                <path class="region-path" data-region="apulia" d="M340,580 L370,570 L400,580 L410,590 L420,600 L430,610 L440,620 L450,630 L440,640 L430,650 L420,660 L410,670 L400,680 L390,690 L380,700 L370,690 L360,680 L350,670 L340,660 L330,650 L320,640 L330,630 L340,620 Z" />
-                                <path class="region-path" data-region="basilicata" d="M300,650 L330,640 L360,650 L370,660 L380,670 L370,680 L360,690 L350,700 L340,710 L330,700 L320,690 L310,680 L300,670 Z" />
-                                <path class="region-path" data-region="calabria" d="M280,720 L310,710 L340,720 L350,730 L360,740 L370,750 L380,760 L370,770 L360,780 L350,790 L340,800 L330,790 L320,780 L310,770 L300,760 L290,750 L280,740 Z" />
-                                <path class="region-path" data-region="sicily" d="M180,800 L210,790 L240,800 L250,810 L260,820 L270,830 L280,840 L270,850 L260,860 L250,870 L240,880 L230,870 L220,860 L210,850 L200,840 L190,830 L180,820 Z" />
-                                <path class="region-path" data-region="sardinia" d="M50,400 L80,390 L110,400 L120,410 L130,420 L140,430 L150,440 L140,450 L130,460 L120,470 L110,480 L100,490 L90,480 L80,470 L70,460 L60,450 L50,440 L40,430 L30,420 L40,410 L50,400 Z" />
+                            <div class="italy-map-container">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Italy_Regions_Provinces.svg/1200px-Italy_Regions_Provinces.svg.png" 
+                                     alt="İtalya Haritası" 
+                                     class="italy-map">
                                 
-                                <!-- Bölge isimleri -->
-                                <text x="200" y="220" font-size="14" text-anchor="middle" fill="#0f172a" font-weight="600">Piyemonte</text>
-                                <text x="160" y="130" font-size="12" text-anchor="middle" fill="#0f172a" font-weight="500">Aosta</text>
-                                <text x="250" y="250" font-size="16" text-anchor="middle" fill="#0f172a" font-weight="600">Lombardiya</text>
-                                <text x="280" y="150" font-size="12" text-anchor="middle" fill="#0f172a" font-weight="500">Trentino</text>
-                                <text x="320" y="250" font-size="14" text-anchor="middle" fill="#0f172a" font-weight="600">Veneto</text>
-                                <text x="380" y="200" font-size="12" text-anchor="middle" fill="#0f172a" font-weight="500">Friuli</text>
-                                <text x="120" y="270" font-size="12" text-anchor="middle" fill="#0f172a" font-weight="500">Ligurya</text>
-                                <text x="200" y="400" font-size="14" text-anchor="middle" fill="#0f172a" font-weight="600">Emilia</text>
-                                <text x="180" y="450" font-size="14" text-anchor="middle" fill="#0f172a" font-weight="600">Toskana</text>
-                                <text x="250" y="500" font-size="12" text-anchor="middle" fill="#0f172a" font-weight="500">Umbria</text>
-                                <text x="300" y="450" font-size="12" text-anchor="middle" fill="#0f172a" font-weight="500">Marche</text>
-                                <text x="220" y="580" font-size="14" text-anchor="middle" fill="#0f172a" font-weight="600">Lazio</text>
-                                <text x="320" y="520" font-size="12" text-anchor="middle" fill="#0f172a" font-weight="500">Abruzzo</text>
-                                <text x="350" y="570" font-size="10" text-anchor="middle" fill="#0f172a" font-weight="500">Molise</text>
-                                <text x="280" y="650" font-size="14" text-anchor="middle" fill="#0f172a" font-weight="600">Campania</text>
-                                <text x="380" y="620" font-size="14" text-anchor="middle" fill="#0f172a" font-weight="600">Puglia</text>
-                                <text x="330" y="680" font-size="12" text-anchor="middle" fill="#0f172a" font-weight="500">Basilicata</text>
-                                <text x="320" y="760" font-size="12" text-anchor="middle" fill="#0f172a" font-weight="500">Calabria</text>
-                                <text x="220" y="850" font-size="14" text-anchor="middle" fill="#0f172a" font-weight="600">Sicilya</text>
-                                <text x="80" y="450" font-size="14" text-anchor="middle" fill="#0f172a" font-weight="600">Sardinya</text>
-                            </svg>
+                                <!-- Region labels with approximate positions -->
+                                <div class="region-label" style="top: 10%; left: 20%;" data-region="aosta">Aosta Vadisi</div>
+                                <div class="region-label" style="top: 15%; left: 25%;" data-region="piedmont">Piyemonte</div>
+                                <div class="region-label" style="top: 18%; left: 35%;" data-region="lombardy">Lombardiya</div>
+                                <div class="region-label" style="top: 10%; left: 35%;" data-region="trentino">Trentino</div>
+                                <div class="region-label" style="top: 22%; left: 40%;" data-region="veneto">Veneto</div>
+                                <div class="region-label" style="top: 20%; left: 45%;" data-region="friuli">Friuli</div>
+                                <div class="region-label" style="top: 25%; left: 15%;" data-region="liguria">Ligurya</div>
+                                <div class="region-label" style="top: 35%; left: 30%;" data-region="emilia">Emilia-Romagna</div>
+                                <div class="region-label" style="top: 40%; left: 25%;" data-region="tuscany">Toskana</div>
+                                <div class="region-label" style="top: 45%; left: 35%;" data-region="umbria">Umbria</div>
+                                <div class="region-label" style="top: 45%; left: 45%;" data-region="marche">Marche</div>
+                                <div class="region-label" style="top: 55%; left: 35%;" data-region="lazio">Lazio</div>
+                                <div class="region-label" style="top: 55%; left: 45%;" data-region="abruzzo">Abruzzo</div>
+                                <div class="region-label" style="top: 60%; left: 50%;" data-region="molise">Molise</div>
+                                <div class="region-label" style="top: 65%; left: 45%;" data-region="campania">Campania</div>
+                                <div class="region-label" style="top: 65%; left: 55%;" data-region="apulia">Puglia</div>
+                                <div class="region-label" style="top: 70%; left: 50%;" data-region="basilicata">Basilicata</div>
+                                <div class="region-label" style="top: 80%; left: 50%;" data-region="calabria">Calabria</div>
+                                <div class="region-label" style="top: 85%; left: 30%;" data-region="sicily">Sicilya</div>
+                                <div class="region-label" style="top: 35%; left: 10%;" data-region="sardinia">Sardinya</div>
+                            </div>
                         </div>
-                        
                         <div class="map-sidebar">
                             <div class="region-header">
                                 <img class="region-flag" id="regionFlag" src="" alt="Bölge Bayrağı">
                                 <h2 class="region-name" id="regionName">Bir bölge seçin</h2>
                             </div>
-                            
                             <div class="region-stats">
                                 <div class="stat-card">
                                     <div class="stat-label">Nüfus</div>
@@ -1168,7 +1138,6 @@
                                     <div class="stat-value" id="universityCount">-</div>
                                 </div>
                             </div>
-                            
                             <div class="universities-section">
                                 <h3 class="universities-title">Bu bölgedeki üniversiteler</h3>
                                 <ul class="university-list" id="universityList">
@@ -1182,12 +1151,12 @@
                 </div>
             </div>
         </div>
-        
+
         <footer>
-            <p>© 2024 Eğitim Portalı. Tüm hakları saklıdır. | Zihinleri güçlendiriyor, geleceği şekillendiriyoruz.</p>
+            <p>© 2024 İtalyan Üniversiteleri Portalı. Tüm hakları saklıdır. | Zihinleri güçlendiriyor, geleceği şekillendiriyoruz.</p>
         </footer>
     </div>
-    
+
     <script>
         // Predefined credentials
         const validCredentials = [
@@ -1195,7 +1164,7 @@
             { username: "student1", password: "student123", role: "student" },
             { username: "student2", password: "student123", role: "student" }
         ];
-        
+
         // Region data with all original information
         const regionData = {
             piedmont: {
@@ -1448,9 +1417,9 @@
                 ]
             }
         };
-        
+
         let selectedRegion = null;
-        
+
         // Login function
         function login() {
             const username = document.getElementById('username').value;
@@ -1470,7 +1439,7 @@
                 errorElement.style.display = 'block';
             }
         }
-        
+
         function logout() {
             document.getElementById('portal').style.display = 'none';
             document.getElementById('loginSection').style.display = 'flex';
@@ -1479,7 +1448,7 @@
             showSection('dashboard');
             updateActiveTab('dashboard');
         }
-        
+
         function showSection(sectionId) {
             const sections = document.querySelectorAll('.section');
             sections.forEach(section => section.classList.remove('active'));
@@ -1487,7 +1456,7 @@
             document.getElementById(sectionId).classList.add('active');
             updateActiveTab(sectionId);
         }
-        
+
         function showMapSection() {
             const sections = document.querySelectorAll('.section');
             sections.forEach(section => section.classList.remove('active'));
@@ -1499,7 +1468,7 @@
                 displayRegionInfo('lombardy');
             }
         }
-        
+
         function updateActiveTab(sectionId) {
             const tabs = document.querySelectorAll('.nav-item');
             tabs.forEach(tab => tab.classList.remove('active-tab'));
@@ -1516,34 +1485,23 @@
                 tabs[tabIndex].classList.add('active-tab');
             }
         }
-        
+
         function initializeMap() {
-            const regionPaths = document.querySelectorAll('.region-path');
-            
-            regionPaths.forEach(path => {
-                path.addEventListener('click', function() {
+            const regionLabels = document.querySelectorAll('.region-label');
+            regionLabels.forEach(label => {
+                label.addEventListener('click', function() {
                     const regionId = this.getAttribute('data-region');
                     displayRegionInfo(regionId);
                     
                     // Update selected region visual state
-                    regionPaths.forEach(p => p.classList.remove('selected'));
-                    this.classList.add('selected');
-                });
-                
-                path.addEventListener('mouseenter', function() {
-                    if (!this.classList.contains('selected')) {
-                        this.style.transform = 'scale(1.02)';
-                    }
-                });
-                
-                path.addEventListener('mouseleave', function() {
-                    if (!this.classList.contains('selected')) {
-                        this.style.transform = 'scale(1)';
-                    }
+                    regionLabels.forEach(l => l.style.background = 'rgba(255, 255, 255, 0.8)');
+                    regionLabels.forEach(l => l.style.color = 'var(--primary)');
+                    this.style.background = 'var(--accent)';
+                    this.style.color = 'white';
                 });
             });
         }
-        
+
         function displayRegionInfo(regionId) {
             const regionInfo = regionData[regionId];
             selectedRegion = regionId;
@@ -1556,11 +1514,10 @@
                 document.getElementById('area').textContent = regionInfo.area;
                 document.getElementById('capital').textContent = regionInfo.capital;
                 document.getElementById('universityCount').textContent = regionInfo.universities.length;
-                
                 displayUniversities(regionId);
             }
         }
-        
+
         function displayUniversities(regionId) {
             const universities = regionData[regionId]?.universities || [];
             const universityList = document.getElementById('universityList');
@@ -1572,7 +1529,7 @@
                     li.className = 'university-item';
                     li.innerHTML = `
                         <div class="university-name">${univ.name}</div>
-                        <div class="university-location">📍 ${univ.location}</div>
+                        <div class="university-location"><i class="fas fa-map-marker-alt"></i> ${univ.location}</div>
                         <span class="university-type ${univ.type.toLowerCase()}">${univ.type}</span>
                     `;
                     universityList.appendChild(li);
@@ -1586,7 +1543,7 @@
                 universityList.appendChild(li);
             }
         }
-        
+
         // Initialize the portal
         document.addEventListener('DOMContentLoaded', function() {
             // Handle Enter key for login
