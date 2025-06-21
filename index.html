@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Education Portal - Modern Design</title>
+    <title>Eğitim Portalı - Modern Tasarım</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #0f172a;
-            --primary-light: #1e293b;
+            --primary: #ffffff;
+            --primary-light: #f8fafc;
             --accent: #3b82f6;
             --accent-hover: #2563eb;
             --success: #22c55e;
@@ -21,10 +21,13 @@
             --text-primary: #ffffff;
             --text-secondary: #94a3b8;
             --text-muted: #64748b;
+            --text-dark: #1f2937;
             --border: #334155;
             --border-light: #475569;
             --glass-bg: rgba(26, 31, 46, 0.8);
             --glass-border: rgba(148, 163, 184, 0.1);
+            --white-glass-bg: rgba(255, 255, 255, 0.95);
+            --white-glass-border: rgba(0, 0, 0, 0.1);
             --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             --gradient-surface: linear-gradient(145deg, #1a1f2e 0%, #252b3b 100%);
             --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.3);
@@ -80,15 +83,16 @@
             position: relative;
         }
 
-        /* Header */
+        /* Header - Beyaz yapıldı */
         header {
-            background: var(--glass-bg);
+            background: var(--white-glass-bg);
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--white-glass-border);
             padding: 1.5rem 2rem;
             position: sticky;
             top: 0;
             z-index: 100;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
 
         .header-content {
@@ -104,7 +108,7 @@
             height: 50px;
             width: auto;
             border-radius: 12px;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
             transition: transform 0.3s ease;
         }
 
@@ -121,7 +125,7 @@
             background-clip: text;
         }
 
-        /* Login Section */
+        /* Login Section - Beyaz kutu yapıldı */
         .login-container {
             display: flex;
             justify-content: center;
@@ -164,14 +168,14 @@
         }
 
         .login-box {
-            background: var(--glass-bg);
+            background: var(--white-glass-bg);
             backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
+            border: 1px solid var(--white-glass-border);
             border-radius: 24px;
             padding: 3rem;
             width: 100%;
             max-width: 450px;
-            box-shadow: var(--shadow-lg);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
             position: relative;
             overflow: hidden;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -184,7 +188,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
             transition: left 0.5s;
         }
 
@@ -194,7 +198,7 @@
 
         .login-box:hover {
             transform: translateY(-8px);
-            box-shadow: var(--shadow-lg), var(--shadow-glow);
+            box-shadow: 0 35px 60px rgba(0, 0, 0, 0.2), 0 0 30px rgba(59, 130, 246, 0.2);
         }
 
         .login-header {
@@ -207,21 +211,18 @@
             width: auto;
             margin-bottom: 1rem;
             border-radius: 16px;
-            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.2));
         }
 
         .login-title {
             font-size: 1.75rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--text-dark);
         }
 
         .login-subtitle {
-            color: var(--text-secondary);
+            color: #6b7280;
             font-size: 0.95rem;
         }
 
@@ -233,7 +234,7 @@
         .form-label {
             display: block;
             margin-bottom: 0.75rem;
-            color: var(--text-secondary);
+            color: var(--text-dark);
             font-size: 0.875rem;
             font-weight: 600;
             text-transform: uppercase;
@@ -243,10 +244,10 @@
         .form-input {
             width: 100%;
             padding: 1rem 1.25rem;
-            background: var(--surface-light);
-            border: 2px solid var(--border);
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
             border-radius: 12px;
-            color: var(--text-primary);
+            color: var(--text-dark);
             font-size: 1rem;
             transition: all 0.3s ease;
             outline: none;
@@ -255,11 +256,11 @@
         .form-input:focus {
             border-color: var(--accent);
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-            background: var(--surface);
+            background: #ffffff;
         }
 
         .form-input::placeholder {
-            color: var(--text-muted);
+            color: #9ca3af;
         }
 
         .btn-primary {
@@ -734,40 +735,40 @@
             letter-spacing: 0.5px;
         }
 
-        .university-type.private {
+        .university-type.özel {
             background: linear-gradient(135deg, var(--warning), #f97316);
         }
 
         /* SVG Region Styles */
         .region-path {
-            fill: var(--surface-light);
-            stroke: var(--border);
-            stroke-width: 1.5;
+            fill: #3a5998;
+            stroke: #2d4373;
+            stroke-width: 0.8;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             transform-origin: center;
         }
 
         .region-path:hover {
-            fill: var(--accent);
-            stroke: var(--accent-hover);
-            stroke-width: 2;
-            transform: scale(1.05);
-            filter: drop-shadow(0 5px 15px rgba(59, 130, 246, 0.4));
+            fill: #4f46e5;
+            stroke: #3730a3;
+            stroke-width: 1.2;
+            transform: scale(1.02);
+            filter: drop-shadow(0 5px 15px rgba(79, 70, 229, 0.4));
         }
 
         .region-path.selected {
             fill: var(--accent);
             stroke: var(--accent-hover);
-            stroke-width: 2;
-            transform: scale(1.03);
+            stroke-width: 1.5;
+            transform: scale(1.02);
             filter: drop-shadow(0 5px 15px rgba(59, 130, 246, 0.4));
             animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
-            0%, 100% { transform: scale(1.03); }
-            50% { transform: scale(1.06); }
+            0%, 100% { transform: scale(1.02); }
+            50% { transform: scale(1.05); }
         }
 
         /* Footer */
@@ -885,7 +886,7 @@
         <header>
             <div class="header-content">
                 <img src="https://r.resimlink.com/ZtgP_MypD4Q.png" alt="Logo" class="logo">
-                <h1 class="header-title">Education Portal</h1>
+                <h1 class="header-title">Eğitim Portalı</h1>
             </div>
         </header>
 
@@ -901,22 +902,22 @@
             <div class="login-box">
                 <div class="login-header">
                     <img src="https://r.resimlink.com/ZtgP_MypD4Q.png" alt="Logo" class="login-logo">
-                    <h2 class="login-title">Welcome Back</h2>
-                    <p class="login-subtitle">Sign in to access your education portal</p>
+                    <h2 class="login-title">Hoş Geldiniz</h2>
+                    <p class="login-subtitle">Eğitim portalınıza erişmek için giriş yapın</p>
                 </div>
                 
                 <div class="form-group">
-                    <label for="username" class="form-label">Username</label>
-                    <input type="text" id="username" class="form-input" placeholder="Enter your username">
+                    <label for="username" class="form-label">Kullanıcı Adı</label>
+                    <input type="text" id="username" class="form-input" placeholder="Kullanıcı adınızı girin">
                 </div>
                 
                 <div class="form-group">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" id="password" class="form-input" placeholder="Enter your password">
+                    <label for="password" class="form-label">Şifre</label>
+                    <input type="password" id="password" class="form-input" placeholder="Şifrenizi girin">
                 </div>
                 
-                <button class="btn-primary" onclick="login()">Sign In</button>
-                <div id="loginError" class="error-message">Invalid username or password!</div>
+                <button class="btn-primary" onclick="login()">Giriş Yap</button>
+                <div id="loginError" class="error-message">Geçersiz kullanıcı adı veya şifre!</div>
             </div>
         </div>
 
@@ -925,11 +926,11 @@
             <nav>
                 <div class="nav-container">
                     <ul class="nav-list">
-                        <li class="nav-item active-tab" onclick="showSection('dashboard')">Dashboard</li>
-                        <li class="nav-item" onclick="showSection('lessons')">Lessons</li>
-                        <li class="nav-item" onclick="showMapSection()">Italian Universities</li>
-                        <li class="nav-item" onclick="showSection('about')">About Us</li>
-                        <li class="nav-item logout" onclick="logout()">Logout</li>
+                        <li class="nav-item active-tab" onclick="showSection('dashboard')">Ana Sayfa</li>
+                        <li class="nav-item" onclick="showSection('lessons')">Dersler</li>
+                        <li class="nav-item" onclick="showMapSection()">İtalya Üniversiteleri</li>
+                        <li class="nav-item" onclick="showSection('about')">Hakkımızda</li>
+                        <li class="nav-item logout" onclick="logout()">Çıkış</li>
                     </ul>
                 </div>
             </nav>
@@ -937,63 +938,63 @@
             <div class="main-content">
                 <!-- Dashboard Section -->
                 <div class="section active" id="dashboard">
-                    <h2 class="section-title">Dashboard</h2>
+                    <h2 class="section-title">Ana Sayfa</h2>
                     
                     <div class="dashboard-grid">
                         <div class="dashboard-card">
                             <div class="card-header">
                                 <div class="card-icon">📚</div>
-                                <h3 class="card-title">Active Courses</h3>
+                                <h3 class="card-title">Aktif Dersler</h3>
                             </div>
-                            <p style="color: var(--text-secondary);">You have 6 active courses this semester</p>
+                            <p style="color: var(--text-secondary);">Bu dönem 6 aktif dersiniz bulunmaktadır</p>
                         </div>
                         
                         <div class="dashboard-card">
                             <div class="card-header">
                                 <div class="card-icon">📊</div>
-                                <h3 class="card-title">Progress</h3>
+                                <h3 class="card-title">İlerleme</h3>
                             </div>
-                            <p style="color: var(--text-secondary);">75% completion rate across all courses</p>
+                            <p style="color: var(--text-secondary);">Tüm derslerde %75 tamamlanma oranı</p>
                         </div>
                         
                         <div class="dashboard-card">
                             <div class="card-header">
                                 <div class="card-icon">🎯</div>
-                                <h3 class="card-title">Upcoming Exams</h3>
+                                <h3 class="card-title">Yaklaşan Sınavlar</h3>
                             </div>
-                            <p style="color: var(--text-secondary);">3 exams scheduled this month</p>
+                            <p style="color: var(--text-secondary);">Bu ay programlanmış 3 sınav</p>
                         </div>
                     </div>
 
-                    <h3 class="section-subtitle">Upcoming Lessons</h3>
+                    <h3 class="section-subtitle">Yaklaşan Dersler</h3>
                     <div class="table-container">
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>Date</th>
-                                    <th>Time</th>
-                                    <th>Subject</th>
-                                    <th>Teacher</th>
+                                    <th>Tarih</th>
+                                    <th>Saat</th>
+                                    <th>Ders</th>
+                                    <th>Öğretmen</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>2023-11-10</td>
+                                    <td>10.11.2025</td>
                                     <td>10:00 - 12:00</td>
-                                    <td>Mathematics</td>
-                                    <td>Mr. Smith</td>
+                                    <td>Matematik</td>
+                                    <td>Bay Smith</td>
                                 </tr>
                                 <tr>
-                                    <td>2023-11-12</td>
+                                    <td>12.11.2025</td>
                                     <td>09:00 - 11:00</td>
-                                    <td>Science</td>
-                                    <td>Ms. Johnson</td>
+                                    <td>Fen Bilgisi</td>
+                                    <td>Bayan Johnson</td>
                                 </tr>
                                 <tr>
-                                    <td>2023-11-15</td>
+                                    <td>15.11.2025</td>
                                     <td>14:00 - 16:00</td>
-                                    <td>History</td>
-                                    <td>Mr. Brown</td>
+                                    <td>Tarih</td>
+                                    <td>Bay Brown</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1002,42 +1003,42 @@
 
                 <!-- Lessons Section -->
                 <div class="section" id="lessons">
-                    <h2 class="section-title">Course Materials</h2>
+                    <h2 class="section-title">Ders Materyalleri</h2>
                     
                     <div class="dashboard-grid">
                         <div class="dashboard-card">
                             <div class="card-header">
                                 <div class="card-icon">📐</div>
-                                <h3 class="card-title">Mathematics</h3>
+                                <h3 class="card-title">Matematik</h3>
                             </div>
                             <ul class="course-list">
-                                <li class="course-item"><a href="#" class="course-link">Algebra Basics</a></li>
-                                <li class="course-item"><a href="#" class="course-link">Geometry Concepts</a></li>
-                                <li class="course-item"><a href="#" class="course-link">Calculus Introduction</a></li>
+                                <li class="course-item"><a href="#" class="course-link">Cebir Temelleri</a></li>
+                                <li class="course-item"><a href="#" class="course-link">Geometri Kavramları</a></li>
+                                <li class="course-item"><a href="#" class="course-link">Kalkülüs Giriş</a></li>
                             </ul>
                         </div>
                         
                         <div class="dashboard-card">
                             <div class="card-header">
                                 <div class="card-icon">🔬</div>
-                                <h3 class="card-title">Science</h3>
+                                <h3 class="card-title">Fen Bilgisi</h3>
                             </div>
                             <ul class="course-list">
-                                <li class="course-item"><a href="#" class="course-link">Physics Fundamentals</a></li>
-                                <li class="course-item"><a href="#" class="course-link">Chemistry Basics</a></li>
-                                <li class="course-item"><a href="#" class="course-link">Biology Essentials</a></li>
+                                <li class="course-item"><a href="#" class="course-link">Fizik Temelleri</a></li>
+                                <li class="course-item"><a href="#" class="course-link">Kimya Temelleri</a></li>
+                                <li class="course-item"><a href="#" class="course-link">Biyoloji Esasları</a></li>
                             </ul>
                         </div>
                         
                         <div class="dashboard-card">
                             <div class="card-header">
                                 <div class="card-icon">📜</div>
-                                <h3 class="card-title">History</h3>
+                                <h3 class="card-title">Tarih</h3>
                             </div>
                             <ul class="course-list">
-                                <li class="course-item"><a href="#" class="course-link">Ancient Civilizations</a></li>
-                                <li class="course-item"><a href="#" class="course-link">Medieval Period</a></li>
-                                <li class="course-item"><a href="#" class="course-link">Modern Era</a></li>
+                                <li class="course-item"><a href="#" class="course-link">Antik Medeniyetler</a></li>
+                                <li class="course-item"><a href="#" class="course-link">Orta Çağ Dönemi</a></li>
+                                <li class="course-item"><a href="#" class="course-link">Modern Çağ</a></li>
                             </ul>
                         </div>
                     </div>
@@ -1045,31 +1046,31 @@
 
                 <!-- About Section -->
                 <div class="section" id="about">
-                    <h2 class="section-title">About Our Institution</h2>
+                    <h2 class="section-title">Kurumumuz Hakkında</h2>
                     
                     <div class="dashboard-grid">
                         <div class="dashboard-card">
                             <div class="card-header">
                                 <div class="card-icon">🎯</div>
-                                <h3 class="card-title">Our Mission</h3>
+                                <h3 class="card-title">Misyonumuz</h3>
                             </div>
-                            <p style="color: var(--text-secondary); line-height: 1.6;">To empower students through innovative education, critical thinking, and comprehensive learning experiences that prepare them for future challenges.</p>
+                            <p style="color: var(--text-secondary); line-height: 1.6;">Öğrencileri yenilikçi eğitim, eleştirel düşünce ve onları gelecekteki zorluklara hazırlayan kapsamlı öğrenme deneyimleri ile güçlendirmek.</p>
                         </div>
                         
                         <div class="dashboard-card">
                             <div class="card-header">
                                 <div class="card-icon">👥</div>
-                                <h3 class="card-title">Our Community</h3>
+                                <h3 class="card-title">Topluluğumuz</h3>
                             </div>
-                            <p style="color: var(--text-secondary); line-height: 1.6;">A diverse community of learners, educators, and researchers committed to academic excellence and personal growth.</p>
+                            <p style="color: var(--text-secondary); line-height: 1.6;">Akademik mükemmellik ve kişisel gelişim konularında kararlı öğrenciler, eğitimciler ve araştırmacılardan oluşan çeşitli bir topluluk.</p>
                         </div>
                         
                         <div class="dashboard-card">
                             <div class="card-header">
                                 <div class="card-icon">🌟</div>
-                                <h3 class="card-title">Our Values</h3>
+                                <h3 class="card-title">Değerlerimiz</h3>
                             </div>
-                            <p style="color: var(--text-secondary); line-height: 1.6;">Integrity, innovation, inclusivity, and excellence guide everything we do in our educational journey.</p>
+                            <p style="color: var(--text-secondary); line-height: 1.6;">Dürüstlük, yenilikçilik, kapsayıcılık ve mükemmellik, eğitim yolculuğumuzda yaptığımız her şeye rehberlik eder.</p>
                         </div>
                     </div>
                 </div>
@@ -1077,103 +1078,124 @@
                 <!-- Map Section -->
                 <div class="map-section" id="mapSection">
                     <div class="map-header">
-                        🎓 Italian Universities Interactive Map - 2024
+                        🎓 İtalya Üniversiteleri İnteraktif Harita - 2025
                     </div>
                     <div class="map-container">
                         <div class="map-content">
-                            <svg class="italy-map" viewBox="0 0 500 600" xmlns="http://www.w3.org/2000/svg">
-                                <!-- Valle d'Aosta -->
-                                <path class="region-path" data-region="aosta" d="M85,85 L95,75 L110,80 L115,90 L105,100 L90,95 Z" />
+                            <svg class="italy-map" viewBox="0 0 600 700" xmlns="http://www.w3.org/2000/svg">
+                                <!-- İtalya Haritası SVG -->
+                                <g id="IT21" class="region-path" data-region="piedmont">
+                                    <path d="M152,177 L179,182 L198,193 L215,207 L228,224 L237,243 L238,262 L232,279 L217,289 L196,294 L172,292 L149,285 L132,273 L120,256 L114,236 L115,216 L122,197 L135,183 Z"/>
+                                </g>
                                 
-                                <!-- Piemonte -->
-                                <path class="region-path" data-region="piedmont" d="M70,95 L105,100 L115,90 L125,95 L130,110 L120,130 L110,140 L95,135 L80,125 L75,110 Z" />
+                                <g id="IT23" class="region-path" data-region="aosta">
+                                    <path d="M135,183 L152,177 L165,169 L175,155 L180,140 L181,124 L178,109 L170,97 L158,89 L143,86 L128,89 L116,97 L109,109 L107,124 L111,140 L120,155 Z"/>
+                                </g>
                                 
-                                <!-- Liguria -->
-                                <path class="region-path" data-region="liguria" d="M80,125 L95,135 L110,140 L125,145 L130,155 L115,160 L100,155 L85,150 L75,145 Z" />
+                                <g id="IT25" class="region-path" data-region="lombardy">
+                                    <path d="M198,193 L228,188 L256,185 L282,186 L306,191 L326,200 L342,213 L352,229 L356,246 L353,263 L343,277 L327,287 L307,293 L285,295 L262,293 L238,287 L217,276 L202,261 L194,244 L192,226 L195,208 Z"/>
+                                </g>
                                 
-                                <!-- Lombardia -->
-                                <path class="region-path" data-region="lombardy" d="M125,95 L155,90 L170,100 L175,115 L165,130 L150,135 L130,130 L120,115 Z" />
+                                <g id="IT32" class="region-path" data-region="trentino">
+                                    <path d="M282,186 L316,181 L347,179 L375,181 L399,187 L418,197 L432,211 L440,227 L442,244 L438,261 L428,275 L413,285 L395,291 L375,293 L354,291 L335,285 L319,275 L307,261 L300,245 L298,228 L301,211 L308,195 Z"/>
+                                </g>
                                 
-                                <!-- Trentino-Alto Adige -->
-                                <path class="region-path" data-region="trentino" d="M155,90 L185,85 L195,95 L190,110 L180,120 L170,115 L165,100 Z" />
+                                <g id="IT34" class="region-path" data-region="veneto">
+                                    <path d="M347,179 L385,176 L420,177 L452,181 L480,188 L504,199 L523,213 L536,230 L543,249 L544,268 L538,286 L526,301 L509,312 L488,319 L465,322 L442,321 L420,316 L400,307 L383,294 L370,279 L361,262 L356,244 L355,226 L359,208 L366,191 Z"/>
+                                </g>
                                 
-                                <!-- Veneto -->
-                                <path class="region-path" data-region="veneto" d="M175,115 L205,110 L220,120 L225,135 L210,145 L195,140 L180,135 L170,125 Z" />
+                                <g id="IT36" class="region-path" data-region="friuli">
+                                    <path d="M480,188 L517,185 L551,186 L581,191 L606,200 L625,213 L638,229 L644,247 L643,265 L635,282 L621,296 L602,306 L580,312 L556,314 L533,312 L512,306 L494,296 L479,283 L469,267 L463,250 L462,232 L466,215 L474,199 Z"/>
+                                </g>
                                 
-                                <!-- Friuli-Venezia Giulia -->
-                                <path class="region-path" data-region="friuli" d="M220,120 L245,115 L255,125 L250,140 L235,145 L225,135 L215,125 Z" />
+                                <g id="IT42" class="region-path" data-region="liguria">
+                                    <path d="M149,285 L172,292 L196,294 L217,289 L235,279 L249,265 L258,248 L262,230 L260,212 L253,195 L241,181 L225,170 L206,163 L185,160 L164,161 L144,166 L126,175 L112,188 L103,204 L99,221 L101,239 L108,256 L119,271 L134,282 Z"/>
+                                </g>
                                 
-                                <!-- Emilia-Romagna -->
-                                <path class="region-path" data-region="emilia" d="M130,155 L165,150 L195,155 L210,165 L205,180 L190,185 L170,180 L150,175 L135,170 Z" />
+                                <g id="IT45" class="region-path" data-region="emilia">
+                                    <path d="M238,287 L262,293 L285,295 L307,293 L327,287 L343,277 L353,263 L356,246 L352,229 L342,213 L326,200 L306,191 L282,186 L256,185 L228,188 L198,193 L170,202 L145,215 L124,232 L108,252 L98,274 L94,297 L96,320 L104,342 L118,361 L137,377 L160,389 L185,397 L211,401 L237,401 L262,397 L285,389 L305,377 L322,361 L335,342 L344,321 L348,299 L347,276 L342,254 L332,233 L318,215 L300,200 L279,189 L256,182 L232,179 L208,180 L185,185 L164,194 L146,207 L131,223 L120,241 L113,261 L111,281 L114,301 L122,320 L135,337 L152,351 L172,362 L194,370 L217,375 L240,377 L263,375 L285,370 L305,362 L323,351 L338,337 L350,320 L358,301 L362,281 L362,260 L358,240 L350,221 L338,204 L323,189 L305,177 L285,168 L263,162 L240,159 L217,160 L194,164 L172,171 L152,181 L135,194 L122,210 L113,228 L108,247 L107,267 L110,286 Z"/>
+                                </g>
                                 
-                                <!-- Toscana -->
-                                <path class="region-path" data-region="tuscany" d="M125,175 L155,170 L170,180 L175,195 L165,210 L150,215 L135,210 L125,195 Z" />
+                                <g id="IT52" class="region-path" data-region="tuscany">
+                                    <path d="M164,194 L185,185 L208,180 L232,179 L256,182 L279,189 L300,200 L318,215 L332,233 L342,254 L347,276 L348,299 L344,321 L335,342 L322,361 L305,377 L285,389 L262,397 L237,401 L211,401 L185,397 L160,389 L137,377 L118,361 L104,342 L96,320 L94,297 L98,274 L108,252 L124,232 L145,215 Z"/>
+                                </g>
                                 
-                                <!-- Umbria -->
-                                <path class="region-path" data-region="umbria" d="M170,195 L190,190 L200,200 L195,215 L185,220 L175,215 L165,205 Z" />
+                                <g id="IT55" class="region-path" data-region="umbria">
+                                    <path d="M305,377 L322,361 L335,342 L344,321 L348,299 L347,276 L342,254 L332,233 L318,215 L300,200 L279,189 L256,182 L232,179 L208,180 L185,185 L164,194 L146,207 L131,223 L120,241 L113,261 L111,281 L114,301 L122,320 L135,337 L152,351 L172,362 L194,370 L217,375 L240,377 L263,375 L285,370 Z"/>
+                                </g>
                                 
-                                <!-- Marche -->
-                                <path class="region-path" data-region="marche" d="M195,180 L220,175 L235,185 L240,200 L230,215 L215,220 L200,215 L190,200 Z" />
+                                <g id="IT57" class="region-path" data-region="marche">
+                                    <path d="M380,295 L415,292 L445,294 L470,300 L490,310 L505,324 L515,341 L520,359 L520,377 L515,394 L505,409 L490,421 L470,430 L445,436 L415,439 L380,439 L350,436 L325,430 L305,421 L290,409 L280,394 L275,377 L275,359 L280,341 L290,324 L305,310 L325,300 L350,294 Z"/>
+                                </g>
                                 
-                                <!-- Lazio -->
-                                <path class="region-path" data-region="lazio" d="M150,215 L185,220 L200,230 L195,245 L180,250 L165,245 L155,235 L145,225 Z" />
+                                <g id="IT62" class="region-path" data-region="lazio">
+                                    <path d="M275,377 L305,374 L335,374 L365,377 L390,384 L410,395 L425,409 L435,426 L440,444 L440,462 L435,479 L425,494 L410,506 L390,515 L365,521 L335,524 L305,524 L275,521 L250,515 L230,506 L215,494 L205,479 L200,462 L200,444 L205,426 L215,409 L230,395 L250,384 Z"/>
+                                </g>
                                 
-                                <!-- Abruzzo -->
-                                <path class="region-path" data-region="abruzzo" d="M200,215 L225,210 L240,220 L235,235 L220,240 L205,235 L195,225 Z" />
+                                <g id="IT65" class="region-path" data-region="abruzzo">
+                                    <path d="M415,292 L450,289 L480,292 L505,299 L525,310 L540,325 L550,342 L555,360 L555,378 L550,395 L540,410 L525,422 L505,431 L480,437 L450,440 L415,440 L385,437 L360,431 L340,422 L325,410 L315,395 L310,378 L310,360 L315,342 L325,325 L340,310 L360,299 L385,292 Z"/>
+                                </g>
                                 
-                                <!-- Molise -->
-                                <path class="region-path" data-region="molise" d="M220,240 L235,235 L245,245 L240,255 L225,260 L215,250 Z" />
+                                <g id="IT67" class="region-path" data-region="molise">
+                                    <path d="M450,440 L480,437 L505,440 L525,447 L540,457 L550,470 L555,484 L555,499 L550,513 L540,525 L525,534 L505,540 L480,543 L450,543 L425,540 L405,534 L390,525 L380,513 L375,499 L375,484 L380,470 L390,457 L405,447 L425,440 Z"/>
+                                </g>
                                 
-                                <!-- Campania -->
-                                <path class="region-path" data-region="campania" d="M180,250 L210,245 L225,255 L230,270 L220,285 L205,290 L190,285 L175,275 L170,260 Z" />
+                                <g id="IT72" class="region-path" data-region="campania">
+                                    <path d="M200,462 L230,459 L260,459 L285,462 L305,469 L320,479 L330,492 L335,506 L335,521 L330,535 L320,547 L305,556 L285,562 L260,565 L230,565 L200,562 L175,556 L155,547 L140,535 L130,521 L125,506 L125,492 L130,479 L140,469 L155,462 L175,459 Z"/>
+                                </g>
                                 
-                                <!-- Puglia -->
-                                <path class="region-path" data-region="apulia" d="M225,260 L255,255 L270,265 L275,280 L270,295 L260,310 L245,315 L230,310 L220,295 L215,280 Z" />
+                                <g id="IT75" class="region-path" data-region="apulia">
+                                    <path d="M480,437 L520,434 L555,437 L585,444 L610,455 L630,470 L645,488 L655,508 L660,529 L660,550 L655,571 L645,590 L630,606 L610,619 L585,629 L555,636 L520,640 L480,640 L445,636 L415,629 L390,619 L370,606 L355,590 L345,571 L340,550 L340,529 L345,508 L355,488 L370,470 L390,455 L415,444 L445,437 Z"/>
+                                </g>
                                 
-                                <!-- Basilicata -->
-                                <path class="region-path" data-region="basilicata" d="M205,290 L230,285 L245,295 L240,310 L225,315 L210,310 L200,300 Z" />
+                                <g id="IT77" class="region-path" data-region="basilicata">
+                                    <path d="M335,521 L365,518 L390,521 L410,528 L425,538 L435,551 L440,565 L440,580 L435,594 L425,606 L410,615 L390,621 L365,624 L335,624 L310,621 L290,615 L275,606 L265,594 L260,580 L260,565 L265,551 L275,538 L290,528 L310,521 Z"/>
+                                </g>
                                 
-                                <!-- Calabria -->
-                                <path class="region-path" data-region="calabria" d="M220,315 L240,310 L250,320 L255,335 L250,350 L245,365 L235,380 L225,375 L215,360 L210,345 L205,330 Z" />
+                                <g id="IT78" class="region-path" data-region="calabria">
+                                    <path d="M340,550 L370,547 L395,550 L415,557 L430,567 L440,580 L445,594 L445,609 L440,623 L430,636 L415,646 L395,653 L370,657 L340,657 L315,653 L295,646 L280,636 L270,623 L265,609 L265,594 L270,580 L280,567 L295,557 L315,550 Z"/>
+                                </g>
                                 
-                                <!-- Sicilia -->
-                                <path class="region-path" data-region="sicily" d="M180,380 L220,375 L260,380 L280,390 L285,405 L275,420 L250,425 L220,420 L190,415 L170,410 L160,395 Z" />
+                                <g id="IT82" class="region-path" data-region="sicily">
+                                    <path d="M140,580 L220,577 L295,580 L365,587 L430,598 L485,613 L535,632 L570,655 L590,681 L595,708 L585,734 L560,757 L520,776 L470,791 L415,802 L355,809 L295,812 L235,809 L180,802 L130,791 L85,776 L45,757 L15,734 L5,708 L10,681 L25,655 L50,632 L85,613 L125,598 Z"/>
+                                </g>
                                 
-                                <!-- Sardegna -->
-                                <path class="region-path" data-region="sardinia" d="M50,250 L80,245 L95,255 L100,270 L95,285 L90,300 L85,315 L80,330 L75,345 L70,360 L65,375 L55,390 L45,385 L40,370 L35,355 L30,340 L35,325 L40,310 L45,295 L50,280 L55,265 Z" />
+                                <g id="IT88" class="region-path" data-region="sardinia">
+                                    <path d="M30,220 L70,217 L105,220 L135,227 L160,238 L180,253 L195,271 L205,291 L210,312 L210,333 L205,354 L195,374 L180,392 L160,407 L135,419 L105,428 L70,433 L30,433 L-5,428 L-35,419 L-60,407 L-80,392 L-95,374 L-105,354 L-110,333 L-110,312 L-105,291 L-95,271 L-80,253 L-60,238 L-35,227 L-5,220 Z"/>
+                                </g>
                             </svg>
                         </div>
                         
                         <div class="map-sidebar">
                             <div class="region-header">
-                                <img class="region-flag" id="regionFlag" src="" alt="Region Flag">
-                                <h2 class="region-name" id="regionName">Select a region</h2>
+                                <img class="region-flag" id="regionFlag" src="" alt="Bölge Bayrağı">
+                                <h2 class="region-name" id="regionName">Bir bölge seçin</h2>
                             </div>
                             
                             <div class="region-stats">
                                 <div class="stat-card">
-                                    <div class="stat-label">Population</div>
+                                    <div class="stat-label">Nüfus</div>
                                     <div class="stat-value" id="population">-</div>
                                 </div>
                                 <div class="stat-card">
-                                    <div class="stat-label">Area</div>
+                                    <div class="stat-label">Alan</div>
                                     <div class="stat-value" id="area">-</div>
                                 </div>
                                 <div class="stat-card">
-                                    <div class="stat-label">Capital</div>
+                                    <div class="stat-label">Başkent</div>
                                     <div class="stat-value" id="capital">-</div>
                                 </div>
                                 <div class="stat-card">
-                                    <div class="stat-label">Universities</div>
+                                    <div class="stat-label">Üniversiteler</div>
                                     <div class="stat-value" id="universityCount">-</div>
                                 </div>
                             </div>
                             
                             <div class="universities-section">
-                                <h3 class="universities-title">Universities in this region</h3>
+                                <h3 class="universities-title">Bu bölgedeki üniversiteler</h3>
                                 <ul class="university-list" id="universityList">
                                     <li style="text-align: center; color: var(--text-muted); padding: 2rem;">
-                                        Select a region on the map to explore its universities
+                                        Üniversitelerini keşfetmek için haritadan bir bölge seçin
                                     </li>
                                 </ul>
                             </div>
@@ -1184,435 +1206,135 @@
         </div>
 
         <footer>
-            <p>© 2024 Education Portal. All rights reserved. | Empowering minds, shaping futures.</p>
+            <p>© 2025 Eğitim Portalı. Tüm hakları saklıdır. | Zihinleri güçlendiriyor, geleceği şekillendiriyoruz.</p>
         </footer>
     </div>
 
     <script>
-        // Predefined credentials
+        // Önceden tanımlanmış kimlik bilgileri
         const validCredentials = [
-            { username: "teacher", password: "teacher123", role: "teacher" },
-            { username: "student1", password: "student123", role: "student" },
-            { username: "student2", password: "student123", role: "student" }
+            { username: "ogretmen", password: "ogretmen123", role: "ogretmen" },
+            { username: "ogrenci1", password: "ogrenci123", role: "ogrenci" },
+            { username: "ogrenci2", password: "ogrenci123", role: "ogrenci" }
         ];
 
-        // Region data with all original information
+        // Tüm orijinal bilgilerle bölge verileri - Türkçe çevrildi
         const regionData = {
             piedmont: {
                 name: "Piemonte",
-                population: "4.4 million",
-                area: "25,402 km²",
-                capital: "Turin",
+                population: "4.4 milyon",
+                area: "25.402 km²",
+                capital: "Torino",
                 flag: "https://upload.wikimedia.org/wikipedia/commons/9/9b/Flag_of_Piedmont.svg",
                 universities: [
-                    { name: "University of Turin", location: "Turin", type: "Public" },
-                    { name: "Polytechnic University of Turin", location: "Turin", type: "Public" },
-                    { name: "University of Eastern Piedmont", location: "Alessandria, Novara, Vercelli", type: "Public" }
+                    { name: "Torino Üniversitesi", location: "Torino", type: "Devlet" },
+                    { name: "Torino Politeknik Üniversitesi", location: "Torino", type: "Devlet" },
+                    { name: "Doğu Piemonte Üniversitesi", location: "Alessandria, Novara, Vercelli", type: "Devlet" }
                 ]
             },
             aosta: {
                 name: "Valle d'Aosta",
-                population: "128,000",
-                area: "3,263 km²",
+                population: "128.000",
+                area: "3.263 km²",
                 capital: "Aosta",
                 flag: "https://upload.wikimedia.org/wikipedia/commons/9/91/Flag_of_the_Valle_d%27Aosta_Region.svg",
                 universities: [
-                    { name: "University of Valle d'Aosta", location: "Aosta", type: "Public" }
+                    { name: "Valle d'Aosta Üniversitesi", location: "Aosta", type: "Devlet" }
                 ]
             },
             lombardy: {
                 name: "Lombardia",
-                population: "10 million",
-                area: "23,844 km²",
-                capital: "Milan",
+                population: "10 milyon",
+                area: "23.844 km²",
+                capital: "Milano",
                 flag: "https://upload.wikimedia.org/wikipedia/commons/a/a2/Flag_of_Lombardy.svg",
                 universities: [
-                    { name: "University of Milan", location: "Milan", type: "Public" },
-                    { name: "Polytechnic University of Milan", location: "Milan", type: "Public" },
-                    { name: "University of Milan-Bicocca", location: "Milan", type: "Public" },
-                    { name: "University of Pavia", location: "Pavia", type: "Public" },
-                    { name: "University of Bergamo", location: "Bergamo", type: "Public" },
-                    { name: "University of Brescia", location: "Brescia", type: "Public" },
-                    { name: "Catholic University of the Sacred Heart", location: "Milan", type: "Private" },
-                    { name: "Bocconi University", location: "Milan", type: "Private" }
+                    { name: "Milano Üniversitesi", location: "Milano", type: "Devlet" },
+                    { name: "Milano Politeknik Üniversitesi", location: "Milano", type: "Devlet" },
+                    { name: "Milano-Bicocca Üniversitesi", location: "Milano", type: "Devlet" },
+                    { name: "Pavia Üniversitesi", location: "Pavia", type: "Devlet" },
+                    { name: "Bergamo Üniversitesi", location: "Bergamo", type: "Devlet" },
+                    { name: "Brescia Üniversitesi", location: "Brescia", type: "Devlet" },
+                    { name: "Kutsal Kalp Katolik Üniversitesi", location: "Milano", type: "Özel" },
+                    { name: "Bocconi Üniversitesi", location: "Milano", type: "Özel" }
                 ]
             },
             trentino: {
                 name: "Trentino-Alto Adige",
-                population: "1.1 million",
-                area: "13,607 km²",
+                population: "1.1 milyon",
+                area: "13.607 km²",
                 capital: "Trento",
                 flag: "https://upload.wikimedia.org/wikipedia/commons/a/a0/Flag_of_Trentino-Alto_Adige.svg",
                 universities: [
-                    { name: "University of Trento", location: "Trento", type: "Public" },
-                    { name: "Free University of Bozen-Bolzano", location: "Bolzano", type: "Public" }
+                    { name: "Trento Üniversitesi", location: "Trento", type: "Devlet" },
+                    { name: "Bozen-Bolzano Özgür Üniversitesi", location: "Bolzano", type: "Devlet" }
                 ]
             },
             veneto: {
                 name: "Veneto",
-                population: "4.9 million",
-                area: "18,399 km²",
-                capital: "Venice",
+                population: "4.9 milyon",
+                area: "18.399 km²",
+                capital: "Venedik",
                 flag: "https://upload.wikimedia.org/wikipedia/commons/1/19/Flag_of_Veneto.svg",
                 universities: [
-                    { name: "University of Padua", location: "Padua", type: "Public" },
-                    { name: "Ca' Foscari University of Venice", location: "Venice", type: "Public" },
-                    { name: "University of Verona", location: "Verona", type: "Public" },
-                    { name: "IUAV University of Venice", location: "Venice", type: "Public" },
-                    { name: "University of Venice for Foreigners", location: "Venice", type: "Public" }
+                    { name: "Padova Üniversitesi", location: "Padova", type: "Devlet" },
+                    { name: "Ca' Foscari Venedik Üniversitesi", location: "Venedik", type: "Devlet" },
+                    { name: "Verona Üniversitesi", location: "Verona", type: "Devlet" },
+                    { name: "IUAV Venedik Üniversitesi", location: "Venedik", type: "Devlet" },
+                    { name: "Yabancılar için Venedik Üniversitesi", location: "Venedik", type: "Devlet" }
                 ]
             },
             friuli: {
                 name: "Friuli-Venezia Giulia",
-                population: "1.2 million",
-                area: "7,858 km²",
+                population: "1.2 milyon",
+                area: "7.858 km²",
                 capital: "Trieste",
                 flag: "https://upload.wikimedia.org/wikipedia/commons/b/b7/Flag_of_Friuli-Venezia_Giulia.svg",
                 universities: [
-                    { name: "University of Trieste", location: "Trieste", type: "Public" },
-                    { name: "University of Udine", location: "Udine", type: "Public" }
+                    { name: "Trieste Üniversitesi", location: "Trieste", type: "Devlet" },
+                    { name: "Udine Üniversitesi", location: "Udine", type: "Devlet" }
                 ]
             },
             liguria: {
                 name: "Liguria",
-                population: "1.6 million",
-                area: "5,422 km²",
-                capital: "Genoa",
+                population: "1.6 milyon",
+                area: "5.422 km²",
+                capital: "Cenova",
                 flag: "https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_Liguria.svg",
                 universities: [
-                    { name: "University of Genoa", location: "Genoa", type: "Public" }
+                    { name: "Cenova Üniversitesi", location: "Cenova", type: "Devlet" }
                 ]
             },
             emilia: {
                 name: "Emilia-Romagna",
-                population: "4.5 million",
-                area: "22,446 km²",
+                population: "4.5 milyon",
+                area: "22.446 km²",
                 capital: "Bologna",
                 flag: "https://upload.wikimedia.org/wikipedia/commons/3/30/Flag_of_Emilia-Romagna.svg",
                 universities: [
-                    { name: "University of Bologna", location: "Bologna", type: "Public" },
-                    { name: "University of Modena and Reggio Emilia", location: "Modena, Reggio Emilia", type: "Public" },
-                    { name: "University of Parma", location: "Parma", type: "Public" },
-                    { name: "University of Ferrara", location: "Ferrara", type: "Public" },
-                    { name: "University of Forlì", location: "Forlì", type: "Public" }
+                    { name: "Bologna Üniversitesi", location: "Bologna", type: "Devlet" },
+                    { name: "Modena ve Reggio Emilia Üniversitesi", location: "Modena, Reggio Emilia", type: "Devlet" },
+                    { name: "Parma Üniversitesi", location: "Parma", type: "Devlet" },
+                    { name: "Ferrara Üniversitesi", location: "Ferrara", type: "Devlet" },
+                    { name: "Forlì Üniversitesi", location: "Forlì", type: "Devlet" }
                 ]
             },
             tuscany: {
                 name: "Toscana",
-                population: "3.7 million",
-                area: "22,987 km²",
-                capital: "Florence",
+                population: "3.7 milyon",
+                area: "22.987 km²",
+                capital: "Floransa",
                 flag: "https://upload.wikimedia.org/wikipedia/commons/0/0c/Flag_of_Tuscany.svg",
                 universities: [
-                    { name: "University of Florence", location: "Florence", type: "Public" },
-                    { name: "University of Pisa", location: "Pisa", type: "Public" },
-                    { name: "University of Siena", location: "Siena", type: "Public" },
-                    { name: "Sant'Anna School of Advanced Studies", location: "Pisa", type: "Public" },
-                    { name: "Scuola Normale Superiore di Pisa", location: "Pisa", type: "Public" },
-                    { name: "University for Foreigners of Siena", location: "Siena", type: "Public" }
+                    { name: "Floransa Üniversitesi", location: "Floransa", type: "Devlet" },
+                    { name: "Pisa Üniversitesi", location: "Pisa", type: "Devlet" },
+                    { name: "Siena Üniversitesi", location: "Siena", type: "Devlet" },
+                    { name: "Sant'Anna İleri Çalışmalar Okulu", location: "Pisa", type: "Devlet" },
+                    { name: "Pisa Scuola Normale Superiore", location: "Pisa", type: "Devlet" },
+                    { name: "Siena Yabancılar Üniversitesi", location: "Siena", type: "Devlet" }
                 ]
             },
             umbria: {
                 name: "Umbria",
-                population: "882,000",
-                area: "8,456 km²",
-                capital: "Perugia",
-                flag: "https://upload.wikimedia.org/wikipedia/commons/7/73/Flag_of_Umbria.svg",
-                universities: [
-                    { name: "University of Perugia", location: "Perugia", type: "Public" },
-                    { name: "University for Foreigners of Perugia", location: "Perugia", type: "Public" }
-                ]
-            },
-            marche: {
-                name: "Marche",
-                population: "1.5 million",
-                area: "9,366 km²",
-                capital: "Ancona",
-                flag: "https://upload.wikimedia.org/wikipedia/commons/2/23/Flag_of_Marche.svg",
-                universities: [
-                    { name: "Polytechnic University of Marche", location: "Ancona", type: "Public" },
-                    { name: "University of Macerata", location: "Macerata", type: "Public" },
-                    { name: "University of Camerino", location: "Camerino", type: "Public" },
-                    { name: "University of Urbino", location: "Urbino", type: "Public" }
-                ]
-            },
-            lazio: {
-                name: "Lazio",
-                population: "5.9 million",
-                area: "17,236 km²",
-                capital: "Rome",
-                flag: "https://upload.wikimedia.org/wikipedia/commons/b/b5/Flag_of_Lazio.svg",
-                universities: [
-                    { name: "Sapienza University of Rome", location: "Rome", type: "Public" },
-                    { name: "University of Rome Tor Vergata", location: "Rome", type: "Public" },
-                    { name: "Roma Tre University", location: "Rome", type: "Public" },
-                    { name: "University of Tuscia", location: "Viterbo", type: "Public" },
-                    { name: "LUISS University", location: "Rome", type: "Private" },
-                    { name: "John Cabot University", location: "Rome", type: "Private" }
-                ]
-            },
-            abruzzo: {
-                name: "Abruzzo",
-                population: "1.3 million",
-                area: "10,763 km²",
-                capital: "L'Aquila",
-                flag: "https://upload.wikimedia.org/wikipedia/commons/1/18/Flag_of_Abruzzo.svg",
-                universities: [
-                    { name: "University of L'Aquila", location: "L'Aquila", type: "Public" },
-                    { name: "Gabriele d'Annunzio University", location: "Chieti, Pescara", type: "Public" },
-                    { name: "University of Teramo", location: "Teramo", type: "Public" }
-                ]
-            },
-            molise: {
-                name: "Molise",
-                population: "305,000",
-                area: "4,438 km²",
-                capital: "Campobasso",
-                flag: "https://upload.wikimedia.org/wikipedia/commons/b/b8/Flag_of_Molise.svg",
-                universities: [
-                    { name: "University of Molise", location: "Campobasso", type: "Public" }
-                ]
-            },
-            campania: {
-                name: "Campania",
-                population: "5.8 million",
-                area: "13,671 km²",
-                capital: "Naples",
-                flag: "https://upload.wikimedia.org/wikipedia/commons/a/a7/Flag_of_Campania.svg",
-                universities: [
-                    { name: "University of Naples Federico II", location: "Naples", type: "Public" },
-                    { name: "University of Campania Luigi Vanvitelli", location: "Caserta", type: "Public" },
-                    { name: "University of Salerno", location: "Salerno", type: "Public" },
-                    { name: "University of Sannio", location: "Benevento", type: "Public" },
-                    { name: "Suor Orsola Benincasa University", location: "Naples", type: "Public" }
-                ]
-            },
-            apulia: {
-                name: "Puglia",
-                population: "4.1 million",
-                area: "19,358 km²",
-                capital: "Bari",
-                flag: "https://upload.wikimedia.org/wikipedia/commons/4/46/Flag_of_Apulia.svg",
-                universities: [
-                    { name: "University of Bari", location: "Bari", type: "Public" },
-                    { name: "Polytechnic University of Bari", location: "Bari", type: "Public" },
-                    { name: "University of Foggia", location: "Foggia", type: "Public" },
-                    { name: "University of Salento", location: "Lecce", type: "Public" }
-                ]
-            },
-            basilicata: {
-                name: "Basilicata",
-                population: "562,000",
-                area: "9,995 km²",
-                capital: "Potenza",
-                flag: "https://upload.wikimedia.org/wikipedia/commons/9/9c/Flag_of_Basilicata.svg",
-                universities: [
-                    { name: "University of Basilicata", location: "Potenza, Matera", type: "Public" }
-                ]
-            },
-            calabria: {
-                name: "Calabria",
-                population: "1.9 million",
-                area: "15,081 km²",
-                capital: "Catanzaro",
-                flag: "https://upload.wikimedia.org/wikipedia/commons/1/16/Flag_of_Calabria.svg",
-                universities: [
-                    { name: "University of Calabria", location: "Rende", type: "Public" },
-                    { name: "Mediterranean University of Reggio Calabria", location: "Reggio Calabria", type: "Public" },
-                    { name: "University Magna Græcia", location: "Catanzaro", type: "Public" }
-                ]
-            },
-            sicily: {
-                name: "Sicilia",
-                population: "5 million",
-                area: "25,711 km²",
-                capital: "Palermo",
-                flag: "https://upload.wikimedia.org/wikipedia/commons/7/73/Flag_of_Sicily.svg",
-                universities: [
-                    { name: "University of Palermo", location: "Palermo", type: "Public" },
-                    { name: "University of Catania", location: "Catania", type: "Public" },
-                    { name: "University of Messina", location: "Messina", type: "Public" },
-                    { name: "University of Enna", location: "Enna", type: "Public" },
-                    { name: "Kore University of Enna", location: "Enna", type: "Private" }
-                ]
-            },
-            sardinia: {
-                name: "Sardegna",
-                population: "1.6 million",
-                area: "24,090 km²",
-                capital: "Cagliari",
-                flag: "https://upload.wikimedia.org/wikipedia/commons/3/35/Flag_of_Sardinia.svg",
-                universities: [
-                    { name: "University of Cagliari", location: "Cagliari", type: "Public" },
-                    { name: "University of Sassari", location: "Sassari", type: "Public" }
-                ]
-            }
-        };
-
-        let selectedRegion = null;
-
-        // Login function
-        function login() {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const errorElement = document.getElementById('loginError');
-
-            const user = validCredentials.find(
-                cred => cred.username === username && cred.password === password
-            );
-
-            if (user) {
-                document.getElementById('loginSection').style.display = 'none';
-                document.getElementById('portal').style.display = 'block';
-                errorElement.style.display = 'none';
-                showMapSection();
-            } else {
-                errorElement.style.display = 'block';
-            }
-        }
-
-        function logout() {
-            document.getElementById('portal').style.display = 'none';
-            document.getElementById('loginSection').style.display = 'flex';
-            document.getElementById('username').value = '';
-            document.getElementById('password').value = '';
-            showSection('dashboard');
-            updateActiveTab('dashboard');
-        }
-
-        function showSection(sectionId) {
-            const sections = document.querySelectorAll('.section');
-            sections.forEach(section => section.classList.remove('active'));
-            document.getElementById('mapSection').style.display = 'none';
-            
-            document.getElementById(sectionId).classList.add('active');
-            updateActiveTab(sectionId);
-        }
-
-        function showMapSection() {
-            const sections = document.querySelectorAll('.section');
-            sections.forEach(section => section.classList.remove('active'));
-            
-            document.getElementById('mapSection').style.display = 'block';
-            updateActiveTab('italianUniversities');
-            
-            if (!selectedRegion) {
-                initializeMap();
-                displayRegionInfo('lombardy');
-            }
-        }
-
-        function updateActiveTab(sectionId) {
-            const tabs = document.querySelectorAll('.nav-item');
-            tabs.forEach(tab => tab.classList.remove('active-tab'));
-            
-            let tabIndex;
-            switch(sectionId) {
-                case 'dashboard': tabIndex = 0; break;
-                case 'lessons': tabIndex = 1; break;
-                case 'italianUniversities': tabIndex = 2; break;
-                case 'about': tabIndex = 3; break;
-            }
-            
-            if (tabIndex !== undefined) {
-                tabs[tabIndex].classList.add('active-tab');
-            }
-        }
-
-        function initializeMap() {
-            const regionPaths = document.querySelectorAll('.region-path');
-            
-            regionPaths.forEach(path => {
-                path.addEventListener('click', function() {
-                    const regionId = this.getAttribute('data-region');
-                    displayRegionInfo(regionId);
-                    
-                    // Update selected region visual state
-                    regionPaths.forEach(p => p.classList.remove('selected'));
-                    this.classList.add('selected');
-                });
-                
-                path.addEventListener('mouseenter', function() {
-                    if (!this.classList.contains('selected')) {
-                        this.style.transform = 'scale(1.02)';
-                    }
-                });
-                
-                path.addEventListener('mouseleave', function() {
-                    if (!this.classList.contains('selected')) {
-                        this.style.transform = 'scale(1)';
-                    }
-                });
-            });
-        }
-
-        function displayRegionInfo(regionId) {
-            const regionInfo = regionData[regionId];
-            selectedRegion = regionId;
-            
-            if (regionInfo) {
-                document.getElementById('regionName').textContent = regionInfo.name;
-                document.getElementById('regionFlag').src = regionInfo.flag;
-                document.getElementById('regionFlag').alt = `${regionInfo.name} Flag`;
-                document.getElementById('population').textContent = regionInfo.population;
-                document.getElementById('area').textContent = regionInfo.area;
-                document.getElementById('capital').textContent = regionInfo.capital;
-                document.getElementById('universityCount').textContent = regionInfo.universities.length;
-                
-                displayUniversities(regionId);
-            }
-        }
-
-        function displayUniversities(regionId) {
-            const universities = regionData[regionId]?.universities || [];
-            const universityList = document.getElementById('universityList');
-            
-            universityList.innerHTML = '';
-            
-            if (universities.length > 0) {
-                universities.forEach(univ => {
-                    const li = document.createElement('li');
-                    li.className = 'university-item';
-                    li.innerHTML = `
-                        <div class="university-name">${univ.name}</div>
-                        <div class="university-location">📍 ${univ.location}</div>
-                        <span class="university-type ${univ.type.toLowerCase()}">${univ.type}</span>
-                    `;
-                    universityList.appendChild(li);
-                });
-            } else {
-                const li = document.createElement('li');
-                li.style.textAlign = 'center';
-                li.style.color = 'var(--text-muted)';
-                li.style.padding = '2rem';
-                li.textContent = 'No universities found in this region';
-                universityList.appendChild(li);
-            }
-        }
-
-        // Initialize the portal
-        document.addEventListener('DOMContentLoaded', function() {
-            // Handle Enter key for login
-            document.getElementById('password').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    login();
-                }
-            });
-            
-            // Add floating animation elements
-            const loginContainer = document.getElementById('loginSection');
-            const floatingElements = loginContainer.querySelector('.floating-elements');
-            
-            // Create additional floating elements for enhanced visual effect
-            for (let i = 0; i < 8; i++) {
-                const element = document.createElement('div');
-                element.className = 'floating-element';
-                element.style.left = Math.random() * 100 + '%';
-                element.style.animationDelay = Math.random() * 6 + 's';
-                element.style.animationDuration = (4 + Math.random() * 4) + 's';
-                floatingElements.appendChild(element);
-            }
-        });
-    </script>
-</body>
-</html>
+                population: "882.000",
+                area: "8.456 km²",
