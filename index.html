@@ -4,29 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Education Portal</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #34495e;
-            --accent-color: #3498db;
-            --light-color: #ecf0f1;
-            --dark-color: #2c3e50;
-            --text-color: #333;
-            --text-light: #7f8c8d;
+            --primary-color: #1e293b;
+            --primary-light: #334155;
+            --accent-color: #3b82f6;
+            --accent-hover: #2563eb;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --error-color: #ef4444;
+            --background: #f8fafc;
+            --surface: #ffffff;
+            --surface-hover: #f1f5f9;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+            --border: #e2e8f0;
+            --border-light: #f1f5f9;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-accent: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
         }
         
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
         }
         
         body {
-            background-color: #f5f7fa;
-            color: var(--text-color);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--background);
+            color: var(--text-primary);
             line-height: 1.6;
+            overflow-x: hidden;
         }
         
         .container {
@@ -35,377 +50,567 @@
             min-height: 100vh;
         }
         
+        /* Header Styles */
         header {
-            background-color: var(--primary-color);
+            background: var(--gradient-primary);
             color: white;
-            padding: 1.5rem;
-            text-align: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
         }
         
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" fill-opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" fill-opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" fill-opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .logo {
+            height: 48px;
+            width: auto;
+            border-radius: 8px;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .header-title {
+            font-size: 1.875rem;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        /* Login Section */
         .login-container {
             display: flex;
             justify-content: center;
             align-items: center;
             flex-grow: 1;
             padding: 2rem;
-            background: linear-gradient(135deg, #f5f7fa 0%, #dfe6f0 100%);
+            background: var(--gradient-primary);
+            position: relative;
+        }
+        
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 0%, transparent 50%);
         }
         
         .login-box {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            background: var(--surface);
+            border-radius: 16px;
+            box-shadow: var(--shadow-xl);
             width: 100%;
-            max-width: 400px;
-            padding: 2.5rem;
-            text-align: center;
-            transform: translateY(-20px);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            max-width: 420px;
+            padding: 3rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            z-index: 1;
+            transform: translateY(0);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         .login-box:hover {
-            transform: translateY(-25px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl), 0 25px 50px -12px rgba(0,0,0,0.25);
         }
         
-        .login-box h2 {
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-            font-weight: 500;
+        .login-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
             font-size: 1.5rem;
+            font-weight: 600;
         }
         
         .form-group {
             margin-bottom: 1.5rem;
-            text-align: left;
         }
         
-        .form-group label {
+        .form-label {
             display: block;
             margin-bottom: 0.5rem;
-            color: var(--text-light);
-            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
             font-weight: 500;
         }
         
-        .form-group input {
+        .form-input {
             width: 100%;
-            padding: 0.8rem 1rem;
-            border: 1px solid #e0e0e0;
-            border-radius: 6px;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
             font-size: 1rem;
-            transition: all 0.3s ease;
+            transition: all 0.2s;
+            background: var(--surface);
         }
         
-        .form-group input:focus {
-            border-color: var(--accent-color);
+        .form-input:focus {
             outline: none;
-            box-shadow: 0 0 0 3px rgba(52,152,219,0.2);
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
         
-        .btn {
-            background-color: var(--accent-color);
+        .btn-primary {
+            width: 100%;
+            padding: 0.875rem 1.5rem;
+            background: var(--gradient-accent);
             color: white;
             border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 6px;
-            cursor: pointer;
+            border-radius: 8px;
             font-size: 1rem;
-            width: 100%;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            margin-top: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: var(--shadow-md);
         }
         
-        .btn:hover {
-            background-color: #2980b9;
-            transform: translateY(-2px);
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-lg);
         }
         
         .error-message {
-            color: #e74c3c;
+            color: var(--error-color);
             margin-top: 1rem;
             display: none;
             text-align: center;
-            font-size: 0.9rem;
+            font-size: 0.875rem;
+            padding: 0.5rem;
+            background: rgba(239, 68, 68, 0.1);
+            border-radius: 6px;
         }
         
+        /* Portal Navigation */
         .portal {
             display: none;
             width: 100%;
         }
         
         nav {
-            background-color: var(--secondary-color);
-            color: white;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
         }
         
         .nav-container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 0 1.5rem;
+            padding: 0 2rem;
         }
         
-        nav ul {
-            list-style-type: none;
+        .nav-list {
+            list-style: none;
             display: flex;
-            flex-wrap: wrap;
+            align-items: center;
         }
         
-        nav ul li {
-            padding: 1.2rem 1.8rem;
+        .nav-item {
+            padding: 1rem 1.5rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s;
             font-weight: 500;
-            font-size: 0.95rem;
+            color: var(--text-secondary);
             position: relative;
+            border-radius: 8px;
+            margin: 0.5rem 0.25rem;
         }
         
-        nav ul li:hover {
-            background-color: rgba(255,255,255,0.1);
+        .nav-item:hover {
+            background: var(--surface-hover);
+            color: var(--text-primary);
         }
         
-        .active-tab {
-            background-color: rgba(255,255,255,0.1);
+        .nav-item.active-tab {
+            color: var(--accent-color);
+            background: rgba(59, 130, 246, 0.1);
         }
         
-        .active-tab::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background-color: var(--accent-color);
+        .nav-item.logout {
+            margin-left: auto;
+            color: var(--error-color);
         }
         
+        .nav-item.logout:hover {
+            background: rgba(239, 68, 68, 0.1);
+        }
+        
+        /* Main Content */
         .main-content {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             width: 100%;
-            padding: 2rem 1.5rem;
+            padding: 2rem;
+            flex: 1;
         }
         
         .section {
             display: none;
+            animation: fadeIn 0.3s ease-in-out;
         }
         
-        .active {
+        .section.active {
             display: block;
         }
         
-        footer {
-            background-color: var(--primary-color);
-            color: white;
-            text-align: center;
-            padding: 1.5rem;
-            margin-top: auto;
-            font-size: 0.9rem;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
-        /* Map Section Styles */
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+        
+        .section-subtitle {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem 0;
+            color: var(--text-primary);
+        }
+        
+        /* Dashboard Cards */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .dashboard-card {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-light);
+            transition: all 0.2s;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1.25rem;
+        }
+        
+        .card-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        /* Table Styles */
+        .table-container {
+            background: var(--surface);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-light);
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .table th {
+            background: var(--surface-hover);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-light);
+            color: var(--text-secondary);
+        }
+        
+        .table tr:hover {
+            background: var(--surface-hover);
+        }
+        
+        /* Map Section */
         .map-section {
             display: none;
-            height: calc(100vh - 120px);
-        }
-        
-        #map-container {
-            display: flex;
-            height: 100%;
-            width: 100%;
-            border-radius: 8px;
+            height: calc(100vh - 200px);
+            background: var(--surface);
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-light);
         }
         
-        #italyMap {
+        .map-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        
+        .map-container {
+            display: flex;
+            height: calc(100% - 70px);
+        }
+        
+        .map-content {
             flex: 2;
+            position: relative;
+            background: #f8fafc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .italy-map {
+            width: 100%;
             height: 100%;
-            z-index: 1;
+            max-width: 600px;
+            max-height: 700px;
         }
         
         .map-sidebar {
             flex: 1;
-            background: white;
-            padding: 1.5rem;
+            padding: 2rem;
             overflow-y: auto;
-            border-left: 1px solid #eee;
-        }
-        
-        .map-title {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 1.2rem;
-            text-align: center;
-            font-size: 1.2rem;
-            font-weight: 500;
+            background: var(--surface);
+            border-left: 1px solid var(--border);
         }
         
         /* Region Info Styles */
-        .region-info {
-            margin-bottom: 2rem;
-        }
-        
         .region-header {
             display: flex;
             align-items: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: var(--surface-hover);
+            border-radius: 12px;
         }
         
         .region-flag {
-            width: 70px;
-            height: 45px;
+            width: 60px;
+            height: 40px;
             object-fit: cover;
-            border: 1px solid #eee;
-            margin-right: 1.2rem;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-radius: 6px;
+            margin-right: 1rem;
+            box-shadow: var(--shadow-sm);
         }
         
-        .region-title {
-            color: var(--primary-color);
-            margin: 0;
+        .region-name {
             font-size: 1.5rem;
-            font-weight: 600;
+            font-weight: 700;
+            color: var(--text-primary);
         }
         
         .region-stats {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
         
-        .stat-item {
-            background-color: #f8fafc;
+        .stat-card {
+            background: var(--surface-hover);
             padding: 1rem;
-            border-radius: 6px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border-radius: 8px;
+            text-align: center;
         }
         
         .stat-label {
-            font-size: 0.8rem;
-            color: var(--text-light);
+            font-size: 0.75rem;
+            color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.5px;
             margin-bottom: 0.5rem;
+            font-weight: 500;
         }
         
         .stat-value {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        
+        .universities-section {
+            margin-top: 2rem;
+        }
+        
+        .universities-title {
+            font-size: 1.25rem;
             font-weight: 600;
-            color: var(--primary-color);
-            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
         }
         
         .university-list {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
+            list-style: none;
         }
         
         .university-item {
+            background: var(--surface);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
             padding: 1rem;
-            border-bottom: 1px solid #f0f0f0;
-            transition: background-color 0.2s;
+            margin-bottom: 0.75rem;
+            transition: all 0.2s;
         }
         
         .university-item:hover {
-            background-color: #f8fafc;
+            transform: translateX(4px);
+            box-shadow: var(--shadow-md);
         }
         
         .university-name {
             font-weight: 600;
-            color: var(--primary-color);
+            color: var(--text-primary);
             margin-bottom: 0.5rem;
         }
         
         .university-location {
-            color: var(--text-light);
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
             margin-bottom: 0.5rem;
-        }
-        
-        .university-location svg {
-            margin-right: 0.5rem;
-            color: var(--accent-color);
         }
         
         .university-type {
             display: inline-block;
-            padding: 0.3rem 0.8rem;
-            background-color: #e6f2ff;
-            color: #0066cc;
+            padding: 0.25rem 0.75rem;
+            background: var(--accent-color);
+            color: white;
             border-radius: 12px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 500;
         }
         
-        .no-universities {
-            color: var(--text-light);
-            font-style: italic;
+        .university-type.private {
+            background: var(--warning-color);
+        }
+        
+        /* SVG Region Styles */
+        .region-path {
+            fill: #e2e8f0;
+            stroke: #cbd5e1;
+            stroke-width: 1;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .region-path:hover {
+            fill: #cbd5e1;
+            stroke: var(--accent-color);
+            stroke-width: 2;
+        }
+        
+        .region-path.selected {
+            fill: var(--accent-color);
+            stroke: var(--accent-hover);
+            stroke-width: 2;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--primary-color);
+            color: white;
             text-align: center;
             padding: 2rem;
+            margin-top: auto;
         }
         
-        /* Region Label Styles */
-        .region-label {
-            position: absolute;
-            background-color: rgba(255,255,255,0.85);
-            padding: 0.3rem 0.8rem;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--primary-color);
-            pointer-events: none;
-            z-index: 1000;
-            transform: translate(-50%, -50%);
-            white-space: nowrap;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            border: 1px solid rgba(0,0,0,0.1);
-        }
-        
-        @media (max-width: 992px) {
-            #map-container {
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .map-container {
                 flex-direction: column;
             }
             
-            #italyMap {
+            .map-content {
                 height: 400px;
             }
             
             .map-sidebar {
-                overflow-y: visible;
+                border-left: none;
+                border-top: 1px solid var(--border);
             }
         }
         
         @media (max-width: 768px) {
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .nav-list {
+                flex-wrap: wrap;
+            }
+            
+            .nav-item {
+                padding: 0.75rem 1rem;
+                font-size: 0.875rem;
+            }
+            
             .login-box {
                 padding: 2rem 1.5rem;
-            }
-            
-            nav ul li {
-                padding: 1rem 1.2rem;
-                font-size: 0.9rem;
-            }
-            
-            .main-content {
-                padding: 1.5rem 1rem;
+                margin: 1rem;
             }
             
             .region-header {
                 flex-direction: column;
-                align-items: flex-start;
+                text-align: center;
             }
             
             .region-flag {
                 margin-bottom: 1rem;
                 margin-right: 0;
+            }
+            
+            .region-stats {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -413,135 +618,286 @@
 <body>
     <div class="container">
         <header>
-            <h1>Education Portal</h1>
+            <div class="header-content">
+                <img src="https://r.resimlink.com/ZtgP_MypD4Q.png" alt="Logo" class="logo">
+                <h1 class="header-title">Education Portal</h1>
+            </div>
         </header>
 
+        <!-- Login Section -->
         <div class="login-container" id="loginSection">
             <div class="login-box">
-                <h2>Login to Your Account</h2>
+                <h2 class="login-title">Welcome Back</h2>
                 <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" placeholder="Enter your username">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" id="username" class="form-input" placeholder="Enter your username">
                 </div>
                 <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" placeholder="Enter your password">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" class="form-input" placeholder="Enter your password">
                 </div>
-                <button class="btn" onclick="login()">Login</button>
-                <p id="loginError" class="error-message">Invalid username or password!</p>
+                <button class="btn-primary" onclick="login()">Sign In</button>
+                <div id="loginError" class="error-message">Invalid username or password!</div>
             </div>
         </div>
 
+        <!-- Portal Content -->
         <div class="portal" id="portal">
             <nav>
                 <div class="nav-container">
-                    <ul>
-                        <li class="active-tab" onclick="showSection('dashboard')">Dashboard</li>
-                        <li onclick="showSection('lessons')">Lessons</li>
-                        <li onclick="showMapSection()">Italian Universities</li>
-                        <li onclick="showSection('about')">About Us</li>
-                        <li onclick="logout()" style="margin-left: auto;">Logout</li>
+                    <ul class="nav-list">
+                        <li class="nav-item active-tab" onclick="showSection('dashboard')">Dashboard</li>
+                        <li class="nav-item" onclick="showSection('lessons')">Lessons</li>
+                        <li class="nav-item" onclick="showMapSection()">Italian Universities</li>
+                        <li class="nav-item" onclick="showSection('about')">About Us</li>
+                        <li class="nav-item logout" onclick="logout()">Logout</li>
                     </ul>
                 </div>
             </nav>
 
             <div class="main-content">
+                <!-- Dashboard Section -->
                 <div class="section active" id="dashboard">
-                    <h2>Dashboard</h2>
-                    <p>Welcome to your education portal. Here you can access all your learning materials.</p>
+                    <h2 class="section-title">Dashboard</h2>
                     
-                    <h3>Your Upcoming Lessons</h3>
-                    <table>
-                        <tr>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Subject</th>
-                            <th>Teacher</th>
-                        </tr>
-                        <tr>
-                            <td>2023-11-10</td>
-                            <td>10:00 - 12:00</td>
-                            <td>Mathematics</td>
-                            <td>Mr. Smith</td>
-                        </tr>
-                        <tr>
-                            <td>2023-11-12</td>
-                            <td>09:00 - 11:00</td>
-                            <td>Science</td>
-                            <td>Ms. Johnson</td>
-                        </tr>
-                        <tr>
-                            <td>2023-11-15</td>
-                            <td>14:00 - 16:00</td>
-                            <td>History</td>
-                            <td>Mr. Brown</td>
-                        </tr>
-                    </table>
-                </div>
-
-                <div class="section" id="lessons">
-                    <h2>Lessons</h2>
-                    <p>Access your learning materials here.</p>
-                    
-                    <div style="margin-top: 2rem;">
-                        <h3>Mathematics</h3>
-                        <ul>
-                            <li><a href="#">Algebra Basics</a></li>
-                            <li><a href="#">Geometry Concepts</a></li>
-                            <li><a href="#">Calculus Introduction</a></li>
-                        </ul>
+                    <div class="dashboard-grid">
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6;">📚</div>
+                                <h3 class="card-title">Active Courses</h3>
+                            </div>
+                            <p style="color: var(--text-secondary);">You have 6 active courses this semester</p>
+                        </div>
                         
-                        <h3>Science</h3>
-                        <ul>
-                            <li><a href="#">Physics Fundamentals</a></li>
-                            <li><a href="#">Chemistry Basics</a></li>
-                            <li><a href="#">Biology Essentials</a></li>
-                        </ul>
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">📊</div>
+                                <h3 class="card-title">Progress</h3>
+                            </div>
+                            <p style="color: var(--text-secondary);">75% completion rate across all courses</p>
+                        </div>
+                        
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">🎯</div>
+                                <h3 class="card-title">Upcoming Exams</h3>
+                            </div>
+                            <p style="color: var(--text-secondary);">3 exams scheduled this month</p>
+                        </div>
+                    </div>
+
+                    <h3 class="section-subtitle">Upcoming Lessons</h3>
+                    <div class="table-container">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Subject</th>
+                                    <th>Teacher</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2023-11-10</td>
+                                    <td>10:00 - 12:00</td>
+                                    <td>Mathematics</td>
+                                    <td>Mr. Smith</td>
+                                </tr>
+                                <tr>
+                                    <td>2023-11-12</td>
+                                    <td>09:00 - 11:00</td>
+                                    <td>Science</td>
+                                    <td>Ms. Johnson</td>
+                                </tr>
+                                <tr>
+                                    <td>2023-11-15</td>
+                                    <td>14:00 - 16:00</td>
+                                    <td>History</td>
+                                    <td>Mr. Brown</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
-                <div class="section" id="about">
-                    <h2>About Us</h2>
-                    <p>We are committed to providing quality education to all our students.</p>
+                <!-- Lessons Section -->
+                <div class="section" id="lessons">
+                    <h2 class="section-title">Course Materials</h2>
                     
-                    <h3>Our Mission</h3>
-                    <p>To empower students through knowledge and critical thinking skills.</p>
+                    <div class="dashboard-grid">
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background: rgba(139, 69, 19, 0.1); color: #8b4513;">📐</div>
+                                <h3 class="card-title">Mathematics</h3>
+                            </div>
+                            <ul style="list-style: none; padding-left: 0; margin-top: 1rem;">
+                                <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-light);"><a href="#" style="color: var(--accent-color); text-decoration: none;">Algebra Basics</a></li>
+                                <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-light);"><a href="#" style="color: var(--accent-color); text-decoration: none;">Geometry Concepts</a></li>
+                                <li style="padding: 0.5rem 0;"><a href="#" style="color: var(--accent-color); text-decoration: none;">Calculus Introduction</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background: rgba(34, 197, 94, 0.1); color: #22c55e;">🔬</div>
+                                <h3 class="card-title">Science</h3>
+                            </div>
+                            <ul style="list-style: none; padding-left: 0; margin-top: 1rem;">
+                                <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-light);"><a href="#" style="color: var(--accent-color); text-decoration: none;">Physics Fundamentals</a></li>
+                                <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-light);"><a href="#" style="color: var(--accent-color); text-decoration: none;">Chemistry Basics</a></li>
+                                <li style="padding: 0.5rem 0;"><a href="#" style="color: var(--accent-color); text-decoration: none;">Biology Essentials</a></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background: rgba(168, 85, 247, 0.1); color: #a855f7;">📜</div>
+                                <h3 class="card-title">History</h3>
+                            </div>
+                            <ul style="list-style: none; padding-left: 0; margin-top: 1rem;">
+                                <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-light);"><a href="#" style="color: var(--accent-color); text-decoration: none;">Ancient Civilizations</a></li>
+                                <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border-light);"><a href="#" style="color: var(--accent-color); text-decoration: none;">Medieval Period</a></li>
+                                <li style="padding: 0.5rem 0;"><a href="#" style="color: var(--accent-color); text-decoration: none;">Modern Era</a></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
 
+                <!-- About Section -->
+                <div class="section" id="about">
+                    <h2 class="section-title">About Our Institution</h2>
+                    
+                    <div class="dashboard-grid">
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6;">🎯</div>
+                                <h3 class="card-title">Our Mission</h3>
+                            </div>
+                            <p style="color: var(--text-secondary); line-height: 1.6;">To empower students through innovative education, critical thinking, and comprehensive learning experiences that prepare them for future challenges.</p>
+                        </div>
+                        
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">👥</div>
+                                <h3 class="card-title">Our Community</h3>
+                            </div>
+                            <p style="color: var(--text-secondary); line-height: 1.6;">A diverse community of learners, educators, and researchers committed to academic excellence and personal growth.</p>
+                        </div>
+                        
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">🌟</div>
+                                <h3 class="card-title">Our Values</h3>
+                            </div>
+                            <p style="color: var(--text-secondary); line-height: 1.6;">Integrity, innovation, inclusivity, and excellence guide everything we do in our educational journey.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Map Section -->
                 <div class="map-section" id="mapSection">
-                    <h2 class="map-title">Italian Universities Map - 2024</h2>
-                    <div id="map-container">
-                        <div id="italyMap"></div>
+                    <div class="map-header">
+                        🎓 Italian Universities Interactive Map - 2024
+                    </div>
+                    <div class="map-container">
+                        <div class="map-content">
+                            <svg class="italy-map" viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Valle d'Aosta -->
+                                <path class="region-path" data-region="aosta" d="M85,85 L95,75 L110,80 L115,90 L105,100 L90,95 Z" />
+                                
+                                <!-- Piedmont -->
+                                <path class="region-path" data-region="piedmont" d="M70,95 L105,100 L115,90 L125,95 L130,110 L120,130 L110,140 L95,135 L80,125 L75,110 Z" />
+                                
+                                <!-- Liguria -->
+                                <path class="region-path" data-region="liguria" d="M80,125 L95,135 L110,140 L125,145 L130,155 L115,160 L100,155 L85,150 L75,145 Z" />
+                                
+                                <!-- Lombardy -->
+                                <path class="region-path" data-region="lombardy" d="M125,95 L155,90 L170,100 L175,115 L165,130 L150,135 L130,130 L120,115 Z" />
+                                
+                                <!-- Trentino-Alto Adige -->
+                                <path class="region-path" data-region="trentino" d="M155,90 L185,85 L195,95 L190,110 L180,120 L170,115 L165,100 Z" />
+                                
+                                <!-- Veneto -->
+                                <path class="region-path" data-region="veneto" d="M175,115 L205,110 L220,120 L225,135 L210,145 L195,140 L180,135 L170,125 Z" />
+                                
+                                <!-- Friuli-Venezia Giulia -->
+                                <path class="region-path" data-region="friuli" d="M220,120 L245,115 L255,125 L250,140 L235,145 L225,135 L215,125 Z" />
+                                
+                                <!-- Emilia-Romagna -->
+                                <path class="region-path" data-region="emilia" d="M130,155 L165,150 L195,155 L210,165 L205,180 L190,185 L170,180 L150,175 L135,170 Z" />
+                                
+                                <!-- Tuscany -->
+                                <path class="region-path" data-region="tuscany" d="M125,175 L155,170 L170,180 L175,195 L165,210 L150,215 L135,210 L125,195 Z" />
+                                
+                                <!-- Umbria -->
+                                <path class="region-path" data-region="umbria" d="M170,195 L190,190 L200,200 L195,215 L185,220 L175,215 L165,205 Z" />
+                                
+                                <!-- Marche -->
+                                <path class="region-path" data-region="marche" d="M195,180 L220,175 L235,185 L240,200 L230,215 L215,220 L200,215 L190,200 Z" />
+                                
+                                <!-- Lazio -->
+                                <path class="region-path" data-region="lazio" d="M150,215 L185,220 L200,230 L195,245 L180,250 L165,245 L155,235 L145,225 Z" />
+                                
+                                <!-- Abruzzo -->
+                                <path class="region-path" data-region="abruzzo" d="M200,215 L225,210 L240,220 L235,235 L220,240 L205,235 L195,225 Z" />
+                                
+                                <!-- Molise -->
+                                <path class="region-path" data-region="molise" d="M220,240 L235,235 L245,245 L240,255 L225,260 L215,250 Z" />
+                                
+                                <!-- Campania -->
+                                <path class="region-path" data-region="campania" d="M180,250 L210,245 L225,255 L230,270 L220,285 L205,290 L190,285 L175,275 L170,260 Z" />
+                                
+                                <!-- Apulia -->
+                                <path class="region-path" data-region="apulia" d="M225,260 L255,255 L270,265 L275,280 L270,295 L260,310 L245,315 L230,310 L220,295 L215,280 Z" />
+                                
+                                <!-- Basilicata -->
+                                <path class="region-path" data-region="basilicata" d="M205,290 L230,285 L245,295 L240,310 L225,315 L210,310 L200,300 Z" />
+                                
+                                <!-- Calabria -->
+                                <path class="region-path" data-region="calabria" d="M220,315 L240,310 L250,320 L255,335 L250,350 L245,365 L235,380 L225,375 L215,360 L210,345 L205,330 Z" />
+                                
+                                <!-- Sicily -->
+                                <path class="region-path" data-region="sicily" d="M180,380 L220,375 L260,380 L280,390 L285,405 L275,420 L250,425 L220,420 L190,415 L170,410 L160,395 Z" />
+                                
+                                <!-- Sardinia -->
+                                <path class="region-path" data-region="sardinia" d="M50,250 L80,245 L95,255 L100,270 L95,285 L90,300 L85,315 L80,330 L75,345 L70,360 L65,375 L55,390 L45,385 L40,370 L35,355 L30,340 L35,325 L40,310 L45,295 L50,280 L55,265 Z" />
+                            </svg>
+                        </div>
+                        
                         <div class="map-sidebar">
-                            <div class="region-info">
-                                <div class="region-header">
-                                    <img class="region-flag" id="regionFlag" src="" alt="Region Flag">
-                                    <h2 class="region-title" id="regionName">Select a region</h2>
+                            <div class="region-header">
+                                <img class="region-flag" id="regionFlag" src="" alt="Region Flag">
+                                <h2 class="region-name" id="regionName">Select a region</h2>
+                            </div>
+                            
+                            <div class="region-stats">
+                                <div class="stat-card">
+                                    <div class="stat-label">Population</div>
+                                    <div class="stat-value" id="population">-</div>
                                 </div>
-                                <div class="region-stats" id="regionStats">
-                                    <div class="stat-item">
-                                        <div class="stat-label">Population</div>
-                                        <div class="stat-value" id="population">-</div>
-                                    </div>
-                                    <div class="stat-item">
-                                        <div class="stat-label">Area</div>
-                                        <div class="stat-value" id="area">-</div>
-                                    </div>
-                                    <div class="stat-item">
-                                        <div class="stat-label">Capital</div>
-                                        <div class="stat-value" id="capital">-</div>
-                                    </div>
-                                    <div class="stat-item">
-                                        <div class="stat-label">Universities</div>
-                                        <div class="stat-value" id="universityCount">-</div>
-                                    </div>
+                                <div class="stat-card">
+                                    <div class="stat-label">Area</div>
+                                    <div class="stat-value" id="area">-</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-label">Capital</div>
+                                    <div class="stat-value" id="capital">-</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-label">Universities</div>
+                                    <div class="stat-value" id="universityCount">-</div>
                                 </div>
                             </div>
                             
-                            <h3 class="region-title">Universities</h3>
-                            <ul class="university-list" id="universityList">
-                                <li class="no-universities">Select a region on the map to see its universities</li>
-                            </ul>
+                            <div class="universities-section">
+                                <h3 class="universities-title">Universities in this region</h3>
+                                <ul class="university-list" id="universityList">
+                                    <li style="text-align: center; color: var(--text-muted); padding: 2rem;">
+                                        Select a region on the map to explore its universities
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -549,11 +905,10 @@
         </div>
 
         <footer>
-            <p>© 2023 Education Portal. All rights reserved.</p>
+            <p>© 2024 Education Portal. All rights reserved. | Empowering minds, shaping futures.</p>
         </footer>
     </div>
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
         // Predefined credentials
         const validCredentials = [
@@ -562,8 +917,7 @@
             { username: "student2", password: "student123", role: "student" }
         ];
 
-        // Map and region data
-        let map;
+        // Region data with all original information
         const regionData = {
             piedmont: {
                 name: "Piedmont",
@@ -571,7 +925,6 @@
                 area: "25,402 km²",
                 capital: "Turin",
                 flag: "https://upload.wikimedia.org/wikipedia/commons/9/9b/Flag_of_Piedmont.svg",
-                coordinates: [45.15, 7.85],
                 universities: [
                     { name: "University of Turin", location: "Turin", type: "Public" },
                     { name: "Polytechnic University of Turin", location: "Turin", type: "Public" },
@@ -584,7 +937,6 @@
                 area: "3,263 km²",
                 capital: "Aosta",
                 flag: "https://upload.wikimedia.org/wikipedia/commons/9/91/Flag_of_the_Valle_d%27Aosta_Region.svg",
-                coordinates: [45.737, 7.313],
                 universities: [
                     { name: "University of Valle d'Aosta", location: "Aosta", type: "Public" }
                 ]
@@ -595,7 +947,6 @@
                 area: "23,844 km²",
                 capital: "Milan",
                 flag: "https://upload.wikimedia.org/wikipedia/commons/a/a2/Flag_of_Lombardy.svg",
-                coordinates: [45.585, 9.93],
                 universities: [
                     { name: "University of Milan", location: "Milan", type: "Public" },
                     { name: "Polytechnic University of Milan", location: "Milan", type: "Public" },
@@ -613,7 +964,6 @@
                 area: "13,607 km²",
                 capital: "Trento",
                 flag: "https://upload.wikimedia.org/wikipedia/commons/a/a0/Flag_of_Trentino-Alto_Adige.svg",
-                coordinates: [46.36, 11.33],
                 universities: [
                     { name: "University of Trento", location: "Trento", type: "Public" },
                     { name: "Free University of Bozen-Bolzano", location: "Bolzano", type: "Public" }
@@ -625,7 +975,6 @@
                 area: "18,399 km²",
                 capital: "Venice",
                 flag: "https://upload.wikimedia.org/wikipedia/commons/1/19/Flag_of_Veneto.svg",
-                coordinates: [45.44, 11.85],
                 universities: [
                     { name: "University of Padua", location: "Padua", type: "Public" },
                     { name: "Ca' Foscari University of Venice", location: "Venice", type: "Public" },
@@ -640,7 +989,6 @@
                 area: "7,858 km²",
                 capital: "Trieste",
                 flag: "https://upload.wikimedia.org/wikipedia/commons/b/b7/Flag_of_Friuli-Venezia_Giulia.svg",
-                coordinates: [45.98, 13.38],
                 universities: [
                     { name: "University of Trieste", location: "Trieste", type: "Public" },
                     { name: "University of Udine", location: "Udine", type: "Public" }
@@ -652,7 +1000,6 @@
                 area: "5,422 km²",
                 capital: "Genoa",
                 flag: "https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_Liguria.svg",
-                coordinates: [44.45, 8.77],
                 universities: [
                     { name: "University of Genoa", location: "Genoa", type: "Public" }
                 ]
@@ -663,7 +1010,6 @@
                 area: "22,446 km²",
                 capital: "Bologna",
                 flag: "https://upload.wikimedia.org/wikipedia/commons/3/30/Flag_of_Emilia-Romagna.svg",
-                coordinates: [44.65, 10.92],
                 universities: [
                     { name: "University of Bologna", location: "Bologna", type: "Public" },
                     { name: "University of Modena and Reggio Emilia", location: "Modena, Reggio Emilia", type: "Public" },
@@ -678,7 +1024,6 @@
                 area: "22,987 km²",
                 capital: "Florence",
                 flag: "https://upload.wikimedia.org/wikipedia/commons/0/0c/Flag_of_Tuscany.svg",
-                coordinates: [43.77, 11.26],
                 universities: [
                     { name: "University of Florence", location: "Florence", type: "Public" },
                     { name: "University of Pisa", location: "Pisa", type: "Public" },
@@ -694,7 +1039,6 @@
                 area: "8,456 km²",
                 capital: "Perugia",
                 flag: "https://upload.wikimedia.org/wikipedia/commons/7/73/Flag_of_Umbria.svg",
-                coordinates: [43.11, 12.39],
                 universities: [
                     { name: "University of Perugia", location: "Perugia", type: "Public" },
                     { name: "University for Foreigners of Perugia", location: "Perugia", type: "Public" }
@@ -706,7 +1050,6 @@
                 area: "9,366 km²",
                 capital: "Ancona",
                 flag: "https://upload.wikimedia.org/wikipedia/commons/2/23/Flag_of_Marche.svg",
-                coordinates: [43.62, 13.52],
                 universities: [
                     { name: "Polytechnic University of Marche", location: "Ancona", type: "Public" },
                     { name: "University of Macerata", location: "Macerata", type: "Public" },
@@ -720,7 +1063,6 @@
                 area: "17,236 km²",
                 capital: "Rome",
                 flag: "https://upload.wikimedia.org/wikipedia/commons/b/b5/Flag_of_Lazio.svg",
-                coordinates: [41.89, 12.48],
                 universities: [
                     { name: "Sapienza University of Rome", location: "Rome", type: "Public" },
                     { name: "University of Rome Tor Vergata", location: "Rome", type: "Public" },
@@ -736,7 +1078,6 @@
                 area: "10,763 km²",
                 capital: "L'Aquila",
                 flag: "https://upload.wikimedia.org/wikipedia/commons/1/18/Flag_of_Abruzzo.svg",
-                coordinates: [42.35, 13.4],
                 universities: [
                     { name: "University of L'Aquila", location: "L'Aquila", type: "Public" },
                     { name: "Gabriele d'Annunzio University", location: "Chieti, Pescara", type: "Public" },
@@ -749,7 +1090,6 @@
                 area: "4,438 km²",
                 capital: "Campobasso",
                 flag: "https://upload.wikimedia.org/wikipedia/commons/b/b8/Flag_of_Molise.svg",
-                coordinates: [41.63, 14.61],
                 universities: [
                     { name: "University of Molise", location: "Campobasso", type: "Public" }
                 ]
@@ -760,7 +1100,6 @@
                 area: "13,671 km²",
                 capital: "Naples",
                 flag: "https://upload.wikimedia.org/wikipedia/commons/a/a7/Flag_of_Campania.svg",
-                coordinates: [40.84, 14.25],
                 universities: [
                     { name: "University of Naples Federico II", location: "Naples", type: "Public" },
                     { name: "University of Campania Luigi Vanvitelli", location: "Caserta", type: "Public" },
@@ -775,7 +1114,6 @@
                 area: "19,358 km²",
                 capital: "Bari",
                 flag: "https://upload.wikimedia.org/wikipedia/commons/4/46/Flag_of_Apulia.svg",
-                coordinates: [41.13, 16.87],
                 universities: [
                     { name: "University of Bari", location: "Bari", type: "Public" },
                     { name: "Polytechnic University of Bari", location: "Bari", type: "Public" },
@@ -789,7 +1127,6 @@
                 area: "9,995 km²",
                 capital: "Potenza",
                 flag: "https://upload.wikimedia.org/wikipedia/commons/9/9c/Flag_of_Basilicata.svg",
-                coordinates: [40.64, 15.81],
                 universities: [
                     { name: "University of Basilicata", location: "Potenza, Matera", type: "Public" }
                 ]
@@ -800,7 +1137,6 @@
                 area: "15,081 km²",
                 capital: "Catanzaro",
                 flag: "https://upload.wikimedia.org/wikipedia/commons/1/16/Flag_of_Calabria.svg",
-                coordinates: [38.91, 16.59],
                 universities: [
                     { name: "University of Calabria", location: "Rende", type: "Public" },
                     { name: "Mediterranean University of Reggio Calabria", location: "Reggio Calabria", type: "Public" },
@@ -813,7 +1149,6 @@
                 area: "25,711 km²",
                 capital: "Palermo",
                 flag: "https://upload.wikimedia.org/wikipedia/commons/7/73/Flag_of_Sicily.svg",
-                coordinates: [37.6, 14.02],
                 universities: [
                     { name: "University of Palermo", location: "Palermo", type: "Public" },
                     { name: "University of Catania", location: "Catania", type: "Public" },
@@ -828,7 +1163,6 @@
                 area: "24,090 km²",
                 capital: "Cagliari",
                 flag: "https://upload.wikimedia.org/wikipedia/commons/3/35/Flag_of_Sardinia.svg",
-                coordinates: [39.22, 9.11],
                 universities: [
                     { name: "University of Cagliari", location: "Cagliari", type: "Public" },
                     { name: "University of Sassari", location: "Sassari", type: "Public" }
@@ -836,27 +1170,24 @@
             }
         };
 
+        let selectedRegion = null;
+
         // Login function
         function login() {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
             const errorElement = document.getElementById('loginError');
 
-            // Check credentials
             const user = validCredentials.find(
                 cred => cred.username === username && cred.password === password
             );
 
             if (user) {
-                // Successful login
                 document.getElementById('loginSection').style.display = 'none';
                 document.getElementById('portal').style.display = 'block';
                 errorElement.style.display = 'none';
-                
-                // Show map section by default
                 showMapSection();
             } else {
-                // Failed login
                 errorElement.style.display = 'block';
             }
         }
@@ -866,50 +1197,34 @@
             document.getElementById('loginSection').style.display = 'flex';
             document.getElementById('username').value = '';
             document.getElementById('password').value = '';
-            
-            // Reset to dashboard view
             showSection('dashboard');
-            
-            // Reset active tab
-            const tabs = document.querySelectorAll('nav ul li');
-            tabs.forEach(tab => tab.classList.remove('active-tab'));
-            tabs[0].classList.add('active-tab');
+            updateActiveTab('dashboard');
         }
 
         function showSection(sectionId) {
-            // Hide all sections and map section
             const sections = document.querySelectorAll('.section');
             sections.forEach(section => section.classList.remove('active'));
             document.getElementById('mapSection').style.display = 'none';
             
-            // Show selected section
             document.getElementById(sectionId).classList.add('active');
-            
-            // Update active tab
             updateActiveTab(sectionId);
         }
 
         function showMapSection() {
-            // Hide all sections
             const sections = document.querySelectorAll('.section');
-            sections.forEach(section => {
-                section.classList.remove('active');
-            });
+            sections.forEach(section => section.classList.remove('active'));
             
-            // Show map section
             document.getElementById('mapSection').style.display = 'block';
-            
-            // Initialize map if not already done
-            if (!map) {
-                initItalianUniversitiesMap();
-            }
-            
-            // Update active tab
             updateActiveTab('italianUniversities');
+            
+            if (!selectedRegion) {
+                initializeMap();
+                displayRegionInfo('lombardy');
+            }
         }
 
         function updateActiveTab(sectionId) {
-            const tabs = document.querySelectorAll('nav ul li');
+            const tabs = document.querySelectorAll('.nav-item');
             tabs.forEach(tab => tab.classList.remove('active-tab'));
             
             let tabIndex;
@@ -925,48 +1240,38 @@
             }
         }
 
-        function initItalianUniversitiesMap() {
-            // Initialize the map
-            map = L.map('italyMap').setView([41.8719, 12.5674], 6);
+        function initializeMap() {
+            const regionPaths = document.querySelectorAll('.region-path');
             
-            // Add tile layer (OpenStreetMap)
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(map);
-            
-            // Add region labels and click handlers
-            Object.keys(regionData).forEach(regionId => {
-                const region = regionData[regionId];
+            regionPaths.forEach(path => {
+                path.addEventListener('click', function() {
+                    const regionId = this.getAttribute('data-region');
+                    displayRegionInfo(regionId);
+                    
+                    // Update selected region visual state
+                    regionPaths.forEach(p => p.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
                 
-                // Create a label for each region
-                const label = L.marker(region.coordinates, {
-                    icon: L.divIcon({
-                        className: 'region-label',
-                        html: region.name,
-                        iconSize: [100, 20]
-                    }),
-                    interactive: true,
-                    regionId: regionId
-                }).addTo(map);
+                path.addEventListener('mouseenter', function() {
+                    if (!this.classList.contains('selected')) {
+                        this.style.fill = '#cbd5e1';
+                    }
+                });
                 
-                // Add click event to show region info
-                label.on('click', function(e) {
-                    displayRegionInfo(this.options.regionId);
+                path.addEventListener('mouseleave', function() {
+                    if (!this.classList.contains('selected')) {
+                        this.style.fill = '#e2e8f0';
+                    }
                 });
             });
-            
-            // Display first region info by default
-            displayRegionInfo('lombardy');
-            
-            // Zoom to Lombardy by default
-            map.setView(regionData['lombardy'].coordinates, 8);
         }
 
         function displayRegionInfo(regionId) {
             const regionInfo = regionData[regionId];
+            selectedRegion = regionId;
             
             if (regionInfo) {
-                // Update region info
                 document.getElementById('regionName').textContent = regionInfo.name;
                 document.getElementById('regionFlag').src = regionInfo.flag;
                 document.getElementById('regionFlag').alt = `${regionInfo.name} Flag`;
@@ -975,11 +1280,7 @@
                 document.getElementById('capital').textContent = regionInfo.capital;
                 document.getElementById('universityCount').textContent = regionInfo.universities.length;
                 
-                // Update universities list
                 displayUniversities(regionId);
-                
-                // Zoom to the region on the map
-                map.setView(regionInfo.coordinates, 8);
             }
         }
 
@@ -987,7 +1288,6 @@
             const universities = regionData[regionId]?.universities || [];
             const universityList = document.getElementById('universityList');
             
-            // Clear current list
             universityList.innerHTML = '';
             
             if (universities.length > 0) {
@@ -996,23 +1296,30 @@
                     li.className = 'university-item';
                     li.innerHTML = `
                         <div class="university-name">${univ.name}</div>
-                        <div class="university-location">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
-                            </svg>
-                            ${univ.location}
-                        </div>
-                        <span class="university-type">${univ.type}</span>
+                        <div class="university-location">📍 ${univ.location}</div>
+                        <span class="university-type ${univ.type.toLowerCase()}">${univ.type}</span>
                     `;
                     universityList.appendChild(li);
                 });
             } else {
                 const li = document.createElement('li');
-                li.className = 'no-universities';
+                li.style.textAlign = 'center';
+                li.style.color = 'var(--text-muted)';
+                li.style.padding = '2rem';
                 li.textContent = 'No universities found in this region';
                 universityList.appendChild(li);
             }
         }
+
+        // Initialize the portal
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle Enter key for login
+            document.getElementById('password').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    login();
+                }
+            });
+        });
     </script>
 </body>
 </html>
