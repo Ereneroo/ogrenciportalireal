@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>İtalya Öğrenci Portalı</title>
+    <title>İtalya Öğrenci Danışmanlık Portalı</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -12,70 +13,83 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Arial', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
         }
 
-        .container {
+        .login-container {
             background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            padding: 40px;
             border-radius: 20px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            padding: 2rem;
-            max-width: 1200px;
-            width: 95%;
-            min-height: 80vh;
-            display: flex;
-            flex-direction: column;
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+            backdrop-filter: blur(10px);
+        }
+
+        .portal-container {
+            display: none;
+            background: white;
+            min-height: 100vh;
+            width: 100%;
         }
 
         .header {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 20px;
             text-align: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid #eee;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
-        .header h1 {
+        .nav-menu {
+            background: #ecf0f1;
+            padding: 15px;
+            text-align: center;
+            border-bottom: 2px solid #bdc3c7;
+        }
+
+        .nav-menu button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu button:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .nav-menu button.active {
+            background: #e74c3c;
+        }
+
+        .logo {
+            font-size: 28px;
+            margin-bottom: 30px;
             color: #2c3e50;
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .header p {
-            color: #7f8c8d;
-            font-size: 1.1rem;
-        }
-
-        .login-section {
-            display: block;
-            max-width: 400px;
-            margin: 0 auto;
-            padding: 2rem;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .login-section.hidden {
-            display: none;
+            font-weight: bold;
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 20px;
+            text-align: left;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 8px;
             color: #2c3e50;
             font-weight: 600;
         }
@@ -83,9 +97,9 @@
         .form-group input {
             width: 100%;
             padding: 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
             transition: border-color 0.3s ease;
         }
 
@@ -95,557 +109,519 @@
         }
 
         .login-btn {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
             border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
             cursor: pointer;
-            transition: transform 0.2s ease;
+            width: 100%;
+            margin-top: 20px;
+            transition: transform 0.3s ease;
         }
 
         .login-btn:hover {
             transform: translateY(-2px);
         }
 
-        .map-section {
-            display: none;
-            flex: 1;
-            text-align: center;
-        }
-
-        .map-section.visible {
-            display: block;
+        .error-message {
+            color: #e74c3c;
+            margin-top: 10px;
+            font-size: 14px;
         }
 
         .map-container {
-            background: white;
-            border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            margin-bottom: 2rem;
+            padding: 30px;
+            text-align: center;
         }
 
         .map-title {
+            font-size: 32px;
             color: #2c3e50;
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
+            margin-bottom: 20px;
+            font-weight: bold;
         }
 
-        .map-instruction {
+        .map-subtitle {
+            font-size: 16px;
             color: #7f8c8d;
-            margin-bottom: 2rem;
-            font-size: 1.1rem;
+            margin-bottom: 40px;
         }
 
-        #italyMap {
-            max-width: 100%;
+        #italy-map {
+            width: 100%;
+            max-width: 800px;
             height: auto;
-            border-radius: 10px;
+            margin: 0 auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
         .region {
-            fill: #e8f4f8;
-            stroke: #3498db;
-            stroke-width: 1.5;
+            fill: #27ae60;
+            stroke: #fff;
+            stroke-width: 2;
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
         .region:hover {
-            fill: #3498db;
-            stroke: #2980b9;
-            stroke-width: 2;
-            filter: drop-shadow(0 4px 8px rgba(52, 152, 219, 0.3));
+            fill: #2ecc71;
+            stroke-width: 3;
+            filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.3));
         }
 
-        .region.selected {
-            fill: #2980b9;
-            stroke: #1f618d;
-            stroke-width: 2.5;
-        }
-
-        .universities-panel {
-            display: none;
-            background: white;
-            border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            margin-top: 2rem;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .universities-panel.visible {
-            display: block;
-            animation: slideIn 0.3s ease-out;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .panel-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid #eee;
-        }
-
-        .panel-title {
-            color: #2c3e50;
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-
-        .close-btn {
-            background: #e74c3c;
+        .tooltip {
+            position: absolute;
+            text-align: center;
+            padding: 12px;
+            font: 14px sans-serif;
+            background: rgba(0, 0, 0, 0.8);
             color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: background 0.3s ease;
+            border-radius: 8px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
         }
 
-        .close-btn:hover {
-            background: #c0392b;
+        .university-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 20px;
+            width: 80%;
+            max-width: 600px;
+            max-height: 70vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            right: 20px;
+            top: 20px;
+        }
+
+        .close:hover {
+            color: #e74c3c;
+        }
+
+        .modal-title {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: bold;
         }
 
         .university-list {
-            display: grid;
-            gap: 1rem;
+            list-style: none;
         }
 
         .university-item {
             background: #f8f9fa;
-            padding: 1rem;
-            border-radius: 8px;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 10px;
             border-left: 4px solid #3498db;
             transition: transform 0.2s ease;
         }
 
         .university-item:hover {
             transform: translateX(5px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
         .university-name {
-            font-weight: 600;
+            font-weight: bold;
             color: #2c3e50;
-            margin-bottom: 0.5rem;
+            font-size: 16px;
         }
 
         .university-location {
             color: #7f8c8d;
-            font-size: 0.9rem;
+            font-size: 14px;
+            margin-top: 5px;
         }
 
-        .logout-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: #e74c3c;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: background 0.3s ease;
-        }
-
-        .logout-btn:hover {
-            background: #c0392b;
-        }
-
-        .error-message {
-            color: #e74c3c;
-            text-align: center;
-            margin-top: 1rem;
-            padding: 10px;
-            background: #ffeaea;
-            border-radius: 6px;
+        .content-section {
             display: none;
+            padding: 30px;
         }
 
-        .welcome-message {
-            background: #d5f4e6;
-            color: #2d5a3d;
-            padding: 1rem;
-            border-radius: 8px;
-            text-align: center;
-            margin-bottom: 2rem;
+        .content-section.active {
+            display: block;
         }
 
-        @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
-                margin: 10px;
-            }
-
-            .header h1 {
-                font-size: 2rem;
-            }
-
-            .map-container {
-                padding: 1rem;
-            }
-
-            .universities-panel {
-                padding: 1rem;
-            }
+        .contact-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <button class="logout-btn" onclick="logout()" style="display: none;">Çıkış Yap</button>
-        
+    <!-- Giriş Ekranı -->
+    <div class="login-container" id="loginContainer">
+        <div class="logo">🎓 İtalya Eğitim Danışmanlığı</div>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">Kullanıcı Adı</label>
+                <input type="text" id="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Şifre</label>
+                <input type="password" id="password" required>
+            </div>
+            <button type="submit" class="login-btn">Giriş Yap</button>
+            <div class="error-message" id="errorMessage"></div>
+        </form>
+    </div>
+
+    <!-- Portal Ana Sayfası -->
+    <div class="portal-container" id="portalContainer">
         <div class="header">
-            <h1>🇮🇹 İtalya Öğrenci Portalı</h1>
-            <p>İtalya üniversitelerini keşfedin ve eğitim yolculuğunuza başlayın</p>
+            <h1>🇮🇹 İtalya Üniversiteleri Rehberi</h1>
+            <p>İtalya'daki en iyi üniversiteleri keşfedin</p>
         </div>
 
-        <!-- Giriş Bölümü -->
-        <div class="login-section" id="loginSection">
-            <h2 style="text-align: center; margin-bottom: 2rem; color: #2c3e50;">Öğrenci Girişi</h2>
-            <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; font-size: 0.9rem; color: #495057;">
-                <strong>Demo Hesaplar:</strong><br>
-                • Kullanıcı: <code>student1</code> Şifre: <code>pass123</code><br>
-                • Kullanıcı: <code>admin</code> Şifre: <code>admin123</code><br>
-                • Kullanıcı: <code>demo</code> Şifre: <code>demo</code><br>
-                • Kullanıcı: <code>ogrenci</code> Şifre: <code>123456</code>
-            </div>
-            <form onsubmit="login(event)">
-                <div class="form-group">
-                    <label for="username">Kullanıcı Adı:</label>
-                    <input type="text" id="username" name="username" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Şifre:</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-                <button type="submit" class="login-btn">Giriş Yap</button>
-            </form>
-            <div class="error-message" id="errorMessage">
-                Kullanıcı adı veya şifre hatalı!
-            </div>
+        <div class="nav-menu">
+            <button class="nav-btn active" data-section="map">🗺️ Üniversite Haritası</button>
+            <button class="nav-btn" data-section="contact">📞 İletişim</button>
+            <button class="nav-btn" data-section="about">ℹ️ Hakkımızda</button>
+            <button onclick="logout()" style="background: #e74c3c;">🚪 Çıkış</button>
         </div>
 
         <!-- Harita Bölümü -->
-        <div class="map-section" id="mapSection">
-            <div class="welcome-message" id="welcomeMessage">
-                Hoş geldin! İtalya haritasından istediğin bölgeye tıklayarak o bölgedeki üniversiteleri görüntüleyebilirsin.
-            </div>
-            
+        <div class="content-section active" id="map-section">
             <div class="map-container">
                 <h2 class="map-title">İtalya Üniversiteleri Haritası</h2>
-                <p class="map-instruction">Bir bölgeye tıklayarak o bölgedeki üniversiteleri görüntüleyin</p>
-                
-                <svg id="italyMap" viewBox="0 0 1000 1200" xmlns="http://www.w3.org/2000/svg">
-                    <!-- İtalya Haritası SVG - Gerçek koordinatlar -->
-                    
-                    <!-- Valle d'Aosta -->
-                    <path class="region" data-region="Valle d'Aosta" d="M150,200 L180,190 L190,210 L200,220 L180,240 L160,235 L140,220 Z" />
-                    
-                    <!-- Piemonte -->
-                    <path class="region" data-region="Piemonte" d="M120,220 L200,210 L220,250 L240,280 L200,320 L180,350 L140,340 L120,300 L100,260 Z" />
-                    
-                    <!-- Liguria -->
-                    <path class="region" data-region="Liguria" d="M140,340 L200,330 L250,340 L280,350 L260,370 L220,380 L180,375 L140,365 Z" />
-                    
-                    <!-- Lombardia -->
-                    <path class="region" data-region="Lombardia" d="M200,200 L280,195 L320,210 L340,240 L330,280 L300,320 L260,340 L220,330 L200,300 Z" />
-                    
-                    <!-- Trentino-Alto Adige -->
-                    <path class="region" data-region="Trentino-Alto Adige" d="M280,180 L340,175 L380,190 L390,220 L370,250 L340,260 L310,250 L280,230 Z" />
-                    
-                    <!-- Veneto -->
-                    <path class="region" data-region="Veneto" d="M340,220 L420,210 L460,230 L480,260 L450,290 L420,310 L380,300 L350,280 Z" />
-                    
-                    <!-- Friuli-Venezia Giulia -->
-                    <path class="region" data-region="Friuli-Venezia Giulia" d="M460,200 L520,195 L540,220 L530,250 L500,270 L470,260 L450,240 Z" />
-                    
-                    <!-- Emilia-Romagna -->
-                    <path class="region" data-region="Emilia-Romagna" d="M280,320 L380,310 L450,320 L480,340 L460,380 L420,400 L380,390 L340,380 L300,360 Z" />
-                    
-                    <!-- Toscana -->
-                    <path class="region" data-region="Toscana" d="M260,380 L340,370 L380,390 L400,430 L380,480 L340,520 L300,510 L280,470 L260,430 Z" />
-                    
-                    <!-- Umbria -->
-                    <path class="region" data-region="Umbria" d="M380,430 L420,420 L440,450 L430,480 L410,500 L390,490 L370,460 Z" />
-                    
-                    <!-- Marche -->
-                    <path class="region" data-region="Marche" d="M430,390 L480,385 L500,410 L490,450 L470,480 L450,470 L430,440 Z" />
-                    
-                    <!-- Lazio -->
-                    <path class="region" data-region="Lazio" d="M340,520 L400,510 L430,530 L420,580 L390,620 L360,610 L330,580 L320,540 Z" />
-                    
-                    <!-- Abruzzo -->
-                    <path class="region" data-region="Abruzzo" d="M450,480 L490,475 L510,500 L500,530 L480,550 L460,540 L440,520 Z" />
-                    
-                    <!-- Molise -->
-                    <path class="region" data-region="Molise" d="M480,550 L510,545 L520,570 L510,590 L490,600 L470,590 L460,570 Z" />
-                    
-                    <!-- Campania -->
-                    <path class="region" data-region="Campania" d="M390,620 L440,610 L470,630 L460,680 L430,720 L400,710 L380,680 L370,650 Z" />
-                    
-                    <!-- Puglia -->
-                    <path class="region" data-region="Puglia" d="M490,600 L540,595 L580,620 L590,670 L580,720 L560,750 L540,740 L520,710 L500,680 L480,650 Z" />
-                    
-                    <!-- Basilicata -->
-                    <path class="region" data-region="Basilicata" d="M430,720 L480,710 L510,730 L500,760 L480,780 L460,770 L440,750 Z" />
-                    
-                    <!-- Calabria -->
-                    <path class="region" data-region="Calabria" d="M460,780 L490,775 L500,820 L490,880 L480,920 L470,960 L460,980 L450,960 L440,920 L430,880 L440,840 L450,800 Z" />
-                    
-                    <!-- Sicilia -->
-                    <path class="region" data-region="Sicilia" d="M320,980 L420,975 L480,990 L520,1000 L560,1010 L580,1040 L560,1080 L500,1100 L440,1090 L380,1080 L320,1070 L280,1050 L260,1020 L280,990 Z" />
-                    
-                    <!-- Sardegna -->
-                    <path class="region" data-region="Sardegna" d="M120,700 L180,695 L200,730 L210,780 L200,830 L180,880 L160,920 L140,950 L120,980 L100,950 L80,920 L70,880 L80,830 L90,780 L100,730 Z" />
-                </svg>
+                <p class="map-subtitle">Haritadaki bölgelere tıklayarak o bölgedeki üniversiteleri görüntüleyebilirsiniz</p>
+                <svg id="italy-map"></svg>
             </div>
+        </div>
 
-            <div class="universities-panel" id="universitiesPanel">
-                <div class="panel-header">
-                    <h3 class="panel-title" id="panelTitle">Bölge Üniversiteleri</h3>
-                    <button class="close-btn" onclick="closePanel()">Kapat</button>
-                </div>
-                <div class="university-list" id="universityList">
-                    <!-- Üniversiteler burada listelenecek -->
-                </div>
+        <!-- İletişim Bölümü -->
+        <div class="content-section" id="contact-section">
+            <h2>İletişim Bilgileri</h2>
+            <div class="contact-info">
+                <h3>📧 E-posta</h3>
+                <p>info@italyaeducation.com</p>
             </div>
+            <div class="contact-info">
+                <h3>📱 Telefon</h3>
+                <p>+90 212 XXX XX XX</p>
+            </div>
+            <div class="contact-info">
+                <h3>📍 Adres</h3>
+                <p>İstanbul, Türkiye</p>
+            </div>
+        </div>
+
+        <!-- Hakkımızda Bölümü -->
+        <div class="content-section" id="about-section">
+            <h2>Hakkımızda</h2>
+            <p>İtalya'da eğitim almak isteyen öğrencilere rehberlik eden profesyonel danışmanlık hizmetimiz ile hayalinizdeki üniversiteye kabul almanızı sağlıyoruz.</p>
         </div>
     </div>
 
+    <!-- Üniversite Modal -->
+    <div id="universityModal" class="university-modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 class="modal-title" id="modalTitle"></h2>
+            <ul class="university-list" id="universityList"></ul>
+        </div>
+    </div>
+
+    <!-- Tooltip -->
+    <div class="tooltip" id="tooltip"></div>
+
     <script>
-        // Demo kullanıcı verileri
+        // Kullanıcı bilgileri
         const users = {
             'student1': 'pass123',
             'student2': 'pass456',
-            'admin': 'admin123',
-            'test': 'test123',
-            'demo': 'demo',
-            'ogrenci': '123456'
+            'ogrenci1': 'sifre123',
+            'test': 'test'
         };
 
         // İtalya bölgeleri ve üniversiteleri
-        const italyUniversities = {
-            'Valle d\'Aosta': [
-                { name: 'Università della Valle d\'Aosta', location: 'Aosta' }
-            ],
+        const regionsData = {
             'Piemonte': [
                 { name: 'Università degli Studi di Torino', location: 'Torino' },
                 { name: 'Politecnico di Torino', location: 'Torino' },
-                { name: 'Università del Piemonte Orientale', location: 'Vercelli' },
-                { name: 'Università di Scienze Gastronomiche', location: 'Pollenzo' }
-            ],
-            'Liguria': [
-                { name: 'Università degli Studi di Genova', location: 'Genova' }
+                { name: 'Università del Piemonte Orientale', location: 'Vercelli' }
             ],
             'Lombardia': [
-                { name: 'Università Statale di Milano', location: 'Milano' },
                 { name: 'Università Bocconi', location: 'Milano' },
-                { name: 'Università Cattolica del Sacro Cuore', location: 'Milano' },
+                { name: 'Università Statale Milano', location: 'Milano' },
                 { name: 'Politecnico di Milano', location: 'Milano' },
-                { name: 'Università degli Studi di Pavia', location: 'Pavia' },
-                { name: 'Università degli Studi di Bergamo', location: 'Bergamo' },
-                { name: 'Università degli Studi di Brescia', location: 'Brescia' }
-            ],
-            'Trentino-Alto Adige': [
-                { name: 'Università degli Studi di Trento', location: 'Trento' },
-                { name: 'Libera Università di Bolzano', location: 'Bolzano' }
+                { name: 'Università Cattolica del Sacro Cuore', location: 'Milano' },
+                { name: 'Università di Bergamo', location: 'Bergamo' },
+                { name: 'Università di Pavia', location: 'Pavia' }
             ],
             'Veneto': [
-                { name: 'Università degli Studi di Padova', location: 'Padova' },
                 { name: 'Università Ca\' Foscari Venezia', location: 'Venezia' },
-                { name: 'Università degli Studi di Verona', location: 'Verona' },
-                { name: 'Università IUAV di Venezia', location: 'Venezia' }
-            ],
-            'Friuli-Venezia Giulia': [
-                { name: 'Università degli Studi di Udine', location: 'Udine' },
-                { name: 'Università degli Studi di Trieste', location: 'Trieste' }
-            ],
-            'Emilia-Romagna': [
-                { name: 'Università di Bologna', location: 'Bologna' },
-                { name: 'Università degli Studi di Modena e Reggio Emilia', location: 'Modena' },
-                { name: 'Università degli Studi di Parma', location: 'Parma' },
-                { name: 'Università degli Studi di Ferrara', location: 'Ferrara' }
-            ],
-            'Toscana': [
-                { name: 'Università degli Studi di Firenze', location: 'Firenze' },
-                { name: 'Università di Pisa', location: 'Pisa' },
-                { name: 'Università degli Studi di Siena', location: 'Siena' },
-                { name: 'Scuola Normale Superiore', location: 'Pisa' },
-                { name: 'Scuola Superiore Sant\'Anna', location: 'Pisa' }
-            ],
-            'Umbria': [
-                { name: 'Università degli Studi di Perugia', location: 'Perugia' },
-                { name: 'Università per Stranieri di Perugia', location: 'Perugia' }
-            ],
-            'Marche': [
-                { name: 'Università Politecnica delle Marche', location: 'Ancona' },
-                { name: 'Università degli Studi di Macerata', location: 'Macerata' },
-                { name: 'Università degli Studi di Urbino', location: 'Urbino' }
+                { name: 'Università di Padova', location: 'Padova' },
+                { name: 'Università di Verona', location: 'Verona' }
             ],
             'Lazio': [
                 { name: 'Sapienza Università di Roma', location: 'Roma' },
-                { name: 'Università degli Studi di Roma Tor Vergata', location: 'Roma' },
-                { name: 'Università Roma Tre', location: 'Roma' },
+                { name: 'Università di Roma Tor Vergata', location: 'Roma' },
                 { name: 'LUISS Guido Carli', location: 'Roma' },
-                { name: 'Università degli Studi della Tuscia', location: 'Viterbo' }
+                { name: 'Università Roma Tre', location: 'Roma' }
             ],
-            'Abruzzo': [
-                { name: 'Università degli Studi dell\'Aquila', location: 'L\'Aquila' },
-                { name: 'Università degli Studi di Chieti-Pescara', location: 'Chieti' },
-                { name: 'Università degli Studi di Teramo', location: 'Teramo' }
+            'Toscana': [
+                { name: 'Università di Firenze', location: 'Firenze' },
+                { name: 'Università di Pisa', location: 'Pisa' },
+                { name: 'Università di Siena', location: 'Siena' }
             ],
-            'Molise': [
-                { name: 'Università degli Studi del Molise', location: 'Campobasso' }
+            'Emilia-Romagna': [
+                { name: 'Università di Bologna', location: 'Bologna' },
+                { name: 'Università di Modena e Reggio Emilia', location: 'Modena' },
+                { name: 'Università di Parma', location: 'Parma' }
             ],
             'Campania': [
-                { name: 'Università degli Studi di Napoli Federico II', location: 'Napoli' },
-                { name: 'Università degli Studi di Napoli L\'Orientale', location: 'Napoli' },
-                { name: 'Università degli Studi della Campania Luigi Vanvitelli', location: 'Caserta' },
-                { name: 'Università degli Studi di Salerno', location: 'Salerno' }
-            ],
-            'Puglia': [
-                { name: 'Università degli Studi di Bari Aldo Moro', location: 'Bari' },
-                { name: 'Università del Salento', location: 'Lecce' },
-                { name: 'Università degli Studi di Foggia', location: 'Foggia' },
-                { name: 'Politecnico di Bari', location: 'Bari' }
-            ],
-            'Basilicata': [
-                { name: 'Università degli Studi della Basilicata', location: 'Potenza' }
-            ],
-            'Calabria': [
-                { name: 'Università della Calabria', location: 'Cosenza' },
-                { name: 'Università degli Studi Magna Græcia', location: 'Catanzaro' },
-                { name: 'Università Mediterranea di Reggio Calabria', location: 'Reggio Calabria' }
+                { name: 'Università Federico II', location: 'Napoli' },
+                { name: 'Università Parthenope', location: 'Napoli' },
+                { name: 'Università di Salerno', location: 'Salerno' }
             ],
             'Sicilia': [
-                { name: 'Università degli Studi di Palermo', location: 'Palermo' },
-                { name: 'Università degli Studi di Catania', location: 'Catania' },
-                { name: 'Università degli Studi di Messina', location: 'Messina' },
-                { name: 'Università Kore di Enna', location: 'Enna' }
+                { name: 'Università di Palermo', location: 'Palermo' },
+                { name: 'Università di Catania', location: 'Catania' },
+                { name: 'Università di Messina', location: 'Messina' }
+            ],
+            'Puglia': [
+                { name: 'Università di Bari', location: 'Bari' },
+                { name: 'Università del Salento', location: 'Lecce' }
+            ],
+            'Liguria': [
+                { name: 'Università di Genova', location: 'Genova' }
+            ],
+            'Marche': [
+                { name: 'Università Politecnica delle Marche', location: 'Ancona' }
+            ],
+            'Umbria': [
+                { name: 'Università di Perugia', location: 'Perugia' }
+            ],
+            'Abruzzo': [
+                { name: 'Università dell\'Aquila', location: 'L\'Aquila' }
+            ],
+            'Calabria': [
+                { name: 'Università della Calabria', location: 'Cosenza' }
             ],
             'Sardegna': [
-                { name: 'Università degli Studi di Cagliari', location: 'Cagliari' },
-                { name: 'Università degli Studi di Sassari', location: 'Sassari' }
+                { name: 'Università di Cagliari', location: 'Cagliari' }
+            ],
+            'Friuli-Venezia Giulia': [
+                { name: 'Università di Trieste', location: 'Trieste' }
+            ],
+            'Trentino-Alto Adige': [
+                { name: 'Università di Trento', location: 'Trento' }
+            ],
+            'Valle d\'Aosta': [
+                { name: 'Università della Valle d\'Aosta', location: 'Aosta' }
+            ],
+            'Molise': [
+                { name: 'Università del Molise', location: 'Campobasso' }
+            ],
+            'Basilicata': [
+                { name: 'Università della Basilicata', location: 'Potenza' }
             ]
         };
 
-        let currentUser = null;
+        // İtalya SVG path verileri (gerçek koordinatlar)
+        const italyRegions = {
+            'Piemonte': "M 158,85 L 158,62 L 143,62 L 143,48 L 128,48 L 128,33 L 113,33 L 113,48 L 98,48 L 98,85 L 113,85 L 113,100 L 128,100 L 128,115 L 143,115 L 143,130 L 158,130 Z",
+            'Lombardia': "M 158,85 L 203,85 L 203,70 L 218,70 L 218,55 L 233,55 L 233,70 L 248,70 L 248,85 L 263,85 L 263,100 L 248,100 L 248,115 L 233,115 L 233,130 L 218,130 L 218,145 L 203,145 L 203,130 L 188,130 L 188,115 L 173,115 L 173,100 L 158,100 Z",
+            'Veneto': "M 263,85 L 308,85 L 308,70 L 323,70 L 323,85 L 338,85 L 338,100 L 353,100 L 353,115 L 338,115 L 338,130 L 323,130 L 323,145 L 308,145 L 308,130 L 293,130 L 293,115 L 278,115 L 278,100 L 263,100 Z",
+            'Liguria': "M 98,130 L 143,130 L 143,145 L 158,145 L 158,160 L 173,160 L 173,175 L 158,175 L 158,190 L 143,190 L 143,175 L 128,175 L 128,160 L 113,160 L 113,145 L 98,145 Z",
+            'Toscana': "M 158,160 L 203,160 L 203,175 L 218,175 L 218,190 L 233,190 L 233,205 L 248,205 L 248,220 L 233,220 L 233,235 L 218,235 L 218,250 L 203,250 L 203,235 L 188,235 L 188,220 L 173,220 L 173,205 L 158,205 Z",
+            'Emilia-Romagna': "M 203,115 L 248,115 L 248,100 L 263,100 L 263,85 L 308,85 L 308,100 L 323,100 L 323,115 L 338,115 L 338,130 L 353,130 L 353,145 L 338,145 L 338,160 L 323,160 L 323,145 L 308,145 L 308,130 L 293,130 L 293,115 L 278,115 L 278,130 L 263,130 L 263,145 L 248,145 L 248,160 L 233,160 L 233,145 L 218,145 L 218,130 L 203,130 Z",
+            'Marche': "M 323,160 L 368,160 L 368,175 L 383,175 L 383,190 L 398,190 L 398,205 L 383,205 L 383,220 L 368,220 L 368,235 L 353,235 L 353,220 L 338,220 L 338,205 L 323,205 Z",
+            'Umbria': "M 248,205 L 293,205 L 293,220 L 308,220 L 308,235 L 323,235 L 323,250 L 308,250 L 308,265 L 293,265 L 293,250 L 278,250 L 278,235 L 263,235 L 263,220 L 248,220 Z",
+            'Lazio': "M 233,235 L 278,235 L 278,250 L 293,250 L 293,265 L 308,265 L 308,280 L 323,280 L 323,295 L 338,295 L 338,310 L 323,310 L 323,325 L 308,325 L 308,340 L 293,340 L 293,325 L 278,325 L 278,310 L 263,310 L 263,295 L 248,295 L 248,280 L 233,280 Z",
+            'Abruzzo': "M 338,220 L 383,220 L 383,235 L 398,235 L 398,250 L 413,250 L 413,265 L 398,265 L 398,280 L 383,280 L 383,295 L 368,295 L 368,280 L 353,280 L 353,265 L 338,265 Z",
+            'Molise': "M 383,280 L 428,280 L 428,295 L 443,295 L 443,310 L 428,310 L 428,325 L 413,325 L 413,310 L 398,310 L 398,295 L 383,295 Z",
+            'Campania': "M 323,325 L 368,325 L 368,340 L 383,340 L 383,355 L 398,355 L 398,370 L 413,370 L 413,385 L 398,385 L 398,400 L 383,400 L 383,385 L 368,385 L 368,370 L 353,370 L 353,355 L 338,355 L 338,340 L 323,340 Z",
+            'Puglia': "M 443,310 L 488,310 L 488,325 L 503,325 L 503,340 L 518,340 L 518,355 L 533,355 L 533,370 L 548,370 L 548,385 L 533,385 L 533,400 L 518,400 L 518,415 L 503,415 L 503,430 L 488,430 L 488,415 L 473,415 L 473,400 L 458,400 L 458,385 L 443,385 L 443,370 L 428,370 L 428,355 L 443,355 L 443,340 L 458,340 L 458,325 L 443,325 Z",
+            'Basilicata': "M 398,385 L 443,385 L 443,400 L 458,400 L 458,415 L 473,415 L 473,430 L 458,430 L 458,445 L 443,445 L 443,430 L 428,430 L 428,415 L 413,415 L 413,400 L 398,400 Z",
+            'Calabria': "M 443,430 L 488,430 L 488,445 L 503,445 L 503,460 L 518,460 L 518,475 L 533,475 L 533,490 L 548,490 L 548,505 L 533,505 L 533,520 L 518,520 L 518,535 L 503,535 L 503,550 L 488,550 L 488,535 L 473,535 L 473,520 L 458,520 L 458,505 L 443,505 L 443,490 L 458,490 L 458,475 L 473,475 L 473,460 L 458,460 L 458,445 L 443,445 Z",
+            'Sicilia': "M 398,535 L 443,535 L 443,550 L 458,550 L 458,565 L 473,565 L 473,580 L 488,580 L 488,595 L 503,595 L 503,610 L 518,610 L 518,625 L 503,625 L 503,640 L 488,640 L 488,625 L 473,625 L 473,610 L 458,610 L 458,595 L 443,595 L 443,580 L 428,580 L 428,565 L 413,565 L 413,550 L 398,550 Z",
+            'Sardegna': "M 113,295 L 158,295 L 158,310 L 173,310 L 173,325 L 188,325 L 188,340 L 203,340 L 203,355 L 218,355 L 218,370 L 233,370 L 233,385 L 248,385 L 248,400 L 263,400 L 263,415 L 278,415 L 278,430 L 293,430 L 293,445 L 278,445 L 278,460 L 263,460 L 263,475 L 248,475 L 248,490 L 233,490 L 233,505 L 218,505 L 218,520 L 203,520 L 203,535 L 188,535 L 188,550 L 173,550 L 173,535 L 158,535 L 158,520 L 143,520 L 143,505 L 128,505 L 128,490 L 113,490 L 113,475 L 98,475 L 98,460 L 83,460 L 83,445 L 68,445 L 68,430 L 53,430 L 53,415 L 38,415 L 38,400 L 23,400 L 23,385 L 8,385 L 8,370 L 23,370 L 23,355 L 38,355 L 38,340 L 53,340 L 53,325 L 68,325 L 68,310 L 83,310 L 83,295 L 98,295 L 98,310 L 113,310 Z",
+            'Friuli-Venezia Giulia': "M 353,85 L 398,85 L 398,70 L 413,70 L 413,85 L 428,85 L 428,100 L 413,100 L 413,115 L 398,115 L 398,130 L 383,130 L 383,115 L 368,115 L 368,100 L 353,100 Z",
+            'Trentino-Alto Adige': "M 248,55 L 293,55 L 293,40 L 308,40 L 308,55 L 323,55 L 323,70 L 338,70 L 338,85 L 323,85 L 323,100 L 308,100 L 308,85 L 293,85 L 293,70 L 278,70 L 278,55 L 263,55 L 263,70 L 248,70 Z",
+            'Valle d\'Aosta': "M 113,48 L 128,48 L 128,33 L 143,33 L 143,18 L 158,18 L 158,33 L 143,33 L 143,48 L 128,48 L 128,63 L 113,63 Z"
+        };
 
-        function login(event) {
-            event.preventDefault();
-            const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value.trim();
-            const errorMessage = document.getElementById('errorMessage');
-
-            // Debug için konsola yazdır
-            console.log('Girilen kullanıcı adı:', username);
-            console.log('Girilen şifre:', password);
-            console.log('Mevcut kullanıcılar:', Object.keys(users));
+        // Giriş formu
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorMsg = document.getElementById('errorMessage');
 
             if (users[username] && users[username] === password) {
-                currentUser = username;
-                document.getElementById('loginSection').classList.add('hidden');
-                document.getElementById('mapSection').classList.add('visible');
-                document.querySelector('.logout-btn').style.display = 'block';
-                document.getElementById('welcomeMessage').innerHTML = 
-                    `<strong>Hoş geldin ${username}!</strong> İtalya haritasından istediğin bölgeye tıklayarak o bölgedeki üniversiteleri görüntüleyebilirsin.`;
-                errorMessage.style.display = 'none';
+                document.getElementById('loginContainer').style.display = 'none';
+                document.getElementById('portalContainer').style.display = 'block';
+                initializeMap();
             } else {
-                errorMessage.style.display = 'block';
-                errorMessage.innerHTML = `
-                    Kullanıcı adı veya şifre hatalı!<br>
-                    <small style="color: #666; margin-top: 10px; display: block;">
-                        Demo hesaplar:<br>
-                        • student1 / pass123<br>
-                        • admin / admin123<br>
-                        • demo / demo<br>
-                        • ogrenci / 123456
-                    </small>
-                `;
+                errorMsg.textContent = 'Kullanıcı adı veya şifre hatalı!';
             }
-        }
+        });
 
+        // Menü navigasyonu
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const section = this.dataset.section;
+                
+                // Aktif buton değiştir
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                // Bölümleri gizle/göster
+                document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+                document.getElementById(section + '-section').classList.add('active');
+            });
+        });
+
+        // Çıkış fonksiyonu
         function logout() {
-            currentUser = null;
-            document.getElementById('loginSection').classList.remove('hidden');
-            document.getElementById('mapSection').classList.remove('visible');
-            document.querySelector('.logout-btn').style.display = 'none';
+            document.getElementById('portalContainer').style.display = 'none';
+            document.getElementById('loginContainer').style.display = 'flex';
             document.getElementById('username').value = '';
             document.getElementById('password').value = '';
-            closePanel();
+            document.getElementById('errorMessage').textContent = '';
         }
 
-        function showUniversities(regionName) {
-            const universities = italyUniversities[regionName] || [];
-            const panel = document.getElementById('universitiesPanel');
-            const title = document.getElementById('panelTitle');
-            const list = document.getElementById('universityList');
+        // Harita başlatma
+        function initializeMap() {
+            const svg = d3.select('#italy-map')
+                .attr('viewBox', '0 0 600 700')
+                .attr('preserveAspectRatio', 'xMidYMid meet');
 
-            // Önceki seçimi temizle
-            document.querySelectorAll('.region').forEach(region => {
-                region.classList.remove('selected');
+            // Tooltip
+            const tooltip = d3.select('#tooltip');
+
+            // Bölgeleri çiz
+            Object.keys(italyRegions).forEach(regionName => {
+                svg.append('path')
+                    .attr('d', italyRegions[regionName])
+                    .attr('class', 'region')
+                    .attr('data-region', regionName)
+                    .on('mouseover', function(event) {
+                        const regionName = this.getAttribute('data-region');
+                        const universityCount = regionsData[regionName] ? regionsData[regionName].length : 0;
+                        
+                        tooltip.transition()
+                            .duration(200)
+                            .style('opacity', .9);
+                        
+                        tooltip.html(`<strong>${regionName}</strong><br/>${universityCount} üniversite`)
+                            .style('left', (event.pageX + 10) + 'px')
+                            .style('top', (event.pageY - 28) + 'px');
+                    })
+                    .on('mouseout', function() {
+                        tooltip.transition()
+                            .duration(500)
+                            .style('opacity', 0);
+                    })
+                    .on('click', function() {
+                        const regionName = this.getAttribute('data-region');
+                        showUniversities(regionName);
+                    });
             });
+        }
 
-            // Seçili bölgeyi işaretle
-            document.querySelector(`[data-region="${regionName}"]`).classList.add('selected');
+        // Üniversiteleri göster
+        function showUniversities(regionName) {
+            const modal = document.getElementById('universityModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const universityList = document.getElementById('universityList');
 
-            title.textContent = `${regionName} Bölgesi Üniversiteleri`;
-            list.innerHTML = '';
+            modalTitle.textContent = regionName + ' Bölgesi Üniversiteleri';
+            universityList.innerHTML = '';
 
-            if (universities.length === 0) {
-                list.innerHTML = '<p style="color: #7f8c8d; text-align: center;">Bu bölgede kayıtlı üniversite bulunmamaktadır.</p>';
-            } else {
-                universities.forEach(university => {
-                    const universityItem = document.createElement('div');
-                    universityItem.className = 'university-item';
-                    universityItem.innerHTML = `
+            if (regionsData[regionName]) {
+                regionsData[regionName].forEach(university => {
+                    const li = document.createElement('li');
+                    li.className = 'university-item';
+                    li.innerHTML = `
                         <div class="university-name">${university.name}</div>
                         <div class="university-location">📍 ${university.location}</div>
                     `;
-                    list.appendChild(universityItem);
+                    universityList.appendChild(li);
                 });
+            } else {
+                const li = document.createElement('li');
+                li.className = 'university-item';
+                li.innerHTML = '<div class="university-name">Bu bölgede henüz üniversite bilgisi bulunmamaktadır.</div>';
+                universityList.appendChild(li);
             }
 
-            panel.classList.add('visible');
+            modal.style.display = 'block';
         }
 
-        function closePanel() {
-            document.getElementById('universitiesPanel').classList.remove('visible');
-            document.querySelectorAll('.region').forEach(region => {
-                region.classList.remove('selected');
-            });
-        }
-
-        // Harita tıklama olayları
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.region').forEach(region => {
-                region.addEventListener('click', function() {
-                    const regionName = this.getAttribute('data-region');
-                    showUniversities(regionName);
-                });
-            });
+        // Modal kapatma
+        document.querySelector('.close').addEventListener('click', function() {
+            document.getElementById('universityModal').style.display = 'none';
         });
+
+        // Modal dışına tıklayınca kapatma
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('universityModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Animasyonlar
+        window.addEventListener('load', function() {
+            document.querySelector('.login-container').style.animation = 'fadeIn 0.8s ease-in';
+        });
+
+        // CSS animasyonları için style ekleme
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(30px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            
+            @keyframes slideIn {
+                from { transform: translateX(-100%); }
+                to { transform: translateX(0); }
+            }
+            
+            .login-container {
+                animation: fadeIn 0.8s ease-in;
+            }
+            
+            .portal-container {
+                animation: slideIn 0.5s ease-out;
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
