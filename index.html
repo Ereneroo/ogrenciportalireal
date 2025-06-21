@@ -4,15 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Education Portal</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         * {
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         body {
             margin: 0;
             padding: 0;
-            background-color: #f5f5f5;
+            background-color: #f8f9fa;
+            color: #333;
         }
         .container {
             display: flex;
@@ -24,49 +26,61 @@
             color: white;
             padding: 1rem;
             text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         .login-container {
             display: flex;
             justify-content: center;
             align-items: center;
             flex-grow: 1;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         }
         .login-form {
             background-color: white;
             padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             width: 100%;
             max-width: 400px;
         }
         .login-form h2 {
             margin-top: 0;
             color: #2c3e50;
+            text-align: center;
         }
         .form-group {
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
-            color: #333;
+            color: #555;
+            font-weight: 500;
         }
         .form-group input {
             width: 100%;
             padding: 0.75rem;
             border: 1px solid #ddd;
-            border-radius: 4px;
+            border-radius: 6px;
             font-size: 1rem;
+            transition: border 0.3s;
+        }
+        .form-group input:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52,152,219,0.2);
         }
         button {
             background-color: #3498db;
             color: white;
             border: none;
             padding: 0.75rem 1.5rem;
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
             font-size: 1rem;
             width: 100%;
+            font-weight: 600;
+            transition: background-color 0.3s;
         }
         button:hover {
             background-color: #2980b9;
@@ -78,6 +92,10 @@
         nav {
             background-color: #34495e;
             color: white;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         nav ul {
             list-style-type: none;
@@ -87,112 +105,126 @@
             flex-wrap: wrap;
         }
         nav ul li {
-            padding: 1rem;
+            padding: 1rem 1.5rem;
             cursor: pointer;
+            white-space: nowrap;
+            transition: background-color 0.3s;
+            font-weight: 500;
         }
         nav ul li:hover {
             background-color: #2c3e50;
         }
+        .active-tab {
+            background-color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+        }
         .section {
             padding: 2rem;
             display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
         }
         .active {
             display: block;
-        }
-        .active-tab {
-            background-color: #2c3e50;
         }
         footer {
             background-color: #2c3e50;
             color: white;
             text-align: center;
-            padding: 1rem;
+            padding: 1.5rem;
             margin-top: auto;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
-        }
-        table, th, td {
-            border: 1px solid #ddd;
-        }
-        th, td {
-            padding: 0.75rem;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
         }
         
         /* Italian Universities Map Styles */
-        .map-container {
-            position: relative;
+        .map-section {
+            display: none;
+            padding: 0;
             width: 100%;
-            height: 500px;
-            margin-bottom: 30px;
-            background: #e6f2ff;
-            border-radius: 8px;
-            overflow: hidden;
+            height: calc(100vh - 120px);
+        }
+        
+        #map-container {
+            display: flex;
+            height: 100%;
+            width: 100%;
         }
         
         #italyMap {
-            width: 100%;
+            flex: 2;
             height: 100%;
-            object-fit: contain;
+            z-index: 1;
         }
         
-        .region {
-            position: absolute;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            opacity: 0.4;
-            background-color: #4a90e2;
-            border-radius: 3px;
-        }
-        
-        .region:hover {
-            opacity: 0.7;
-        }
-        
-        .region.active {
-            opacity: 0.8;
-            background-color: #e74c3c;
-            box-shadow: 0 0 5px rgba(0,0,0,0.5);
-        }
-        
-        .panel {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-        
-        .universities-container {
+        .map-sidebar {
             flex: 1;
-            min-width: 300px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 20px;
             background: white;
+            padding: 1.5rem;
+            overflow-y: auto;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+        }
+        
+        .region-info {
+            margin-bottom: 2rem;
+        }
+        
+        .region-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .region-flag {
+            width: 60px;
+            height: 40px;
+            object-fit: cover;
+            border: 1px solid #ddd;
+            margin-right: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         
         .region-title {
-            color: #003366;
-            margin-top: 0;
-            border-bottom: 2px solid #4a90e2;
-            padding-bottom: 10px;
+            color: #2c3e50;
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        
+        .region-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .stat-item {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-value {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1.1rem;
         }
         
         .university-list {
             list-style-type: none;
             padding: 0;
-            max-height: 400px;
-            overflow-y: auto;
+            margin: 0;
         }
         
         .university-item {
-            padding: 15px;
+            padding: 1rem;
             border-bottom: 1px solid #eee;
             transition: background-color 0.2s;
         }
@@ -202,84 +234,72 @@
         }
         
         .university-name {
-            font-weight: bold;
-            color: #003366;
-            margin-bottom: 5px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
         }
         
         .university-location {
             color: #666;
-            font-size: 0.9em;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .university-location svg {
+            margin-right: 0.5rem;
+            color: #3498db;
         }
         
         .university-type {
             display: inline-block;
-            padding: 2px 8px;
+            padding: 0.25rem 0.75rem;
             background-color: #e6f2ff;
             color: #0066cc;
             border-radius: 12px;
-            font-size: 0.8em;
-            margin-top: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
         }
         
         .no-universities {
             color: #999;
             font-style: italic;
             text-align: center;
-            padding: 20px;
+            padding: 2rem;
         }
         
-        .region-info {
-            flex: 1;
-            min-width: 300px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 20px;
-            background: white;
+        .map-title {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem;
+            margin: 0;
+            text-align: center;
+            font-size: 1.2rem;
         }
         
-        .region-flag {
-            max-width: 100px;
-            max-height: 60px;
-            margin-right: 15px;
-            border: 1px solid #ddd;
-        }
-        
-        .region-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        
-        .region-stats {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-        
-        .stat-item {
-            padding: 10px;
-            background-color: #f5f9ff;
-            border-radius: 5px;
-        }
-        
-        .stat-label {
-            font-size: 0.8em;
-            color: #666;
-        }
-        
-        .stat-value {
-            font-weight: bold;
-            color: #003366;
+        @media (max-width: 992px) {
+            #map-container {
+                flex-direction: column;
+            }
+            
+            #italyMap {
+                height: 400px;
+            }
+            
+            .map-sidebar {
+                overflow-y: visible;
+            }
         }
         
         @media (max-width: 768px) {
-            .panel {
-                flex-direction: column;
-            }
             nav ul li {
-                padding: 0.5rem;
+                padding: 0.75rem 1rem;
                 font-size: 0.9rem;
+            }
+            
+            .section {
+                padding: 1.5rem;
             }
         }
     </style>
@@ -302,7 +322,7 @@
                     <input type="password" id="password" placeholder="Enter your password">
                 </div>
                 <button onclick="login()">Login</button>
-                <p id="loginError" style="color: red; margin-top: 1rem; display: none;">Invalid username or password!</p>
+                <p id="loginError" style="color: red; margin-top: 1rem; display: none; text-align: center;">Invalid username or password!</p>
             </div>
         </div>
 
@@ -311,7 +331,7 @@
                 <ul>
                     <li class="active-tab" onclick="showSection('dashboard')">Dashboard</li>
                     <li onclick="showSection('lessons')">Lessons</li>
-                    <li onclick="showSection('italianUniversities')">Italian Universities</li>
+                    <li onclick="showMapSection()">Italian Universities</li>
                     <li onclick="showSection('about')">About Us</li>
                     <li onclick="showSection('contact')">Contact</li>
                     <li onclick="logout()" style="margin-left: auto;">Logout</li>
@@ -379,65 +399,39 @@
                 </div>
             </div>
 
-            <div class="section" id="italianUniversities">
-                <h2>Italian Universities Map</h2>
-                
-                <div class="map-container">
-                    <img id="italyMap" src="https://raw.githubusercontent.com/deldersveld/topojson/master/countries/italy/italy-regions.png" alt="Italy Map">
-                    
-                    <!-- These regions are positioned over Italy's map -->
-                    <div class="region" id="piedmont" style="top: 10%; left: 10%; width: 8%; height: 7%;"></div>
-                    <div class="region" id="aosta" style="top: 5%; left: 8%; width: 5%; height: 4%;"></div>
-                    <div class="region" id="lombardy" style="top: 15%; left: 15%; width: 10%; height: 12%;"></div>
-                    <div class="region" id="trentino" style="top: 10%; left: 20%; width: 8%; height: 8%;"></div>
-                    <div class="region" id="veneto" style="top: 15%; left: 25%; width: 10%; height: 12%;"></div>
-                    <div class="region" id="friuli" style="top: 15%; left: 35%; width: 8%; height: 8%;"></div>
-                    <div class="region" id="liguria" style="top: 20%; left: 8%; width: 6%; height: 8%;"></div>
-                    <div class="region" id="emilia" style="top: 25%; left: 18%; width: 10%; height: 12%;"></div>
-                    <div class="region" id="tuscany" style="top: 35%; left: 15%; width: 10%; height: 15%;"></div>
-                    <div class="region" id="umbria" style="top: 45%; left: 22%; width: 7%; height: 8%;"></div>
-                    <div class="region" id="marche" style="top: 45%; left: 28%; width: 8%; height: 10%;"></div>
-                    <div class="region" id="lazio" style="top: 50%; left: 20%; width: 10%; height: 12%;"></div>
-                    <div class="region" id="abruzzo" style="top: 55%; left: 30%; width: 8%; height: 10%;"></div>
-                    <div class="region" id="molise" style="top: 60%; left: 35%; width: 5%; height: 6%;"></div>
-                    <div class="region" id="campania" style="top: 65%; left: 25%; width: 10%; height: 12%;"></div>
-                    <div class="region" id="apulia" style="top: 65%; left: 35%; width: 12%; height: 15%;"></div>
-                    <div class="region" id="basilicata" style="top: 70%; left: 30%; width: 8%; height: 10%;"></div>
-                    <div class="region" id="calabria" style="top: 80%; left: 30%; width: 10%; height: 15%;"></div>
-                    <div class="region" id="sicily" style="top: 85%; left: 10%; width: 15%; height: 12%;"></div>
-                    <div class="region" id="sardinia" style="top: 35%; left: 2%; width: 12%; height: 20%;"></div>
-                </div>
-                
-                <div class="panel">
-                    <div class="region-info">
-                        <div class="region-header" id="regionHeader">
-                            <img class="region-flag" id="regionFlag" src="" alt="Region Flag">
-                            <h2 class="region-title" id="regionName">Select a region</h2>
-                        </div>
-                        <div class="region-stats" id="regionStats">
-                            <div class="stat-item">
-                                <div class="stat-label">Population</div>
-                                <div class="stat-value" id="population">-</div>
+            <div class="map-section" id="mapSection">
+                <h2 class="map-title">Italian Universities Map - 2024</h2>
+                <div id="map-container">
+                    <div id="italyMap"></div>
+                    <div class="map-sidebar">
+                        <div class="region-info">
+                            <div class="region-header">
+                                <img class="region-flag" id="regionFlag" src="" alt="Region Flag">
+                                <h2 class="region-title" id="regionName">Select a region</h2>
                             </div>
-                            <div class="stat-item">
-                                <div class="stat-label">Area</div>
-                                <div class="stat-value" id="area">-</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-label">Capital</div>
-                                <div class="stat-value" id="capital">-</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-label">Universities</div>
-                                <div class="stat-value" id="universityCount">-</div>
+                            <div class="region-stats" id="regionStats">
+                                <div class="stat-item">
+                                    <div class="stat-label">Population</div>
+                                    <div class="stat-value" id="population">-</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-label">Area</div>
+                                    <div class="stat-value" id="area">-</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-label">Capital</div>
+                                    <div class="stat-value" id="capital">-</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-label">Universities</div>
+                                    <div class="stat-value" id="universityCount">-</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="universities-container">
-                        <h2 class="region-title">Universities</h2>
+                        
+                        <h3 class="region-title">Universities</h3>
                         <ul class="university-list" id="universityList">
-                            <li class="no-universities">Select a region to see its universities</li>
+                            <li class="no-universities">Select a region on the map to see its universities</li>
                         </ul>
                     </div>
                 </div>
@@ -491,14 +485,290 @@
         </footer>
     </div>
 
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // Predefined credentials (you can change these and add more)
+        // Predefined credentials
         const validCredentials = [
             { username: "teacher", password: "teacher123", role: "teacher" },
             { username: "student1", password: "student123", role: "student" },
             { username: "student2", password: "student123", role: "student" }
         ];
 
+        // Map and region data
+        let map;
+        const regionData = {
+            piedmont: {
+                name: "Piedmont",
+                population: "4.4 million",
+                area: "25,402 km²",
+                capital: "Turin",
+                flag: "https://upload.wikimedia.org/wikipedia/commons/9/9b/Flag_of_Piedmont.svg",
+                coordinates: [45.15, 7.85],
+                universities: [
+                    { name: "University of Turin", location: "Turin", type: "Public" },
+                    { name: "Polytechnic University of Turin", location: "Turin", type: "Public" },
+                    { name: "University of Eastern Piedmont", location: "Alessandria, Novara, Vercelli", type: "Public" }
+                ]
+            },
+            aosta: {
+                name: "Aosta Valley",
+                population: "128,000",
+                area: "3,263 km²",
+                capital: "Aosta",
+                flag: "https://upload.wikimedia.org/wikipedia/commons/9/91/Flag_of_the_Valle_d%27Aosta_Region.svg",
+                coordinates: [45.737, 7.313],
+                universities: [
+                    { name: "University of Valle d'Aosta", location: "Aosta", type: "Public" }
+                ]
+            },
+            lombardy: {
+                name: "Lombardy",
+                population: "10 million",
+                area: "23,844 km²",
+                capital: "Milan",
+                flag: "https://upload.wikimedia.org/wikipedia/commons/a/a2/Flag_of_Lombardy.svg",
+                coordinates: [45.585, 9.93],
+                universities: [
+                    { name: "University of Milan", location: "Milan", type: "Public" },
+                    { name: "Polytechnic University of Milan", location: "Milan", type: "Public" },
+                    { name: "University of Milan-Bicocca", location: "Milan", type: "Public" },
+                    { name: "University of Pavia", location: "Pavia", type: "Public" },
+                    { name: "University of Bergamo", location: "Bergamo", type: "Public" },
+                    { name: "University of Brescia", location: "Brescia", type: "Public" },
+                    { name: "Catholic University of the Sacred Heart", location: "Milan", type: "Private" },
+                    { name: "Bocconi University", location: "Milan", type: "Private" }
+                ]
+            },
+            trentino: {
+                name: "Trentino-Alto Adige",
+                population: "1.1 million",
+                area: "13,607 km²",
+                capital: "Trento",
+                flag: "https://upload.wikimedia.org/wikipedia/commons/a/a0/Flag_of_Trentino-Alto_Adige.svg",
+                coordinates: [46.36, 11.33],
+                universities: [
+                    { name: "University of Trento", location: "Trento", type: "Public" },
+                    { name: "Free University of Bozen-Bolzano", location: "Bolzano", type: "Public" }
+                ]
+            },
+            veneto: {
+                name: "Veneto",
+                population: "4.9 million",
+                area: "18,399 km²",
+                capital: "Venice",
+                flag: "https://upload.wikimedia.org/wikipedia/commons/1/19/Flag_of_Veneto.svg",
+                coordinates: [45.44, 11.85],
+                universities: [
+                    { name: "University of Padua", location: "Padua", type: "Public" },
+                    { name: "Ca' Foscari University of Venice", location: "Venice", type: "Public" },
+                    { name: "University of Verona", location: "Verona", type: "Public" },
+                    { name: "IUAV University of Venice", location: "Venice", type: "Public" },
+                    { name: "University of Venice for Foreigners", location: "Venice", type: "Public" }
+                ]
+            },
+            friuli: {
+                name: "Friuli-Venezia Giulia",
+                population: "1.2 million",
+                area: "7,858 km²",
+                capital: "Trieste",
+                flag: "https://upload.wikimedia.org/wikipedia/commons/b/b7/Flag_of_Friuli-Venezia_Giulia.svg",
+                coordinates: [45.98, 13.38],
+                universities: [
+                    { name: "University of Trieste", location: "Trieste", type: "Public" },
+                    { name: "University of Udine", location: "Udine", type: "Public" }
+                ]
+            },
+            liguria: {
+                name: "Liguria",
+                population: "1.6 million",
+                area: "5,422 km²",
+                capital: "Genoa",
+                flag: "https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_Liguria.svg",
+                coordinates: [44.45, 8.77],
+                universities: [
+                    { name: "University of Genoa", location: "Genoa", type: "Public" }
+                ]
+            },
+            emilia: {
+                name: "Emilia-Romagna",
+                population: "4.5 million",
+                area: "22,446 km²",
+                capital: "Bologna",
+                flag: "https://upload.wikimedia.org/wikipedia/commons/3/30/Flag_of_Emilia-Romagna.svg",
+                coordinates: [44.65, 10.92],
+                universities: [
+                    { name: "University of Bologna", location: "Bologna", type: "Public" },
+                    { name: "University of Modena and Reggio Emilia", location: "Modena, Reggio Emilia", type: "Public" },
+                    { name: "University of Parma", location: "Parma", type: "Public" },
+                    { name: "University of Ferrara", location: "Ferrara", type: "Public" },
+                    { name: "University of Forlì", location: "Forlì", type: "Public" }
+                ]
+            },
+            tuscany: {
+                name: "Tuscany",
+                population: "3.7 million",
+                area: "22,987 km²",
+                capital: "Florence",
+                flag: "https://upload.wikimedia.org/wikipedia/commons/0/0c/Flag_of_Tuscany.svg",
+                coordinates: [43.77, 11.26],
+                universities: [
+                    { name: "University of Florence", location: "Florence", type: "Public" },
+                    { name: "University of Pisa", location: "Pisa", type: "Public" },
+                    { name: "University of Siena", location: "Siena", type: "Public" },
+                    { name: "Sant'Anna School of Advanced Studies", location: "Pisa", type: "Public" },
+                    { name: "Scuola Normale Superiore di Pisa", location: "Pisa", type: "Public" },
+                    { name: "University for Foreigners of Siena", location: "Siena", type: "Public" }
+                ]
+            },
+            umbria: {
+                name: "Umbria",
+                population: "882,000",
+                area: "8,456 km²",
+                capital: "Perugia",
+                flag: "https://upload.wikimedia.org/wikipedia/commons/7/73/Flag_of_Umbria.svg",
+                coordinates: [43.11, 12.39],
+                universities: [
+                    { name: "University of Perugia", location: "Perugia", type: "Public" },
+                    { name: "University for Foreigners of Perugia", location: "Perugia", type: "Public" }
+                ]
+            },
+            marche: {
+                name: "Marche",
+                population: "1.5 million",
+                area: "9,366 km²",
+                capital: "Ancona",
+                flag: "https://upload.wikimedia.org/wikipedia/commons/2/23/Flag_of_Marche.svg",
+                coordinates: [43.62, 13.52],
+                universities: [
+                    { name: "Polytechnic University of Marche", location: "Ancona", type: "Public" },
+                    { name: "University of Macerata", location: "Macerata", type: "Public" },
+                    { name: "University of Camerino", location: "Camerino", type: "Public" },
+                    { name: "University of Urbino", location: "Urbino", type: "Public" }
+                ]
+            },
+            lazio: {
+                name: "Lazio",
+                population: "5.9 million",
+                area: "17,236 km²",
+                capital: "Rome",
+                flag: "https://upload.wikimedia.org/wikipedia/commons/b/b5/Flag_of_Lazio.svg",
+                coordinates: [41.89, 12.48],
+                universities: [
+                    { name: "Sapienza University of Rome", location: "Rome", type: "Public" },
+                    { name: "University of Rome Tor Vergata", location: "Rome", type: "Public" },
+                    { name: "Roma Tre University", location: "Rome", type: "Public" },
+                    { name: "University of Tuscia", location: "Viterbo", type: "Public" },
+                    { name: "LUISS University", location: "Rome", type: "Private" },
+                    { name: "John Cabot University", location: "Rome", type: "Private" }
+                ]
+            },
+            abruzzo: {
+                name: "Abruzzo",
+                population: "1.3 million",
+                area: "10,763 km²",
+                capital: "L'Aquila",
+                flag: "https://upload.wikimedia.org/wikipedia/commons/1/18/Flag_of_Abruzzo.svg",
+                coordinates: [42.35, 13.4],
+                universities: [
+                    { name: "University of L'Aquila", location: "L'Aquila", type: "Public" },
+                    { name: "Gabriele d'Annunzio University", location: "Chieti, Pescara", type: "Public" },
+                    { name: "University of Teramo", location: "Teramo", type: "Public" }
+                ]
+            },
+            molise: {
+                name: "Molise",
+                population: "305,000",
+                area: "4,438 km²",
+                capital: "Campobasso",
+                flag: "https://upload.wikimedia.org/wikipedia/commons/b/b8/Flag_of_Molise.svg",
+                coordinates: [41.63, 14.61],
+                universities: [
+                    { name: "University of Molise", location: "Campobasso", type: "Public" }
+                ]
+            },
+            campania: {
+                name: "Campania",
+                population: "5.8 million",
+                area: "13,671 km²",
+                capital: "Naples",
+                flag: "https://upload.wikimedia.org/wikipedia/commons/a/a7/Flag_of_Campania.svg",
+                coordinates: [40.84, 14.25],
+                universities: [
+                    { name: "University of Naples Federico II", location: "Naples", type: "Public" },
+                    { name: "University of Campania Luigi Vanvitelli", location: "Caserta", type: "Public" },
+                    { name: "University of Salerno", location: "Salerno", type: "Public" },
+                    { name: "University of Sannio", location: "Benevento", type: "Public" },
+                    { name: "Suor Orsola Benincasa University", location: "Naples", type: "Public" }
+                ]
+            },
+            apulia: {
+                name: "Apulia",
+                population: "4.1 million",
+                area: "19,358 km²",
+                capital: "Bari",
+                flag: "https://upload.wikimedia.org/wikipedia/commons/4/46/Flag_of_Apulia.svg",
+                coordinates: [41.13, 16.87],
+                universities: [
+                    { name: "University of Bari", location: "Bari", type: "Public" },
+                    { name: "Polytechnic University of Bari", location: "Bari", type: "Public" },
+                    { name: "University of Foggia", location: "Foggia", type: "Public" },
+                    { name: "University of Salento", location: "Lecce", type: "Public" }
+                ]
+            },
+            basilicata: {
+                name: "Basilicata",
+                population: "562,000",
+                area: "9,995 km²",
+                capital: "Potenza",
+                flag: "https://upload.wikimedia.org/wikipedia/commons/9/9c/Flag_of_Basilicata.svg",
+                coordinates: [40.64, 15.81],
+                universities: [
+                    { name: "University of Basilicata", location: "Potenza, Matera", type: "Public" }
+                ]
+            },
+            calabria: {
+                name: "Calabria",
+                population: "1.9 million",
+                area: "15,081 km²",
+                capital: "Catanzaro",
+                flag: "https://upload.wikimedia.org/wikipedia/commons/1/16/Flag_of_Calabria.svg",
+                coordinates: [38.91, 16.59],
+                universities: [
+                    { name: "University of Calabria", location: "Rende", type: "Public" },
+                    { name: "Mediterranean University of Reggio Calabria", location: "Reggio Calabria", type: "Public" },
+                    { name: "University Magna Græcia", location: "Catanzaro", type: "Public" }
+                ]
+            },
+            sicily: {
+                name: "Sicily",
+                population: "5 million",
+                area: "25,711 km²",
+                capital: "Palermo",
+                flag: "https://upload.wikimedia.org/wikipedia/commons/7/73/Flag_of_Sicily.svg",
+                coordinates: [37.6, 14.02],
+                universities: [
+                    { name: "University of Palermo", location: "Palermo", type: "Public" },
+                    { name: "University of Catania", location: "Catania", type: "Public" },
+                    { name: "University of Messina", location: "Messina", type: "Public" },
+                    { name: "University of Enna", location: "Enna", type: "Public" },
+                    { name: "Kore University of Enna", location: "Enna", type: "Private" }
+                ]
+            },
+            sardinia: {
+                name: "Sardinia",
+                population: "1.6 million",
+                area: "24,090 km²",
+                capital: "Cagliari",
+                flag: "https://upload.wikimedia.org/wikipedia/commons/3/35/Flag_of_Sardinia.svg",
+                coordinates: [39.22, 9.11],
+                universities: [
+                    { name: "University of Cagliari", location: "Cagliari", type: "Public" },
+                    { name: "University of Sassari", location: "Sassari", type: "Public" }
+                ]
+            }
+        };
+
+        // Login function
         function login() {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
@@ -514,6 +784,9 @@
                 document.getElementById('loginSection').style.display = 'none';
                 document.getElementById('portal').style.display = 'block';
                 errorElement.style.display = 'none';
+                
+                // Show map section by default
+                showMapSection();
             } else {
                 // Failed login
                 errorElement.style.display = 'block';
@@ -536,14 +809,38 @@
         }
 
         function showSection(sectionId) {
-            // Hide all sections
+            // Hide all sections and map section
             const sections = document.querySelectorAll('.section');
             sections.forEach(section => section.classList.remove('active'));
+            document.getElementById('mapSection').style.display = 'none';
             
             // Show selected section
             document.getElementById(sectionId).classList.add('active');
             
             // Update active tab
+            updateActiveTab(sectionId);
+        }
+
+        function showMapSection() {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show map section
+            document.getElementById('mapSection').style.display = 'block';
+            
+            // Initialize map if not already done
+            if (!map) {
+                initItalianUniversitiesMap();
+            }
+            
+            // Update active tab
+            updateActiveTab('italianUniversities');
+        }
+
+        function updateActiveTab(sectionId) {
             const tabs = document.querySelectorAll('nav ul li');
             tabs.forEach(tab => tab.classList.remove('active-tab'));
             
@@ -576,331 +873,95 @@
             }
         }
 
-        // Comprehensive data for all Italian regions with their universities
-        const regionData = {
-            piedmont: {
-                name: "Piedmont",
-                population: "4.4 million",
-                area: "25,402 km²",
-                capital: "Turin",
-                flag: "https://upload.wikimedia.org/wikipedia/commons/9/9b/Flag_of_Piedmont.svg",
-                universities: [
-                    { name: "University of Turin", location: "Turin", type: "Public" },
-                    { name: "Polytechnic University of Turin", location: "Turin", type: "Public" },
-                    { name: "University of Eastern Piedmont", location: "Alessandria, Novara, Vercelli", type: "Public" }
-                ]
-            },
-            aosta: {
-                name: "Aosta Valley",
-                population: "128,000",
-                area: "3,263 km²",
-                capital: "Aosta",
-                flag: "https://upload.wikimedia.org/wikipedia/commons/9/91/Flag_of_the_Valle_d%27Aosta_Region.svg",
-                universities: [
-                    { name: "University of Valle d'Aosta", location: "Aosta", type: "Public" }
-                ]
-            },
-            lombardy: {
-                name: "Lombardy",
-                population: "10 million",
-                area: "23,844 km²",
-                capital: "Milan",
-                flag: "https://upload.wikimedia.org/wikipedia/commons/a/a2/Flag_of_Lombardy.svg",
-                universities: [
-                    { name: "University of Milan", location: "Milan", type: "Public" },
-                    { name: "Polytechnic University of Milan", location: "Milan", type: "Public" },
-                    { name: "University of Milan-Bicocca", location: "Milan", type: "Public" },
-                    { name: "University of Pavia", location: "Pavia", type: "Public" },
-                    { name: "University of Bergamo", location: "Bergamo", type: "Public" },
-                    { name: "University of Brescia", location: "Brescia", type: "Public" },
-                    { name: "Catholic University of the Sacred Heart", location: "Milan", type: "Private" },
-                    { name: "Bocconi University", location: "Milan", type: "Private" }
-                ]
-            },
-            trentino: {
-                name: "Trentino-Alto Adige",
-                population: "1.1 million",
-                area: "13,607 km²",
-                capital: "Trento",
-                flag: "https://upload.wikimedia.org/wikipedia/commons/a/a0/Flag_of_Trentino-Alto_Adige.svg",
-                universities: [
-                    { name: "University of Trento", location: "Trento", type: "Public" },
-                    { name: "Free University of Bozen-Bolzano", location: "Bolzano", type: "Public" }
-                ]
-            },
-            veneto: {
-                name: "Veneto",
-                population: "4.9 million",
-                area: "18,399 km²",
-                capital: "Venice",
-                flag: "https://upload.wikimedia.org/wikipedia/commons/1/19/Flag_of_Veneto.svg",
-                universities: [
-                    { name: "University of Padua", location: "Padua", type: "Public" },
-                    { name: "Ca' Foscari University of Venice", location: "Venice", type: "Public" },
-                    { name: "University of Verona", location: "Verona", type: "Public" },
-                    { name: "IUAV University of Venice", location: "Venice", type: "Public" },
-                    { name: "University of Venice for Foreigners", location: "Venice", type: "Public" }
-                ]
-            },
-            friuli: {
-                name: "Friuli-Venezia Giulia",
-                population: "1.2 million",
-                area: "7,858 km²",
-                capital: "Trieste",
-                flag: "https://upload.wikimedia.org/wikipedia/commons/b/b7/Flag_of_Friuli-Venezia_Giulia.svg",
-                universities: [
-                    { name: "University of Trieste", location: "Trieste", type: "Public" },
-                    { name: "University of Udine", location: "Udine", type: "Public" }
-                ]
-            },
-            liguria: {
-                name: "Liguria",
-                population: "1.6 million",
-                area: "5,422 km²",
-                capital: "Genoa",
-                flag: "https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_Liguria.svg",
-                universities: [
-                    { name: "University of Genoa", location: "Genoa", type: "Public" }
-                ]
-            },
-            emilia: {
-                name: "Emilia-Romagna",
-                population: "4.5 million",
-                area: "22,446 km²",
-                capital: "Bologna",
-                flag: "https://upload.wikimedia.org/wikipedia/commons/3/30/Flag_of_Emilia-Romagna.svg",
-                universities: [
-                    { name: "University of Bologna", location: "Bologna", type: "Public" },
-                    { name: "University of Modena and Reggio Emilia", location: "Modena, Reggio Emilia", type: "Public" },
-                    { name: "University of Parma", location: "Parma", type: "Public" },
-                    { name: "University of Ferrara", location: "Ferrara", type: "Public" },
-                    { name: "University of Forlì", location: "Forlì", type: "Public" }
-                ]
-            },
-            tuscany: {
-                name: "Tuscany",
-                population: "3.7 million",
-                area: "22,987 km²",
-                capital: "Florence",
-                flag: "https://upload.wikimedia.org/wikipedia/commons/0/0c/Flag_of_Tuscany.svg",
-                universities: [
-                    { name: "University of Florence", location: "Florence", type: "Public" },
-                    { name: "University of Pisa", location: "Pisa", type: "Public" },
-                    { name: "University of Siena", location: "Siena", type: "Public" },
-                    { name: "Sant'Anna School of Advanced Studies", location: "Pisa", type: "Public" },
-                    { name: "Scuola Normale Superiore di Pisa", location: "Pisa", type: "Public" },
-                    { name: "University for Foreigners of Siena", location: "Siena", type: "Public" }
-                ]
-            },
-            umbria: {
-                name: "Umbria",
-                population: "882,000",
-                area: "8,456 km²",
-                capital: "Perugia",
-                flag: "https://upload.wikimedia.org/wikipedia/commons/7/73/Flag_of_Umbria.svg",
-                universities: [
-                    { name: "University of Perugia", location: "Perugia", type: "Public" },
-                    { name: "University for Foreigners of Perugia", location: "Perugia", type: "Public" }
-                ]
-            },
-            marche: {
-                name: "Marche",
-                population: "1.5 million",
-                area: "9,366 km²",
-                capital: "Ancona",
-                flag: "https://upload.wikimedia.org/wikipedia/commons/2/23/Flag_of_Marche.svg",
-                universities: [
-                    { name: "Polytechnic University of Marche", location: "Ancona", type: "Public" },
-                    { name: "University of Macerata", location: "Macerata", type: "Public" },
-                    { name: "University of Camerino", location: "Camerino", type: "Public" },
-                    { name: "University of Urbino", location: "Urbino", type: "Public" }
-                ]
-            },
-            lazio: {
-                name: "Lazio",
-                population: "5.9 million",
-                area: "17,236 km²",
-                capital: "Rome",
-                flag: "https://upload.wikimedia.org/wikipedia/commons/b/b5/Flag_of_Lazio.svg",
-                universities: [
-                    { name: "Sapienza University of Rome", location: "Rome", type: "Public" },
-                    { name: "University of Rome Tor Vergata", location: "Rome", type: "Public" },
-                    { name: "Roma Tre University", location: "Rome", type: "Public" },
-                    { name: "University of Tuscia", location: "Viterbo", type: "Public" },
-                    { name: "LUISS University", location: "Rome", type: "Private" },
-                    { name: "John Cabot University", location: "Rome", type: "Private" }
-                ]
-            },
-            abruzzo: {
-                name: "Abruzzo",
-                population: "1.3 million",
-                area: "10,763 km²",
-                capital: "L'Aquila",
-                flag: "https://upload.wikimedia.org/wikipedia/commons/1/18/Flag_of_Abruzzo.svg",
-                universities: [
-                    { name: "University of L'Aquila", location: "L'Aquila", type: "Public" },
-                    { name: "Gabriele d'Annunzio University", location: "Chieti, Pescara", type: "Public" },
-                    { name: "University of Teramo", location: "Teramo", type: "Public" }
-                ]
-            },
-            molise: {
-                name: "Molise",
-                population: "305,000",
-                area: "4,438 km²",
-                capital: "Campobasso",
-                flag: "https://upload.wikimedia.org/wikipedia/commons/b/b8/Flag_of_Molise.svg",
-                universities: [
-                    { name: "University of Molise", location: "Campobasso", type: "Public" }
-                ]
-            },
-            campania: {
-                name: "Campania",
-                population: "5.8 million",
-                area: "13,671 km²",
-                capital: "Naples",
-                flag: "https://upload.wikimedia.org/wikipedia/commons/a/a7/Flag_of_Campania.svg",
-                universities: [
-                    { name: "University of Naples Federico II", location: "Naples", type: "Public" },
-                    { name: "University of Campania Luigi Vanvitelli", location: "Caserta", type: "Public" },
-                    { name: "University of Salerno", location: "Salerno", type: "Public" },
-                    { name: "University of Sannio", location: "Benevento", type: "Public" },
-                    { name: "Suor Orsola Benincasa University", location: "Naples", type: "Public" }
-                ]
-            },
-            apulia: {
-                name: "Apulia",
-                population: "4.1 million",
-                area: "19,358 km²",
-                capital: "Bari",
-                flag: "https://upload.wikimedia.org/wikipedia/commons/4/46/Flag_of_Apulia.svg",
-                universities: [
-                    { name: "University of Bari", location: "Bari", type: "Public" },
-                    { name: "Polytechnic University of Bari", location: "Bari", type: "Public" },
-                    { name: "University of Foggia", location: "Foggia", type: "Public" },
-                    { name: "University of Salento", location: "Lecce", type: "Public" }
-                ]
-            },
-            basilicata: {
-                name: "Basilicata",
-                population: "562,000",
-                area: "9,995 km²",
-                capital: "Potenza",
-                flag: "https://upload.wikimedia.org/wikipedia/commons/9/9c/Flag_of_Basilicata.svg",
-                universities: [
-                    { name: "University of Basilicata", location: "Potenza, Matera", type: "Public" }
-                ]
-            },
-            calabria: {
-                name: "Calabria",
-                population: "1.9 million",
-                area: "15,081 km²",
-                capital: "Catanzaro",
-                flag: "https://upload.wikimedia.org/wikipedia/commons/1/16/Flag_of_Calabria.svg",
-                universities: [
-                    { name: "University of Calabria", location: "Rende", type: "Public" },
-                    { name: "Mediterranean University of Reggio Calabria", location: "Reggio Calabria", type: "Public" },
-                    { name: "University Magna Græcia", location: "Catanzaro", type: "Public" }
-                ]
-            },
-            sicily: {
-                name: "Sicily",
-                population: "5 million",
-                area: "25,711 km²",
-                capital: "Palermo",
-                flag: "https://upload.wikimedia.org/wikipedia/commons/7/73/Flag_of_Sicily.svg",
-                universities: [
-                    { name: "University of Palermo", location: "Palermo", type: "Public" },
-                    { name: "University of Catania", location: "Catania", type: "Public" },
-                    { name: "University of Messina", location: "Messina", type: "Public" },
-                    { name: "University of Enna", location: "Enna", type: "Public" },
-                    { name: "Kore University of Enna", location: "Enna", type: "Private" }
-                ]
-            },
-            sardinia: {
-                name: "Sardinia",
-                population: "1.6 million",
-                area: "24,090 km²",
-                capital: "Cagliari",
-                flag: "https://upload.wikimedia.org/wikipedia/commons/3/35/Flag_of_Sardinia.svg",
-                universities: [
-                    { name: "University of Cagliari", location: "Cagliari", type: "Public" },
-                    { name: "University of Sassari", location: "Sassari", type: "Public" }
-                ]
-            }
-        };
-
-        // Initialize Italian Universities Map when the page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            // Only initialize if we're on the portal page
-            if (document.getElementById('portal').style.display === 'block') {
-                initItalianUniversitiesMap();
-            }
-        });
-
         function initItalianUniversitiesMap() {
-            // Get DOM elements
-            const regions = document.querySelectorAll('.region');
-            const universityList = document.getElementById('universityList');
-            const regionName = document.getElementById('regionName');
-            const regionFlag = document.getElementById('regionFlag');
-            const population = document.getElementById('population');
-            const area = document.getElementById('area');
-            const capital = document.getElementById('capital');
-            const universityCount = document.getElementById('universityCount');
-
-            // Add click handler to each region
-            regions.forEach(region => {
-                region.addEventListener('click', function() {
-                    // Remove active class from all regions
-                    regions.forEach(r => r.classList.remove('active'));
-                    // Add active class to clicked region
-                    this.classList.add('active');
-                    
-                    const regionId = this.id;
-                    displayRegionInfo(regionId);
-                    displayUniversities(regionId);
+            // Initialize the map
+            map = L.map('italyMap').setView([41.8719, 12.5674], 6);
+            
+            // Add tile layer (OpenStreetMap)
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+            
+            // Add markers for each region
+            Object.keys(regionData).forEach(regionId => {
+                const region = regionData[regionId];
+                
+                // Create a custom icon
+                const uniIcon = L.icon({
+                    iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png',
+                    iconSize: [32, 32],
+                    iconAnchor: [16, 32],
+                    popupAnchor: [0, -32]
+                });
+                
+                // Add marker to the map
+                const marker = L.marker(region.coordinates, { 
+                    icon: uniIcon,
+                    regionId: regionId
+                }).addTo(map);
+                
+                // Add click event to show region info
+                marker.on('click', function(e) {
+                    displayRegionInfo(this.options.regionId);
                 });
             });
+            
+            // Display first region info by default
+            displayRegionInfo('lombardy');
+            
+            // Zoom to Lombardy by default
+            map.setView(regionData['lombardy'].coordinates, 8);
+        }
 
-            // Function to display region information
-            function displayRegionInfo(regionId) {
-                const regionInfo = regionData[regionId];
+        function displayRegionInfo(regionId) {
+            const regionInfo = regionData[regionId];
+            
+            if (regionInfo) {
+                // Update region info
+                document.getElementById('regionName').textContent = regionInfo.name;
+                document.getElementById('regionFlag').src = regionInfo.flag;
+                document.getElementById('regionFlag').alt = `${regionInfo.name} Flag`;
+                document.getElementById('population').textContent = regionInfo.population;
+                document.getElementById('area').textContent = regionInfo.area;
+                document.getElementById('capital').textContent = regionInfo.capital;
+                document.getElementById('universityCount').textContent = regionInfo.universities.length;
                 
-                if (regionInfo) {
-                    regionName.textContent = regionInfo.name;
-                    regionFlag.src = regionInfo.flag;
-                    regionFlag.alt = `${regionInfo.name} Flag`;
-                    population.textContent = regionInfo.population;
-                    area.textContent = regionInfo.area;
-                    capital.textContent = regionInfo.capital;
-                    universityCount.textContent = regionInfo.universities.length;
-                }
+                // Update universities list
+                displayUniversities(regionId);
+                
+                // Zoom to the region on the map
+                map.setView(regionInfo.coordinates, 8);
             }
+        }
 
-            // Function to display universities
-            function displayUniversities(regionId) {
-                const universities = regionData[regionId]?.universities || [];
-                
-                // Clear current list
-                universityList.innerHTML = '';
-                
-                if (universities.length > 0) {
-                    universities.forEach(univ => {
-                        const li = document.createElement('li');
-                        li.className = 'university-item';
-                        li.innerHTML = `
-                            <div class="university-name">${univ.name}</div>
-                            <div class="university-location">${univ.location}</div>
-                            <span class="university-type">${univ.type}</span>
-                        `;
-                        universityList.appendChild(li);
-                    });
-                } else {
+        function displayUniversities(regionId) {
+            const universities = regionData[regionId]?.universities || [];
+            const universityList = document.getElementById('universityList');
+            
+            // Clear current list
+            universityList.innerHTML = '';
+            
+            if (universities.length > 0) {
+                universities.forEach(univ => {
                     const li = document.createElement('li');
-                    li.className = 'no-universities';
-                    li.textContent = 'No universities found in this region';
+                    li.className = 'university-item';
+                    li.innerHTML = `
+                        <div class="university-name">${univ.name}</div>
+                        <div class="university-location">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                            </svg>
+                            ${univ.location}
+                        </div>
+                        <span class="university-type">${univ.type}</span>
+                    `;
                     universityList.appendChild(li);
-                }
+                });
+            } else {
+                const li = document.createElement('li');
+                li.className = 'no-universities';
+                li.textContent = 'No universities found in this region';
+                universityList.appendChild(li);
             }
         }
     </script>
