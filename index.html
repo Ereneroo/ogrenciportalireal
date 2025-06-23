@@ -7,27 +7,27 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-    :root {
-            --primary: #000000; /* Beyaz */
-            --primary-light: #f1f5f9;
+        :root {
+            --primary: #000000; /* Lacivert */
+            --primary-light: #1e293b;
             --accent: #3b82f6;
             --accent-hover: #2563eb;
             --success: #22c55e;
             --warning: #f59e0b;
             --error: #ef4444;
-            --background: #ffffff; /* Beyaz arka plan */
-            --surface: #0f172a;
-            --surface-light: #1e293b;
-            --surface-hover: #334155;
-            --text-primary: #ffffff;
-            --text-secondary: #cbd5e1;
-            --text-muted: #94a3b8;
-            --border: #475569;
-            --border-light: #334155;
-            --glass-bg: rgba(15, 23, 42, 0.95); /* Lacivert kutu */
+            --background: #0f172a; /* Lacivert arka plan */
+            --surface: #ffffff;
+            --surface-light: #f1f5f9;
+            --surface-hover: #e2e8f0;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --border: #cbd5e1;
+            --border-light: #e2e8f0;
+            --glass-bg: rgba(255, 255, 255, 0.95); /* Beyaz kutu */
             --glass-border: rgba(148, 163, 184, 0.1);
             --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --gradient-surface: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
+            --gradient-surface: linear-gradient(145deg, #ffffff 0%, #f1f5f9 100%);
             --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.1);
             --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
         }
@@ -541,7 +541,7 @@
             color: var(--text-primary);
         }
 
-        /* Map Section - Düzeltilmiş */
+        /* Map Section */
         .map-section {
             display: none;
             height: calc(100vh - 200px);
@@ -597,82 +597,40 @@
             overflow: hidden;
         }
 
-        /* Sabit aspect ratio ile düzeltilmiş harita container */
         .italy-map-container {
             position: relative;
             width: 100%;
-            max-width: 600px;
-            height: 0;
-            padding-bottom: 120%; /* İtalya haritasının aspect ratio'su */
-            margin: 0 auto;
+            height: 100%;
+            max-width: 800px;
+            max-height: 800px;
         }
 
         .italy-map {
-            position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
             object-fit: contain;
             filter: drop-shadow(0 10px 25px rgba(0,0,0,0.1));
         }
 
-        /* Orijinal pozisyonlar - aynen korundu */
         .region-label {
             position: absolute;
             font-size: 12px;
             font-weight: 600;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 4px 8px;
-            border-radius: 6px;
-            color: #000;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: var(--primary);
             cursor: pointer;
             transition: all 0.3s ease;
             z-index: 10;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            border: 1px solid rgba(0,0,0,0.1);
-            white-space: nowrap;
-            user-select: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            transform: translate(-50%, -50%);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         .region-label:hover {
             background: var(--accent);
             color: white;
-            transform: translate(-50%, -50%) scale(1.05);
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+            transform: scale(1.05);
         }
-
-        .region-label.selected {
-            background: var(--accent);
-            color: white;
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
-        }
-
-        /* Orijinal kodunuzdaki tam pozisyonlar */
-        .region-label[data-region="aosta"] { top: 17%; left: 11%; }
-        .region-label[data-region="piedmont"] { top: 25%; left: 17%; }
-        .region-label[data-region="lombardy"] { top: 20%; left: 29%; }
-        .region-label[data-region="trentino"] { top: 13%; left: 40%; }
-        .region-label[data-region="veneto"] { top: 22%; left: 43%; }
-        .region-label[data-region="friuli"] { top: 14%; left: 53%; }
-        .region-label[data-region="liguria"] { top: 33%; left: 25%; }
-        .region-label[data-region="emilia"] { top: 30%; left: 35%; }
-        .region-label[data-region="tuscany"] { top: 40%; left: 39%; }
-        .region-label[data-region="umbria"] { top: 45%; left: 48%; }
-        .region-label[data-region="marche"] { top: 39%; left: 53%; }
-        .region-label[data-region="lazio"] { top: 53%; left: 49%; }
-        .region-label[data-region="abruzzo"] { top: 48%; left: 59%; }
-        .region-label[data-region="molise"] { top: 56%; left: 63%; }
-        .region-label[data-region="campania"] { top: 62%; left: 60%; }
-        .region-label[data-region="apulia"] { top: 60%; left: 77%; }
-        .region-label[data-region="basilicata"] { top: 66%; left: 71%; }
-        .region-label[data-region="calabria"] { top: 78%; left: 74%; }
-        .region-label[data-region="sicily"] { top: 90%; left: 60%; }
-        .region-label[data-region="sardinia"] { top: 70%; left: 26%; }
 
         .map-sidebar {
             flex: 1;
@@ -829,7 +787,7 @@
             letter-spacing: 0.5px;
         }
 
-        .university-type.özel {
+        .university-type.private {
             background: linear-gradient(135deg, var(--warning), #f97316);
         }
 
@@ -884,28 +842,16 @@
             }
             
             .map-content {
-                height: 500px;
-                padding: 1rem;
-            }
-            
-            .italy-map-container {
-                max-width: 400px;
+                height: 400px;
             }
             
             .map-sidebar {
                 border-left: none;
                 border-top: 1px solid var(--border);
-                max-height: 400px;
             }
             
             .region-stats {
                 grid-template-columns: repeat(2, 1fr);
-            }
-
-            /* Tablet için etiket boyutları */
-            .region-label {
-                font-size: 11px;
-                padding: 3px 6px;
             }
         }
 
@@ -950,54 +896,18 @@
             .section-title {
                 font-size: 2rem;
             }
-
-            .logo {
-                height: 70px;
-            }
-            .login-logo {
-                height: 90px;
-            }
-            header {
-                padding: 1.5rem 1rem;
-            }
-
-            .map-content {
-                height: 400px;
-                padding: 0.5rem;
-            }
-            
-            .italy-map-container {
-                max-width: 320px;
-            }
-
-            /* Mobil için etiket boyutları */
-            .region-label {
-                font-size: 9px;
-                padding: 2px 4px;
-                border-radius: 4px;
-            }
-
-            .map-sidebar {
-                max-height: 350px;
-                padding: 1rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .italy-map-container {
-                max-width: 280px;
-            }
-
-            /* Çok küçük ekranlar için etiket boyutları */
-            .region-label {
-                font-size: 8px;
-                padding: 1px 3px;
-                border-radius: 3px;
-            }
-
-            .map-content {
-                height: 350px;
-            }
+            /* Mobil uyumluluk */
+@media (max-width: 768px) {
+    .logo {
+        height: 70px;
+    }
+    .login-logo {
+        height: 90px;
+    }
+    header {
+        padding: 1.5rem 1rem;
+    }
+}
         }
         
     </style>
@@ -1195,27 +1105,27 @@
                                      alt="İtalya Haritası" 
                                      class="italy-map">
                                 
-                                <!-- Düzeltilmiş bölge etiketleri -->
-                                <div class="region-label" data-region="aosta">Aosta Vadisi</div>
-                                <div class="region-label" data-region="piedmont">Piyemonte</div>
-                                <div class="region-label" data-region="lombardy">Lombardiya</div>
-                                <div class="region-label" data-region="trentino">Trentino</div>
-                                <div class="region-label" data-region="veneto">Veneto</div>
-                                <div class="region-label" data-region="friuli">Friuli</div>
-                                <div class="region-label" data-region="liguria">Ligurya</div>
-                                <div class="region-label" data-region="emilia">Emilia-Romagna</div>
-                                <div class="region-label" data-region="tuscany">Toskana</div>
-                                <div class="region-label" data-region="umbria">Umbria</div>
-                                <div class="region-label" data-region="marche">Marche</div>
-                                <div class="region-label" data-region="lazio">Lazio</div>
-                                <div class="region-label" data-region="abruzzo">Abruzzo</div>
-                                <div class="region-label" data-region="molise">Molise</div>
-                                <div class="region-label" data-region="campania">Campania</div>
-                                <div class="region-label" data-region="apulia">Puglia</div>
-                                <div class="region-label" data-region="basilicata">Basilicata</div>
-                                <div class="region-label" data-region="calabria">Calabria</div>
-                                <div class="region-label" data-region="sicily">Sicilya</div>
-                                <div class="region-label" data-region="sardinia">Sardinya</div>
+                                <!-- Region labels with approximate positions -->
+                                <div class="region-label" style="top: 17%; left: 11%;" data-region="aosta">Aosta Vadisi</div>
+                                <div class="region-label" style="top: 25%; left: 17%;" data-region="piedmont">Piyemonte</div>
+                                <div class="region-label" style="top: 20%; left: 29%;" data-region="lombardy">Lombardiya</div>
+                                <div class="region-label" style="top: 13%; left: 40%;" data-region="trentino">Trentino</div>
+                                <div class="region-label" style="top: 22%; left: 43%;" data-region="veneto">Veneto</div>
+                                <div class="region-label" style="top: 14%; left: 53%;" data-region="friuli">Friuli</div>
+                                <div class="region-label" style="top: 33%; left: 25%;" data-region="liguria">Ligurya</div>
+                                <div class="region-label" style="top: 30%; left: 35%;" data-region="emilia">Emilia-Romagna</div>
+                                <div class="region-label" style="top: 40%; left: 39%;" data-region="tuscany">Toskana</div>
+                                <div class="region-label" style="top: 45%; left: 48%;" data-region="umbria">Umbria</div>
+                                <div class="region-label" style="top: 39%; left: 53%;" data-region="marche">Marche</div>
+                                <div class="region-label" style="top: 53%; left: 49%;" data-region="lazio">Lazio</div>
+                                <div class="region-label" style="top: 48%; left: 59%;" data-region="abruzzo">Abruzzo</div>
+                                <div class="region-label" style="top: 56%; left: 63%;" data-region="molise">Molise</div>
+                                <div class="region-label" style="top: 62%; left: 60%;" data-region="campania">Campania</div>
+                                <div class="region-label" style="top: 60%; left: 77%;" data-region="apulia">Puglia</div>
+                                <div class="region-label" style="top: 66%; left: 71%;" data-region="basilicata">Basilicata</div>
+                                <div class="region-label" style="top: 78%; left: 74%;" data-region="calabria">Calabria</div>
+                                <div class="region-label" style="top: 90%; left: 60%;" data-region="sicily">Sicilya</div>
+                                <div class="region-label" style="top: 70%; left: 26%;" data-region="sardinia">Sardinya</div>
                             </div>
                         </div>
                         <div class="map-sidebar">
@@ -1597,8 +1507,10 @@
                     displayRegionInfo(regionId);
                     
                     // Update selected region visual state
-                    regionLabels.forEach(l => l.classList.remove('selected'));
-                    this.classList.add('selected');
+                    regionLabels.forEach(l => l.style.background = 'rgba(255, 255, 255, 0.8)');
+                    regionLabels.forEach(l => l.style.color = 'var(--primary)');
+                    this.style.background = 'var(--accent)';
+                    this.style.color = 'white';
                 });
             });
         }
