@@ -541,7 +541,7 @@
             color: var(--text-primary);
         }
 
-        /* Map Section */
+        /* Map Section - İyileştirilmiş */
         .map-section {
             display: none;
             height: calc(100vh - 200px);
@@ -597,12 +597,16 @@
             overflow: hidden;
         }
 
+        /* İyileştirilmiş harita container - pozisyonları sabitleyen */
         .italy-map-container {
             position: relative;
             width: 100%;
             height: 100%;
             max-width: 800px;
             max-height: 800px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .italy-map {
@@ -610,26 +614,44 @@
             height: 100%;
             object-fit: contain;
             filter: drop-shadow(0 10px 25px rgba(0,0,0,0.1));
+            display: block;
         }
 
+        /* Sabitlenmiş bölge etiketleri - transform ile ortalanmış */
         .region-label {
             position: absolute;
             font-size: 12px;
             font-weight: 600;
-            background: rgba(255, 255, 255, 0.8);
-            padding: 3px 8px;
-            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 4px 8px;
+            border-radius: 6px;
             color: var(--primary);
             cursor: pointer;
             transition: all 0.3s ease;
             z-index: 10;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            border: 1px solid rgba(0,0,0,0.1);
+            white-space: nowrap;
+            /* Transform ile merkezi hizalama - pozisyon kaymasını önler */
+            transform: translate(-50%, -50%);
+            /* Metni seçilemez yap */
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
         }
 
         .region-label:hover {
             background: var(--accent);
             color: white;
-            transform: scale(1.05);
+            transform: translate(-50%, -50%) scale(1.05);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .region-label.selected {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
         }
 
         .map-sidebar {
@@ -787,7 +809,7 @@
             letter-spacing: 0.5px;
         }
 
-        .university-type.private {
+        .university-type.özel {
             background: linear-gradient(135deg, var(--warning), #f97316);
         }
 
@@ -896,18 +918,22 @@
             .section-title {
                 font-size: 2rem;
             }
-            /* Mobil uyumluluk */
-@media (max-width: 768px) {
-    .logo {
-        height: 70px;
-    }
-    .login-logo {
-        height: 90px;
-    }
-    header {
-        padding: 1.5rem 1rem;
-    }
-}
+
+            .logo {
+                height: 70px;
+            }
+            .login-logo {
+                height: 90px;
+            }
+            header {
+                padding: 1.5rem 1rem;
+            }
+
+            /* Mobilde etiket boyutlarını küçült */
+            .region-label {
+                font-size: 10px;
+                padding: 2px 6px;
+            }
         }
         
     </style>
@@ -1105,7 +1131,7 @@
                                      alt="İtalya Haritası" 
                                      class="italy-map">
                                 
-                                <!-- Region labels with approximate positions -->
+                                <!-- Sabitlenmiş bölge etiketleri - transform ile merkezlenmiş -->
                                 <div class="region-label" style="top: 17%; left: 11%;" data-region="aosta">Aosta Vadisi</div>
                                 <div class="region-label" style="top: 25%; left: 17%;" data-region="piedmont">Piyemonte</div>
                                 <div class="region-label" style="top: 20%; left: 29%;" data-region="lombardy">Lombardiya</div>
@@ -1507,10 +1533,8 @@
                     displayRegionInfo(regionId);
                     
                     // Update selected region visual state
-                    regionLabels.forEach(l => l.style.background = 'rgba(255, 255, 255, 0.8)');
-                    regionLabels.forEach(l => l.style.color = 'var(--primary)');
-                    this.style.background = 'var(--accent)';
-                    this.style.color = 'white';
+                    regionLabels.forEach(l => l.classList.remove('selected'));
+                    this.classList.add('selected');
                 });
             });
         }
