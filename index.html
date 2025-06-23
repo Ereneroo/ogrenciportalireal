@@ -597,27 +597,27 @@
             overflow: hidden;
         }
 
-        /* Dinamik harita container */
+        /* Sabit aspect ratio ile düzeltilmiş harita container */
         .italy-map-container {
             position: relative;
             width: 100%;
             max-width: 600px;
+            height: 0;
+            padding-bottom: 120%; /* İtalya haritasının aspect ratio'su */
             margin: 0 auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
 
         .italy-map {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: auto;
-            max-height: 100%;
+            height: 100%;
             object-fit: contain;
             filter: drop-shadow(0 10px 25px rgba(0,0,0,0.1));
-            display: block;
         }
 
-        /* Dinamik etiket pozisyonları */
+        /* Orijinal pozisyonlar - aynen korundu */
         .region-label {
             position: absolute;
             font-size: 12px;
@@ -637,12 +637,6 @@
             -moz-user-select: none;
             -ms-user-select: none;
             transform: translate(-50%, -50%);
-            opacity: 0;
-            transition: opacity 0.3s ease, all 0.3s ease;
-        }
-
-        .region-label.positioned {
-            opacity: 1;
         }
 
         .region-label:hover {
@@ -657,6 +651,28 @@
             color: white;
             box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
         }
+
+        /* Orijinal kodunuzdaki tam pozisyonlar */
+        .region-label[data-region="aosta"] { top: 17%; left: 11%; }
+        .region-label[data-region="piedmont"] { top: 25%; left: 17%; }
+        .region-label[data-region="lombardy"] { top: 20%; left: 29%; }
+        .region-label[data-region="trentino"] { top: 13%; left: 40%; }
+        .region-label[data-region="veneto"] { top: 22%; left: 43%; }
+        .region-label[data-region="friuli"] { top: 14%; left: 53%; }
+        .region-label[data-region="liguria"] { top: 33%; left: 25%; }
+        .region-label[data-region="emilia"] { top: 30%; left: 35%; }
+        .region-label[data-region="tuscany"] { top: 40%; left: 39%; }
+        .region-label[data-region="umbria"] { top: 45%; left: 48%; }
+        .region-label[data-region="marche"] { top: 39%; left: 53%; }
+        .region-label[data-region="lazio"] { top: 53%; left: 49%; }
+        .region-label[data-region="abruzzo"] { top: 48%; left: 59%; }
+        .region-label[data-region="molise"] { top: 56%; left: 63%; }
+        .region-label[data-region="campania"] { top: 62%; left: 60%; }
+        .region-label[data-region="apulia"] { top: 60%; left: 77%; }
+        .region-label[data-region="basilicata"] { top: 66%; left: 71%; }
+        .region-label[data-region="calabria"] { top: 78%; left: 74%; }
+        .region-label[data-region="sicily"] { top: 90%; left: 60%; }
+        .region-label[data-region="sardinia"] { top: 70%; left: 26%; }
 
         .map-sidebar {
             flex: 1;
@@ -1506,84 +1522,6 @@
         };
 
         let selectedRegion = null;
-        let mapLoaded = false;
-
-        // Bölgelerin sabit pozisyon verileri (harita boyutuna göre oransal)
-        const regionPositions = {
-            aosta: { x: 0.18, y: 0.14 },
-            piedmont: { x: 0.25, y: 0.22 },
-            lombardy: { x: 0.40, y: 0.18 },
-            trentino: { x: 0.50, y: 0.12 },
-            veneto: { x: 0.55, y: 0.20 },
-            friuli: { x: 0.65, y: 0.12 },
-            liguria: { x: 0.30, y: 0.30 },
-            emilia: { x: 0.45, y: 0.28 },
-            tuscany: { x: 0.45, y: 0.38 },
-            umbria: { x: 0.52, y: 0.43 },
-            marche: { x: 0.60, y: 0.38 },
-            lazio: { x: 0.52, y: 0.51 },
-            abruzzo: { x: 0.63, y: 0.46 },
-            molise: { x: 0.67, y: 0.54 },
-            campania: { x: 0.62, y: 0.60 },
-            apulia: { x: 0.77, y: 0.58 },
-            basilicata: { x: 0.71, y: 0.64 },
-            calabria: { x: 0.72, y: 0.76 },
-            sicily: { x: 0.62, y: 0.88 },
-            sardinia: { x: 0.20, y: 0.68 }
-        };
-
-        // Harita etiketlerini dinamik olarak konumlandır
-        function positionMapLabels() {
-            const mapImg = document.querySelector('.italy-map');
-            const container = document.querySelector('.italy-map-container');
-            const labels = document.querySelectorAll('.region-label');
-            
-            if (!mapImg || !container || !mapLoaded) return;
-            
-            // Harita görsel boyutlarını al
-            const mapRect = mapImg.getBoundingClientRect();
-            const containerRect = container.getBoundingClientRect();
-            
-            // Container içindeki harita pozisyonunu hesapla
-            const mapWidth = mapImg.naturalWidth || mapImg.width;
-            const mapHeight = mapImg.naturalHeight || mapImg.height;
-            const displayedWidth = mapRect.width;
-            const displayedHeight = mapRect.height;
-            
-            labels.forEach(label => {
-                const regionId = label.getAttribute('data-region');
-                const position = regionPositions[regionId];
-                
-                if (position) {
-                    // Harita container'ı içindeki pozisyonu hesapla
-                    const x = position.x * displayedWidth;
-                    const y = position.y * displayedHeight;
-                    
-                    // Container'ın sol üst köşesinden olan offset'i hesapla
-                    const mapOffsetX = (containerRect.width - displayedWidth) / 2;
-                    const mapOffsetY = (containerRect.height - displayedHeight) / 2;
-                    
-                    label.style.left = (mapOffsetX + x) + 'px';
-                    label.style.top = (mapOffsetY + y) + 'px';
-                    label.classList.add('positioned');
-                }
-            });
-        }
-
-        // Harita yüklenme kontrolü
-        function handleMapLoad() {
-            mapLoaded = true;
-            setTimeout(() => {
-                positionMapLabels();
-            }, 100);
-        }
-
-        // Pencere boyutu değiştiğinde etiketleri yeniden konumlandır
-        function handleResize() {
-            if (mapLoaded) {
-                setTimeout(positionMapLabels, 100);
-            }
-        }
 
         // Login function
         function login() {
@@ -1632,11 +1570,6 @@
                 initializeMap();
                 displayRegionInfo('lombardy');
             }
-            
-            // Harita görünür hale geldikten sonra etiketleri konumlandır
-            setTimeout(() => {
-                positionMapLabels();
-            }, 200);
         }
 
         function updateActiveTab(sectionId) {
@@ -1657,19 +1590,7 @@
         }
 
         function initializeMap() {
-            const mapImg = document.querySelector('.italy-map');
             const regionLabels = document.querySelectorAll('.region-label');
-            
-            // Harita yükleme event'ini ekle
-            if (mapImg) {
-                if (mapImg.complete) {
-                    handleMapLoad();
-                } else {
-                    mapImg.addEventListener('load', handleMapLoad);
-                }
-            }
-            
-            // Etiket click event'lerini ekle
             regionLabels.forEach(label => {
                 label.addEventListener('click', function() {
                     const regionId = this.getAttribute('data-region');
@@ -1746,9 +1667,6 @@
                 element.style.animationDuration = (4 + Math.random() * 4) + 's';
                 floatingElements.appendChild(element);
             }
-            
-            // Window resize event listener
-            window.addEventListener('resize', handleResize);
         });
     </script>
 </body>
