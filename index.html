@@ -8,14 +8,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #0f172a;
+            --primary: #0f172a; /* Lacivert */
             --primary-light: #1e293b;
             --accent: #3b82f6;
             --accent-hover: #2563eb;
             --success: #22c55e;
             --warning: #f59e0b;
             --error: #ef4444;
-            --background: #0f172a;
+            --background: #0f172a; /* Lacivert arka plan */
             --surface: #ffffff;
             --surface-light: #f1f5f9;
             --surface-hover: #e2e8f0;
@@ -24,7 +24,7 @@
             --text-muted: #64748b;
             --border: #cbd5e1;
             --border-light: #e2e8f0;
-            --glass-bg: rgba(255, 255, 255, 0.95);
+            --glass-bg: rgba(255, 255, 255, 0.95); /* Beyaz kutu */
             --glass-border: rgba(148, 163, 184, 0.1);
             --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             --gradient-surface: linear-gradient(145deg, #ffffff 0%, #f1f5f9 100%);
@@ -81,6 +81,7 @@
             position: relative;
         }
 
+        /* Header */
         header {
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
@@ -122,6 +123,7 @@
             background-clip: text;
         }
 
+        /* Login Section */
         .login-container {
             display: flex;
             justify-content: center;
@@ -312,6 +314,7 @@
             backdrop-filter: blur(10px);
         }
 
+        /* Portal */
         .portal {
             display: none;
             width: 100%;
@@ -323,6 +326,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* Navigation */
         nav {
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
@@ -393,6 +397,7 @@
             background: rgba(239, 68, 68, 0.1);
         }
 
+        /* Main Content */
         .main-content {
             max-width: 1400px;
             margin: 0 auto;
@@ -432,6 +437,7 @@
             color: var(--text-primary);
         }
 
+        /* Dashboard Cards */
         .dashboard-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -493,6 +499,7 @@
             color: var(--text-primary);
         }
 
+        /* Table Styles */
         .table-container {
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
@@ -534,7 +541,7 @@
             color: var(--text-primary);
         }
 
-        /* İyileştirilmiş Map Section */
+        /* Map Section */
         .map-section {
             display: none;
             height: calc(100vh - 200px);
@@ -590,60 +597,39 @@
             overflow: hidden;
         }
 
-        /* İyileştirilmiş SVG Map Container */
         .italy-map-container {
             position: relative;
             width: 100%;
             height: 100%;
             max-width: 800px;
             max-height: 800px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
-        .italy-svg-map {
+        .italy-map {
             width: 100%;
             height: 100%;
-            max-width: 100%;
-            max-height: 100%;
+            object-fit: contain;
             filter: drop-shadow(0 10px 25px rgba(0,0,0,0.1));
         }
 
-        /* SVG region styles */
-        .region-path {
-            fill: #e2e8f0;
-            stroke: #cbd5e1;
-            stroke-width: 1;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .region-path:hover {
-            fill: var(--accent);
-            stroke: var(--accent-hover);
-            stroke-width: 2;
-        }
-
-        .region-path.selected {
-            fill: var(--accent);
-            stroke: var(--accent-hover);
-            stroke-width: 2;
-        }
-
-        .region-label-svg {
-            font-family: 'Inter', sans-serif;
+        .region-label {
+            position: absolute;
             font-size: 12px;
             font-weight: 600;
-            fill: var(--text-primary);
-            text-anchor: middle;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: var(--primary);
             cursor: pointer;
             transition: all 0.3s ease;
+            z-index: 10;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
-        .region-label-svg:hover {
-            fill: white;
-            font-size: 14px;
+        .region-label:hover {
+            background: var(--accent);
+            color: white;
+            transform: scale(1.05);
         }
 
         .map-sidebar {
@@ -654,6 +640,7 @@
             border-left: 1px solid var(--border);
         }
 
+        /* Region Styles */
         .region-header {
             display: flex;
             align-items: center;
@@ -804,6 +791,7 @@
             background: linear-gradient(135deg, var(--warning), #f97316);
         }
 
+        /* Footer */
         footer {
             background: var(--gradient-surface);
             border-top: 1px solid var(--glass-border);
@@ -814,6 +802,7 @@
             backdrop-filter: blur(20px);
         }
 
+        /* Course Materials */
         .course-list {
             list-style: none;
             padding: 0;
@@ -907,19 +896,20 @@
             .section-title {
                 font-size: 2rem;
             }
-
-            .logo {
-                height: 70px;
-            }
-            
-            .login-logo {
-                height: 90px;
-            }
-            
-            header {
-                padding: 1.5rem 1rem;
-            }
+            /* Mobil uyumluluk */
+@media (max-width: 768px) {
+    .logo {
+        height: 70px;
+    }
+    .login-logo {
+        height: 90px;
+    }
+    header {
+        padding: 1.5rem 1rem;
+    }
+}
         }
+        
     </style>
 </head>
 <body>
@@ -932,6 +922,7 @@
             </div>
         </header>
 
+        <!-- Login Section -->
         <div class="login-container" id="loginSection">
             <div class="floating-elements">
                 <div class="floating-element"></div>
@@ -958,6 +949,7 @@
             </div>
         </div>
 
+        <!-- Portal Content -->
         <div class="portal" id="portal">
             <nav>
                 <div class="nav-container">
@@ -972,6 +964,7 @@
             </nav>
 
             <div class="main-content">
+                <!-- Dashboard Section -->
                 <div class="section active" id="dashboard">
                     <h2 class="section-title">Gösterge Paneli</h2>
                     <div class="dashboard-grid">
@@ -1032,6 +1025,7 @@
                     </div>
                 </div>
 
+                <!-- Lessons Section -->
                 <div class="section" id="lessons">
                     <h2 class="section-title">Ders Materyalleri</h2>
                     <div class="dashboard-grid">
@@ -1071,6 +1065,7 @@
                     </div>
                 </div>
 
+                <!-- About Section -->
                 <div class="section" id="about">
                     <h2 class="section-title">Kurumumuz Hakkında</h2>
                     <div class="dashboard-grid">
@@ -1098,94 +1093,39 @@
                     </div>
                 </div>
 
+                <!-- Map Section -->
                 <div class="map-section" id="mapSection">
                     <div class="map-header">
-                        İtalya Üniversite Dağılım Haritası
+                         İtalya Üniversite Dağılım Haritası
                     </div>
                     <div class="map-container">
                         <div class="map-content">
                             <div class="italy-map-container">
-                                <svg class="italy-svg-map" viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
-                                    <!-- Aosta Valley -->
-                                    <path class="region-path" data-region="aosta" d="M45,85 L65,75 L75,85 L70,95 L50,100 Z"/>
-                                    <text class="region-label-svg" x="60" y="90" data-region="aosta">Aosta</text>
-                                    
-                                    <!-- Piedmont -->
-                                    <path class="region-path" data-region="piedmont" d="M30,100 L75,95 L85,120 L70,140 L45,135 L25,125 Z"/>
-                                    <text class="region-label-svg" x="55" y="120" data-region="piedmont">Piyemonte</text>
-                                    
-                                    <!-- Lombardy -->
-                                    <path class="region-path" data-region="lombardy" d="M75,95 L115,90 L125,110 L110,130 L85,120 Z"/>
-                                    <text class="region-label-svg" x="100" y="110" data-region="lombardy">Lombardiya</text>
-                                    
-                                    <!-- Trentino -->
-                                    <path class="region-path" data-region="trentino" d="M115,75 L145,70 L150,85 L135,95 L115,90 Z"/>
-                                    <text class="region-label-svg" x="130" y="82" data-region="trentino">Trentino</text>
-                                    
-                                    <!-- Veneto -->
-                                    <path class="region-path" data-region="veneto" d="M135,95 L170,90 L175,110 L160,125 L125,110 Z"/>
-                                    <text class="region-label-svg" x="150" y="108" data-region="veneto">Veneto</text>
-                                    
-                                    <!-- Friuli -->
-                                    <path class="region-path" data-region="friuli" d="M170,85 L195,80 L200,95 L185,105 L170,90 Z"/>
-                                    <text class="region-label-svg" x="182" y="92" data-region="friuli">Friuli</text>
-                                    
-                                    <!-- Liguria -->
-                                    <path class="region-path" data-region="liguria" d="M25,140 L70,135 L80,155 L40,165 L20,150 Z"/>
-                                    <text class="region-label-svg" x="50" y="150" data-region="liguria">Ligurya</text>
-                                    
-                                    <!-- Emilia-Romagna -->
-                                    <path class="region-path" data-region="emilia" d="M85,140 L160,135 L170,155 L90,165 Z"/>
-                                    <text class="region-label-svg" x="125" y="150" data-region="emilia">Emilia-Romagna</text>
-                                    
-                                    <!-- Tuscany -->
-                                    <path class="region-path" data-region="tuscany" d="M60,180 L130,175 L140,200 L80,210 L55,195 Z"/>
-                                    <text class="region-label-svg" x="100" y="192" data-region="tuscany">Toskana</text>
-                                    
-                                    <!-- Umbria -->
-                                    <path class="region-path" data-region="umbria" d="M120,200 L150,195 L155,215 L130,220 Z"/>
-                                    <text class="region-label-svg" x="137" y="208" data-region="umbria">Umbria</text>
-                                    
-                                    <!-- Marche -->
-                                    <path class="region-path" data-region="marche" d="M150,175 L180,170 L185,200 L155,205 Z"/>
-                                    <text class="region-label-svg" x="167" y="187" data-region="marche">Marche</text>
-                                    
-                                    <!-- Lazio -->
-                                    <path class="region-path" data-region="lazio" d="M90,220 L155,215 L160,245 L100,255 L85,235 Z"/>
-                                    <text class="region-label-svg" x="125" y="235" data-region="lazio">Lazio</text>
-                                    
-                                    <!-- Abruzzo -->
-                                    <path class="region-path" data-region="abruzzo" d="M155,205 L185,200 L190,225 L165,235 Z"/>
-                                    <text class="region-label-svg" x="172" y="218" data-region="abruzzo">Abruzzo</text>
-                                    
-                                    <!-- Molise -->
-                                    <path class="region-path" data-region="molise" d="M165,235 L190,230 L195,245 L175,250 Z"/>
-                                    <text class="region-label-svg" x="180" y="240" data-region="molise">Molise</text>
-                                    
-                                    <!-- Campania -->
-                                    <path class="region-path" data-region="campania" d="M115,260 L175,255 L180,285 L130,295 L110,275 Z"/>
-                                    <text class="region-label-svg" x="145" y="275" data-region="campania">Campania</text>
-                                    
-                                    <!-- Apulia -->
-                                    <path class="region-path" data-region="apulia" d="M175,250 L210,245 L220,290 L190,300 L180,275 Z"/>
-                                    <text class="region-label-svg" x="195" y="270" data-region="apulia">Puglia</text>
-                                    
-                                    <!-- Basilicata -->
-                                    <path class="region-path" data-region="basilicata" d="M140,300 L190,295 L195,320 L155,325 Z"/>
-                                    <text class="region-label-svg" x="167" y="312" data-region="basilicata">Basilicata</text>
-                                    
-                                    <!-- Calabria -->
-                                    <path class="region-path" data-region="calabria" d="M155,325 L185,320 L190,370 L165,375 Z"/>
-                                    <text class="region-label-svg" x="172" y="347" data-region="calabria">Calabria</text>
-                                    
-                                    <!-- Sicily -->
-                                    <path class="region-path" data-region="sicily" d="M140,390 L230,385 L235,420 L150,430 Z"/>
-                                    <text class="region-label-svg" x="190" y="408" data-region="sicily">Sicilya</text>
-                                    
-                                    <!-- Sardinia -->
-                                    <path class="region-path" data-region="sardinia" d="M50,280 L90,275 L95,360 L60,370 Z"/>
-                                    <text class="region-label-svg" x="72" y="325" data-region="sardinia">Sardinya</text>
-                                </svg>
+                                <img src="https://r.resimlink.com/gyfP4UdbtWOj.png" 
+                                     alt="İtalya Haritası" 
+                                     class="italy-map">
+                                
+                                <!-- Region labels with approximate positions -->
+                                <div class="region-label" style="top: 17%; left: 11%;" data-region="aosta">Aosta Vadisi</div>
+                                <div class="region-label" style="top: 25%; left: 17%;" data-region="piedmont">Piyemonte</div>
+                                <div class="region-label" style="top: 20%; left: 29%;" data-region="lombardy">Lombardiya</div>
+                                <div class="region-label" style="top: 13%; left: 40%;" data-region="trentino">Trentino</div>
+                                <div class="region-label" style="top: 22%; left: 43%;" data-region="veneto">Veneto</div>
+                                <div class="region-label" style="top: 14%; left: 53%;" data-region="friuli">Friuli</div>
+                                <div class="region-label" style="top: 33%; left: 25%;" data-region="liguria">Ligurya</div>
+                                <div class="region-label" style="top: 30%; left: 35%;" data-region="emilia">Emilia-Romagna</div>
+                                <div class="region-label" style="top: 40%; left: 39%;" data-region="tuscany">Toskana</div>
+                                <div class="region-label" style="top: 45%; left: 48%;" data-region="umbria">Umbria</div>
+                                <div class="region-label" style="top: 39%; left: 53%;" data-region="marche">Marche</div>
+                                <div class="region-label" style="top: 53%; left: 49%;" data-region="lazio">Lazio</div>
+                                <div class="region-label" style="top: 48%; left: 59%;" data-region="abruzzo">Abruzzo</div>
+                                <div class="region-label" style="top: 56%; left: 63%;" data-region="molise">Molise</div>
+                                <div class="region-label" style="top: 62%; left: 60%;" data-region="campania">Campania</div>
+                                <div class="region-label" style="top: 60%; left: 77%;" data-region="apulia">Puglia</div>
+                                <div class="region-label" style="top: 66%; left: 71%;" data-region="basilicata">Basilicata</div>
+                                <div class="region-label" style="top: 78%; left: 74%;" data-region="calabria">Calabria</div>
+                                <div class="region-label" style="top: 90%; left: 60%;" data-region="sicily">Sicilya</div>
+                                <div class="region-label" style="top: 70%; left: 26%;" data-region="sardinia">Sardinya</div>
                             </div>
                         </div>
                         <div class="map-sidebar">
@@ -1231,12 +1171,14 @@
     </div>
 
     <script>
+        // Predefined credentials
         const validCredentials = [
             { username: "teacher", password: "teacher123", role: "teacher" },
             { username: "student1", password: "student123", role: "student" },
             { username: "student2", password: "student123", role: "student" }
         ];
 
+        // Region data with all original information
         const regionData = {
             piedmont: {
                 name: "Piyemonte",
@@ -1491,6 +1433,7 @@
 
         let selectedRegion = null;
 
+        // Login function
         function login() {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
@@ -1557,40 +1500,19 @@
         }
 
         function initializeMap() {
-            // SVG region paths için event listener'lar
-            const regionPaths = document.querySelectorAll('.region-path');
-            const regionLabels = document.querySelectorAll('.region-label-svg');
-            
-            // Path'ler için click event
-            regionPaths.forEach(path => {
-                path.addEventListener('click', function() {
-                    const regionId = this.getAttribute('data-region');
-                    selectRegion(regionId);
-                });
-            });
-            
-            // Label'lar için click event
+            const regionLabels = document.querySelectorAll('.region-label');
             regionLabels.forEach(label => {
                 label.addEventListener('click', function() {
                     const regionId = this.getAttribute('data-region');
-                    selectRegion(regionId);
+                    displayRegionInfo(regionId);
+                    
+                    // Update selected region visual state
+                    regionLabels.forEach(l => l.style.background = 'rgba(255, 255, 255, 0.8)');
+                    regionLabels.forEach(l => l.style.color = 'var(--primary)');
+                    this.style.background = 'var(--accent)';
+                    this.style.color = 'white';
                 });
             });
-        }
-
-        function selectRegion(regionId) {
-            // Önceki seçimi temizle
-            document.querySelectorAll('.region-path').forEach(path => {
-                path.classList.remove('selected');
-            });
-            
-            // Yeni seçimi işaretle
-            const selectedPath = document.querySelector(`[data-region="${regionId}"]`);
-            if (selectedPath) {
-                selectedPath.classList.add('selected');
-            }
-            
-            displayRegionInfo(regionId);
         }
 
         function displayRegionInfo(regionId) {
@@ -1635,16 +1557,20 @@
             }
         }
 
+        // Initialize the portal
         document.addEventListener('DOMContentLoaded', function() {
+            // Handle Enter key for login
             document.getElementById('password').addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
                     login();
                 }
             });
             
+            // Add floating animation elements
             const loginContainer = document.getElementById('loginSection');
             const floatingElements = loginContainer.querySelector('.floating-elements');
             
+            // Create additional floating elements for enhanced visual effect
             for (let i = 0; i < 8; i++) {
                 const element = document.createElement('div');
                 element.className = 'floating-element';
